@@ -1,0 +1,58 @@
+{% extends "exploration/base.html" %}
+
+{% load i18n %}
+{% load group_tags %}
+
+{% block head_title %}{% spaceless %}
+{% if group %}
+    {% blocktrans with group.name as group_name %}Knowledge Base for {{ group_name }}{% endblocktrans %}
+{% else %}
+    {% trans "Knowledge Base" %}
+{% endif %}
+{% endspaceless %}{% endblock %}
+
+{% block body %}
+
+<h1>{% spaceless %}
+{% if group %}
+    {% blocktrans with group.get_absolute_url as group_url and group.name as group_name %}Knowledge Base for <a href="{{ group_url }}">{{ group_name }}</a>{% endblocktrans %}
+{% else %}
+    {% trans "Knowledge Base" %}
+{% endif %}
+{% endspaceless %}</h1>
+
+{% if filtering %}
+	<h2>Filtered by attributes</h2>
+	<div id="filter_list">    
+        {% for attr in filter_list %}                				
+                <a href="" id="{{attr}}" class="tune_imp">{{ attr }}</a>
+				<img id="cross" src="{{ STATIC_URL }}img/cross.png" alt="Remove"/>
+		{% endfor %}
+	</div>
+{% endif %}
+
+<div id="objects">
+  <h2>Objects</h2>  
+    {% for object in objects %}
+    <div class="object">
+      <a href="{% groupurl object_details project id=object.id %}">{{ object.name }}</a>
+    </div>
+    {% endfor %}
+</div>
+
+<div id="attributes">
+  <h2>Attributes</h2>
+  {% for attr in attributes %}
+  {% if not attr.name in filter_list %}
+  <div class="attribute">
+    {% if filtering %}
+    <a href="{{ current_path }}&a={{ attr.name }}">{{ attr.name }}</a>
+    {% else %}
+    <a href="{{ current_path }}?a={{ attr.name }}">{{ attr.name }}</a>
+    {% endif %}
+  </div>
+  {% endif %}
+  {% endfor %}
+</div>
+
+{% endblock %}

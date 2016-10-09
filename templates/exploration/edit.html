@@ -1,0 +1,30 @@
+{% extends "exploration/base.html" %}
+
+{% load i18n %}
+{% load group_tags %}
+
+{% block head_title %}{% trans "Edit" %}{% endblock %}
+
+{% block body %}
+
+{% for obj in objects %}
+<div id="{{ obj.pk }}" class="edit-object">
+
+  <div class="edit-object-header">
+  <span id="show-attributes">{{ obj.name }}</span>
+  <a href="{% groupurl object_edit project id=obj.id %}"><img width="16" height="16" src="{{ STATIC_URL }}img/pencil.png" alter="Edit"/></a>
+  </div>
+
+  <div style="display: none" class="edit-attributes">
+    {% for attr in attributes %}
+	<div style="display: none" class="attribute-checkbox">
+      <input type="checkbox" name="{{ obj.pk }}" value="{{ attr.pk }}" />{{ attr.name }}</br>
+	</div>
+    {% endfor %}
+	<a id="show-more-attributes" href="#">More...</a> </br>
+    <input type="submit" name="save" value="Submit" id="{{ obj.pk }}"/>
+  </div>
+</div>
+{% endfor %}
+
+{% endblock %}
