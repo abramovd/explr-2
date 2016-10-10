@@ -4,13 +4,13 @@ import tempfile
 import os
 import subprocess
 from sail.settings import MEDIA_ROOT
-
 import fca
+from fca.partial_context import PartialContext
 from fca.readwrite import uwrite_dot
 from fca.algorithms.exploration.exploration import (AttributeExploration, ObjectExploration,
                                                     ExplorationDB)
 
-from models import FObject, FAttribute, AttributeImplication, ObjectImplication
+from models import FObject, FAttribute, AttributeImplication, ObjectImplication, ObjectAttributeLink
 
 
 class ImplicationsContainer(object):
@@ -100,11 +100,11 @@ class BackgroundObjectKnowledgeList(ObjectImplicationsContainer):
 class TranslatedImplication(fca.Implication):
 
     def __init__(self, fca_imp, attributes):
-        print attributes
+        #print attributes
         #premise = set()
         #conclusion = set()
         #for pk in fca_imp
-        print attributes
+        #print attributes
         self._premise = set([attributes[pk] for pk in fca_imp.premise])
         self._conclusion = set([attributes[pk] for pk in fca_imp.conclusion])
         self.pk = fca_imp.pk
@@ -146,14 +146,14 @@ class ImplicationsList(object):
             self.append(imp)
 
 
-class DBContext(fca.Context):
+class DBSimpleContext(fca.Context):
     """Facade for web-site db emulating context
-
     Works with objects' and attributes' pks, not names
     """
-    def __init__(self, group):
-        super(DBContext, self).__init__()
+    def __init__(self, group, name):
+        super(DBSimpleContext, self).__init__()
         self.group = group
+        self.name = name
 
         self._implications = ImplicationsList()
         self._object_implications = ImplicationsList()
@@ -169,7 +169,12 @@ class DBContext(fca.Context):
             attribute_names = [attr.name for attr in attributes]
         table = []
         for obj in objects:
-            table.append(obj.get_as_boolean_list(self.group))
+            bool_list = obj.get_as_boolean_list(self.group)
+            if self.name == 'x':
+                table = bool_list[0]
+            elif self.name == 'q':
+                table = bool_list[1]
+            table.append()
         return fca.Context(table, object_names, attribute_names)
 
     def _get_self_as_fca_object_context(self, pk=True):
@@ -183,7 +188,12 @@ class DBContext(fca.Context):
             attribute_names = [attr.name for attr in attributes]
         table = []
         for obj in objects:
-            table.append(obj.get_as_boolean_list(self.group))
+            bool_list = obj.get_as_boolean_list(self.group)
+            if self.name == 'x':
+                table = bool_list[0]
+            elif self.name == 'q':
+                table = bool_list[1]
+            table.append()
         return fca.Context(zip(*table), attribute_names, object_names)
 
     def get_objects(self):
@@ -197,7 +207,7 @@ class DBContext(fca.Context):
     objects = property(get_objects)
     attributes = property(get_attributes)
 
-    def get_attribute_implications(self, 
+    def get_attribute_implications(self,
                                    basis=fca.algorithms.compute_dg_basis,
                                    confirmed=[],
                                    cond=lambda x: True):
@@ -245,6 +255,149 @@ class DBContext(fca.Context):
             get_obj = lambda name: self.group.content_objects(FObject).get(pk=name)
             attr.objects.add(*[get_obj(pk) for pk in extent])
 
+
+class DBContext(PartialContext):
+    """Facade for web-site db emulating context
+
+    Works with objects' and attributes' pks, not names
+    """
+    def __init__(self, group):
+        super(DBContext, self).__init__()
+        self.group = group
+
+        self._implications = ImplicationsList()
+        self._object_implications = ImplicationsList()
+        self.x_context = DBSimpleContext(group, name='x')
+        self.q_context = DBSimpleContext(group, name='q')
+
+    def _get_self_as_fca_context(self, pk=True):
+        objects = self.group.content_objects(FObject)
+        attributes = self.group.content_objects(FAttribute)
+        if pk:
+            object_names = [obj.pk for obj in objects]
+            attribute_names = [attr.pk for attr in attributes]
+        else:
+            object_names = [obj.name for obj in objects]
+            attribute_names = [attr.name for attr in attributes]
+        table = []
+        qtable = []
+        for obj in objects:
+            bool_list = obj.get_as_boolean_list(self.group)
+            table.append(bool_list[0])
+            qtable.append(bool_list[1])
+        return PartialContext(table, qtable, object_names, attribute_names)
+
+    def _get_self_as_fca_object_context(self, pk=True):
+        objects = self.group.content_objects(FObject)
+        attributes = self.group.content_objects(FAttribute)
+        if pk:
+            object_names = [obj.pk for obj in objects]
+            attribute_names = [attr.pk for attr in attributes]
+        else:
+            object_names = [obj.name for obj in objects]
+            attribute_names = [attr.name for attr in attributes]
+        table = []
+        qtable = []
+        for obj in objects:
+            bool_list = obj.get_as_boolean_list(self.group)
+            table.append(bool_list[0])
+            qtable.append(bool_list[1])
+        return PartialContext(zip(*table), zip(*qtable), attribute_names, object_names)
+
+    def get_objects(self):
+        objects = self.group.content_objects(FObject)
+        return [obj.pk for obj in objects]
+
+    def get_attributes(self):
+        attributes = self.group.content_objects(FAttribute)
+        return [attr.pk for attr in attributes]
+
+    objects = property(get_objects)
+    attributes = property(get_attributes)
+
+    def get_attribute_implications(self, 
+                                   basis=fca.algorithms.dg_basis.compute_partial_dg_basis,
+                                   confirmed=[],
+                                   cond=lambda x: True):
+        imp_basis = confirmed.get_as_plain_list()
+        print 'WHAT?'
+        ct = self._get_self_as_fca_context()
+        print ct.x_context
+        print ct.q_context
+        return self._implications
+        rel_basis = basis(self._get_self_as_fca_context(), imp_basis=imp_basis, cond=cond)
+        self._implications.update(rel_basis)
+        print 'huyot'
+        return self._implications
+
+    def get_object_implications(self,
+                                   basis=fca.algorithms.dg_basis.compute_partial_dg_basis,
+                                   confirmed=[],
+                                   cond=lambda x: True):
+        imp_basis = confirmed.get_as_plain_list()
+        print self._get_self_as_fca_object_context()
+        return self._implications
+        rel_basis = basis(self._get_self_as_fca_object_context(), imp_basis=imp_basis, cond=cond)
+        self._object_implications.update(rel_basis)
+        return self._object_implications
+
+    def set_object_intent(self, intent, name):
+        obj = self.group.content_objects(FObject).get(pk=name)
+        obj.attributes.clear()
+        print '!!_!_!'
+        print intent
+        for attr in intent[0]:
+            print attr
+            oalink = ObjectAttributeLink(object=obj, attribute=self.group.content_objects(FAttribute).get(pk=attr), positive_context=True)
+            oalink.save()
+        for attr in intent[1]:
+            oalink = ObjectAttributeLink(object=obj, attribute=self.group.content_objects(FAttribute).get(pk=attr), positive_context=False)
+            oalink.save()
+
+    def set_attribute_extent(self, extent, name):
+        attr = self.group.content_objects(FAttribute).get(pk=name)
+        attr.objects.clear()
+        for obj in extent[0]:
+            oalink = ObjectAttributeLink(object=self.group.content_objects(FObject).get(pk=obj), attribute=attr, positive_context=True)
+            oalink.save()
+        for obj in extent[1]:
+            oalink = ObjectAttributeLink(object=self.group.content_objects(FObject).get(pk=obj), attribute=attr, positive_context=False)
+            oalink.save()
+
+    # returns positive context
+    def get_object_intent(self, name):
+        obj = self.group.content_objects(FObject).get(pk=name)
+        return set([attr.pk for attr in obj.attributes.all() if ObjectAttributeLink.get(object=obj, attribute=attr).positive_context])
+
+    def add_object_with_intent(self, intent, name):
+        obj = FObject(name=name, group=self.group)
+        obj.save()
+
+        if len(intent[0]) != 0 or len(intent[1]) != 0:
+            get_attr = lambda name: self.group.content_objects(FAttribute).get(pk=name)
+            for pk in intent[0]:
+                for attr in get_attr(pk):
+                    oalink = ObjectAttributeLink(object=obj, attribute=self.group.content_objects(FAttribute).get(pk=attr), positive_context=True)
+                    oalink.save()
+            for pk in intent[1]:
+                for attr in get_attr(pk):
+                    oalink = ObjectAttributeLink(object=obj, attribute=self.group.content_objects(FAttribute).get(pk=attr), positive_context=True)
+                    oalink.save()
+
+    def add_attribute_with_extent(self, extent, name):
+        attr = FAttribute(name=name, group=self.group)
+        attr.save()
+        if len(extent[0]) != 0 or len(extent[1]) != 0:
+            get_obj = lambda name: self.group.content_objects(FObject).get(pk=name)
+            for pk in extent[0]:
+                for obj in get_obj(pk):
+                    oalink = ObjectAttributeLink(object=self.group.content_objects(FObject).get(pk=obj), attribute=attr, positive_context=True)
+                    oalink.save()
+            for pk in extent[1]:
+                for obj in get_obj(pk):
+                    oalink = ObjectAttributeLink(object=self.group.content_objects(FObject).get(pk=obj), attribute=attr, positive_context=True)
+                    oalink.save()
+
 class WebExpert(object):
 
     def set_counterexample(self, example, intent):
@@ -260,6 +413,7 @@ class WebExpert(object):
 
     def provide_object_counterexample(self, imp):
         return (self.example_attr, self.extent)
+
 
 class WebExploration(AttributeExploration):
 

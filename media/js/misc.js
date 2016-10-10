@@ -240,8 +240,20 @@ $(document).ready(function() {
 $("#counterexample_form").bind("submit", function() {
 
 	$.fancybox.showActivity();
+	fields = $(this).serializeArray();
+	var data = [fields[0], fields[1]];
 
-	$.post("rejectimplication", $(this).serializeArray(),
+	$('input[type=checkbox]').each(function () {
+		if (this.indeterminate) {
+			data.push({'name': this.name, 'value': '?'});
+		} else if (this.checked && !this.disabled) {
+			data.push({'name': this.name, 'value': 'on'});
+		}
+
+    });
+
+
+	$.post("rejectimplication", data,
 			function(data) {
 				if (data['status'] != 'ok') {
 					alert(data['status']);
@@ -256,7 +268,18 @@ $("#counterexample_form").bind("submit", function() {
 
 $("#counterexample_object_form").bind("submit", function() {
 	$.fancybox.showActivity();
-	$.post("reject_object_implication", $(this).serializeArray(),
+	fields = $(this).serializeArray();
+	var data = [fields[0], fields[1]];
+
+	$('input[type=checkbox]').each(function () {
+		if (this.indeterminate) {
+			data.push({'name': this.name, 'value': '?'});
+		} else if (this.checked && !this.disabled) {
+			data.push({'name': this.name, 'value': 'on'});
+		}
+
+    });
+	$.post("reject_object_implication", data,
 			function(data) {
 				if (data['status'] != 'ok') {
 					alert(data['status']);

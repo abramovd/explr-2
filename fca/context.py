@@ -168,6 +168,8 @@ class Context(object):
         return set([self.attributes[i] for i in attrs_indexes])
     
     def get_object_intent(self, o):
+        print '-----'
+        print self._objects
         index = self._objects.index(o)
         return self.get_object_intent_by_index(index)
     
@@ -175,15 +177,15 @@ class Context(object):
         """Return a set of corresponding objects for column with index i"""
         objs_indexes = filter(lambda i: self._table[i][j],
                 range(len(self._table)))
-        return set([self.objects[i] for i in objs_indexes])
+        return set([self._objects[i] for i in objs_indexes])
     
     def get_attribute_extent(self, a):
         index = self._attributes.index(a)
         return self.get_attribute_extent_by_index(index)
         
     def get_value(self, o, a):
-        io = self.objects.index(o)
-        ia = self.attributes.index(a)
+        io = self._objects.index(o)
+        ia = self._attributes.index(a)
         return self[io][ia]
     
     def add_attribute(self, col, attr_name):
@@ -227,7 +229,7 @@ class Context(object):
         del self._objects[obj_index]
         
     def delete_object_by_name(self, obj_name):
-        self.delete_object(self.objects.index(obj_name))
+        self.delete_object(self._objects.index(obj_name))
     
     def delete_attribute(self, attr_index):
         for i in range(len(self._objects)):
@@ -268,7 +270,7 @@ class Context(object):
     def extract_subcontext(self, attribute_names):
         """Create a subcontext with only indicated attributes"""
         return Context(self._extract_subtable(attribute_names),
-                       self.objects,
+                       self._objects,
                        attribute_names)
                                 
     def _extract_subtable(self, attribute_names):
@@ -293,7 +295,7 @@ class Context(object):
         
         """
         indices = [i for i in range(len(self)) if condition(i)]
-        return ([self.objects[i] for i in indices],
+        return ([self._objects[i] for i in indices],
                 [self._table[i] for i in indices])
                 
     def _extract_subtable_by_attribute_values(self, values, 
@@ -310,7 +312,7 @@ class Context(object):
             indices = [i for i in range(len(self)) if self._has_values(i, values)]
         elif mode == "or":
             indices = [i for i in range(len(self)) if self._has_at_least_one_value(i, values)]
-        return ([self.objects[i] for i in indices],
+        return ([self._objects[i] for i in indices],
                 [self._table[i] for i in indices])
                 
     def _has_values(self, i, values):
@@ -363,10 +365,10 @@ class Context(object):
     ############################
     
     def __repr__(self):
-        output = ", ".join(self.attributes) + "\n"
-        output += ", ".join(self.objects) + "\n"
+        output = ", ".join([str(attr) for attr in self._attributes]) + "\n"
+        output += ", ".join([str(obj) for obj in self._objects]) + "\n"
         cross = {True : "X", False : "."}
-        for i in xrange(len(self.objects)):
+        for i in xrange(len(self._objects)):
             output += ("".join([cross[b] for b in self[i]])) + "\n"
         return output
 

@@ -4,6 +4,48 @@
 {% load group_tags %}
 
 {% block head_title %}{% trans "Questions" %}{% endblock %}
+{% block extra_body %}
+<script>
+function ts(cb) {
+  if (cb.readOnly) cb.checked=cb.readOnly=false;
+  else if (!cb.checked) cb.readOnly=cb.indeterminate=true;
+}
+</script>
+    <script>
+    var $check = $("input[type=checkbox]"),
+  el;
+
+$check
+  .data('checked', 0)
+  .click(function(e) {
+
+    el = $(this);
+
+    switch (el.data('checked')) {
+
+      // unchecked, going indeterminate
+      case 0:
+        el.data('checked', 1);
+        el.prop('indeterminate', true);
+        break;
+
+        // indeterminate, going checked
+      case 1:
+        el.data('checked', 2);
+        el.prop('indeterminate', false);
+        el.prop('checked', true);
+        break;
+
+        // checked, going unchecked
+      default:
+        el.data('checked', 0);
+        el.prop('indeterminate', false);
+        el.prop('checked', false);
+    }
+
+  });
+    </script>
+{% endblock %}
 
 {% block body %}
 
@@ -16,7 +58,8 @@
         </p>
         <p>
         {% for attr in attributes %}
-            <input type="checkbox" class="attribute-input" name="{{ attr.pk }}" />{{ attr.name }}</br>
+            <!--<input type="checkbox" class="attribute-input" name="{{ attr.pk }}" />{{ attr.name }}</br>-->
+            <input type="checkbox" class="attribute-input" name="{{ attr.pk }}">{{ attr.name }}<br>
         {% endfor %}
         </p>
         <p>

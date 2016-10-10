@@ -496,7 +496,7 @@ def submit_intent(request):
         object_pk = int(request.POST['pk'])
         intent = [int(id_) for id_ in request.POST.getlist(u'intent[]')]
         try:
-            ExplorationWrapper.edit_object(group, object_pk, set(intent))
+            ExplorationWrapper.edit_object(group, object_pk, [set(intent), set()])
             status = 'ok'
         except Exception as details:
             status = str(details)
@@ -629,12 +629,16 @@ def reject_implication(request):
             if len(object_name) == 0:
                 raise Exception("Object's name can't be empty")
             imp_pk = int(request.POST['imp_pk'])
-            intent = set()
+            intent = [set(), set()]
             for key in request.POST:
                 if key != 'example_name' and key != 'imp_pk':
-                    intent.add(int(key))
+                    if request.POST['key']:
+                        intent[0].add(int(key))
+                    else:
+                        intent[1].add(int(key))
             premise = ExplorationWrapper.get_premise(group, int(imp_pk))
-            ExplorationWrapper.reject_implication_with_counterexample(group, imp_pk, object_name, premise | intent)
+            intent[0] = premise | intent[0]
+            ExplorationWrapper.reject_implication_with_counterexample(group, imp_pk, object_name, intent)
             status = 'ok'
         except Exception as details:
             status = str(details)
@@ -666,14 +670,17 @@ def reject_object_implication(request):
             attribute_name = request.POST['example_name']
             if len(attribute_name) == 0:
                 raise Exception("Attribute's name can't be empty")
-            request.POST['imp_pk']
             imp_pk = int(request.POST['imp_pk'])
-            extent = set()
+            extent = [set(), set()]
             for key in request.POST:
                 if key != 'example_name' and key != 'imp_pk':
-                    extent.add(int(key))
+                    if request.POST['key']:
+                        extent[0].add(int(key))
+                    else:
+                        extent[1].add(int(key))
             premise = ObjectExplorationWrapper.get_premise(group, int(imp_pk))
-            ObjectExplorationWrapper.reject_implication_with_counterexample(group, imp_pk, attribute_name, premise | extent)
+            extent[0] = premise | extent[0]
+            ObjectExplorationWrapper.reject_implication_with_counterexample(group, imp_pk, attribute_name, extent)
             status = 'ok'
         except Exception as details:
             status = str(details)

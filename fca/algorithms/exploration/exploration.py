@@ -28,12 +28,14 @@ def context_modifier(F):
     """
     def wrapper(db, *args):
         F(db, *args)
+
         db._cxt_object_implications = db._cxt.get_object_implications(
                                             confirmed=db._implications,
                                             cond=db._cond)
         db._cxt_implications = db._cxt.get_attribute_implications(
                                             confirmed=db._implications,
                                             cond=db._cond)
+
         return db
     return wrapper
 
@@ -64,6 +66,7 @@ class ExplorationDB(object):
         # condition on pseudo-intents
         self._cond = cond
         # relative basis
+
         self._cxt_implications = context.get_attribute_implications(
                                                 confirmed=self._implications,
                                                 cond=cond)
@@ -108,9 +111,10 @@ class ExplorationDB(object):
 
     @context_modifier
     def edit_example(self, name, old_name, intent):
-        old_intent = self._cxt.get_object_intent(old_name)
+        print self._cxt.objects
+        old_intent = self._cxt.x_context.get_object_intent(old_name)
         if intent != old_intent:
-            self._check_intents([intent])
+            self._check_intents([intent[0]])
             self._cxt.set_object_intent(intent, old_name)
         if old_name != name:
             if name in self._cxt.objects:
@@ -134,6 +138,8 @@ class ExplorationDB(object):
         
     @context_modifier
     def edit_attribute(self, name, old_name, extent):
+        pass
+        '''
         intents = []
         for obj in self._cxt.objects:
             if obj in extent:
@@ -151,6 +157,7 @@ class ExplorationDB(object):
                     first = True
         self._cxt.set_attribute_extent(extent, old_name)
         self._cxt.rename_attribute(old_name, name)
+        '''
 
     def get_open_implications(self):
         return copy(self._cxt_implications)

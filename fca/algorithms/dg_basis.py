@@ -32,7 +32,7 @@ def compute_partial_dg_basis(pcxt,
     Compute Duquenne-Guigues basis for a given partial context *pcxt* using
     optimized Ganter algorithm
     """
-    return generalized_compute_dg_basis(pcxt.attributes,
+    return generalized_compute_dg_basis(pcxt._attributes,
                                         pcxt.xq_aclosure,
                                         close=close,
                                         imp_basis=imp_basis,

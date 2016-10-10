@@ -5,6 +5,11 @@ from django.contrib.contenttypes.models import ContentType
 
 import fca
 
+class ObjectAttributeLink(models.Model):
+    object = models.ForeignKey('FObject', related_name='object_attribute_links')
+    attribute = models.ForeignKey('FAttribute', related_name='object_attribute_links',)
+    positive_context = models.BooleanField(default=True)
+
 class FAttribute(models.Model):
     """FObject stands for formal object"""
     name = models.CharField(_('name'), max_length=200, blank=False)
@@ -31,7 +36,7 @@ class FObject(models.Model):
     """FObject stands for formal object"""
     name = models.CharField(_('name'), max_length=200, blank=False)
     description = models.TextField(_('description'), blank=True)
-    attributes = models.ManyToManyField(FAttribute, blank=True, related_name='objects')
+    attributes = models.ManyToManyField(FAttribute, blank=True, related_name='objects', through=ObjectAttributeLink)
     
     # we can built hierarchies of objects
     # parent in the sense of type or class
@@ -58,9 +63,21 @@ class FObject(models.Model):
     def get_as_boolean_list(self, group):
         """Return a list which represents what attributes this object has"""
         object_intent = self.attributes.all()
-        all_attributes = group.content_objects(FAttribute)
-        return [(attr in object_intent) for attr in all_attributes]
-
+        all_attributes = group.content_objects(FAttribute).all()
+        result = [[], []]
+        for attr in all_attributes:
+            if attr in object_intent:
+                link = ObjectAttributeLink(object=self, attribute=attr)
+                if link.positive_context:
+                    result[0].append(True)
+                    result[1].append(False)
+                else:
+                    result[0].append(False)
+                    result[1].append(True)
+            else:
+                result[0].append(False)
+                result[1].append(False)
+        return result
 
 class AttributeImplication(models.Model):
     """Implication on attributes in background knowledge"""

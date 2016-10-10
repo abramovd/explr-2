@@ -82,7 +82,7 @@ def derivation(context, extent=0, intent=0):
             return result
                         
 
-def norris(context):
+def norris(cxt):
     """Build all concepts of a context
     
     Based on the Norris' algorithm for computing the maximal rectangles
@@ -114,6 +114,9 @@ def norris(context):
     ([1, 4], ['d'])
 
     """
+
+
+    context = cxt.x_context
     # To be more efficient we store intent (as Python set) of every 
     # object to the list
     # TODO: Move to Context class?
