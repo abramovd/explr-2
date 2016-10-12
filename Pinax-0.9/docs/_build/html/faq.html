@@ -1,0 +1,187 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Frequently asked questions &mdash; Pinax v0.9a1 documentation</title>
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.9a1',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Pinax v0.9a1 documentation" href="index.html" />
+    <link rel="next" title="Contributing to Pinax" href="contributing.html" />
+    <link rel="prev" title="Dependencies" href="dependencies.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="contributing.html" title="Contributing to Pinax"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="dependencies.html" title="Dependencies"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Pinax v0.9a1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="frequently-asked-questions">
+<span id="ref-faq"></span><h1>Frequently asked questions<a class="headerlink" href="#frequently-asked-questions" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="does-pinax-work-on-django-1-1">
+<h2>Does Pinax work on Django 1.1?<a class="headerlink" href="#does-pinax-work-on-django-1-1" title="Permalink to this headline">¶</a></h2>
+<p>Yes. Pinax 0.7 ships with Django 1.0.4 by default. Django 1.1 came too late in
+our 0.7 release cycle. However, we tested it on Django 1.1 to ensure it works
+and it works well. To use Django 1.1 in your Pinax project simply follow our
+<a class="reference external" href="gettingstarted.html#ref-install"><em>installation</em></a> documentation and once you are in the
+virtual environment run:</p>
+<div class="highlight-python"><pre>pip install -U Django==1.1.1</pre>
+</div>
+<p>This will install Django 1.1.1 over 1.0.4.</p>
+</div>
+<div class="section" id="does-pinax-work-on-django-1-2">
+<h2>Does Pinax work on Django 1.2?<a class="headerlink" href="#does-pinax-work-on-django-1-2" title="Permalink to this headline">¶</a></h2>
+<p>Yes and no. Our stable release 0.7.X (at 0.7.1) does not support Django 1.2.
+We will attempt to make 0.7.2 compatible to run on Django 1.2. Installing
+Django 1.2 over 1.0 that ships with 0.7 will work the same way as seen above.
+We hope to release 0.7.2 soon. There are no timelines.</p>
+<p>On the other hand our development version of Pinax will ship with Django 1.2.
+Stay tuned for more news regarding the releases of 0.9.</p>
+</div>
+<div class="section" id="how-do-i-change-the-references-to-example-com">
+<h2>How do I change the references to example.com<a class="headerlink" href="#how-do-i-change-the-references-to-example-com" title="Permalink to this headline">¶</a></h2>
+<p><tt class="docutils literal"><span class="pre">example.com</span></tt> is the default value for
+<tt class="docutils literal"><span class="pre">Site.objects.get(pk=settings.SITE_ID).domain</span></tt>. This comes from the Django
+contrib app named <tt class="docutils literal"><span class="pre">sites</span></tt>. It is enabled in Pinax by default. Pinax uses
+this value to construct URLs back to your site in e-mails, for example. There
+are two ways to change this value. First, you can modify it in the shell
+(using <tt class="docutils literal"><span class="pre">python</span> <span class="pre">manage.py</span> <span class="pre">shell</span></tt>):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">django.conf</span> <span class="kn">import</span> <span class="n">settings</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">django.contrib.sites.models</span> <span class="kn">import</span> <span class="n">Site</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">site</span> <span class="o">=</span> <span class="n">Site</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">pk</span><span class="o">=</span><span class="n">settings</span><span class="o">.</span><span class="n">SITE_ID</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">site</span><span class="o">.</span><span class="n">domain</span> <span class="o">=</span> <span class="s">&quot;localhost:8000&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">site</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s">&quot;Development site&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">site</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Alternatively, you can perform the same action through the admin interface.</p>
+<blockquote>
+<img alt="_images/admin_sites_change.jpg" src="_images/admin_sites_change.jpg" />
+</blockquote>
+</div>
+<div class="section" id="why-won-t-my-e-mail-send">
+<h2>Why won&#8217;t my e-mail send?<a class="headerlink" href="#why-won-t-my-e-mail-send" title="Permalink to this headline">¶</a></h2>
+<p>Pinax queues all e-mail for delivery. This is the behavior of django-mailer.
+All messages are stored in the database. This enables you to view what will
+be sent via the admin during development.</p>
+<blockquote>
+<img alt="_images/admin_mailer_messages.jpg" src="_images/admin_mailer_messages.jpg" />
+</blockquote>
+<p>To send the messages that are queued you should use the <tt class="docutils literal"><span class="pre">send_mail</span></tt>
+management command. To invoke this you would run:</p>
+<div class="highlight-python"><pre>python manage.py send_mail</pre>
+</div>
+<p>Be sure you have set the appropriate <tt class="docutils literal"><span class="pre">EMAIL_*</span></tt> settings. A full list of
+these settings can be found <a class="reference external" href="http://docs.djangoproject.com/en/dev/ref/settings/#email-host">in Django settings documentation</a>. Our
+<a class="reference external" href="deployment.html#ref-sending-mail-and-notices"><em>deployment</em></a> documentation gives
+instructions on how to set this up on a cron.</p>
+<p>Also, some e-mail may occur as a result of notifications. Some notifications
+are queued. Be sure you run:</p>
+<div class="highlight-python"><pre>python manage.py emit_notices</pre>
+</div>
+<p>to clear the notification queue and get those e-mails queued.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="#">Frequently asked questions</a><ul>
+<li><a class="reference external" href="#does-pinax-work-on-django-1-1">Does Pinax work on Django 1.1?</a></li>
+<li><a class="reference external" href="#does-pinax-work-on-django-1-2">Does Pinax work on Django 1.2?</a></li>
+<li><a class="reference external" href="#how-do-i-change-the-references-to-example-com">How do I change the references to example.com</a></li>
+<li><a class="reference external" href="#why-won-t-my-e-mail-send">Why won&#8217;t my e-mail send?</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="dependencies.html"
+                                  title="previous chapter">Dependencies</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="contributing.html"
+                                  title="next chapter">Contributing to Pinax</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="_sources/faq.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="search.html" method="get">
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="modindex.html" title="Global Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="contributing.html" title="Contributing to Pinax"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="dependencies.html" title="Dependencies"
+             >previous</a> |</li>
+        <li><a href="index.html">Pinax v0.9a1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2010, James Tauber and Pinax Team.
+      Last updated on Jun 06, 2010.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.7.
+    </div>
+  </body>
+</html>

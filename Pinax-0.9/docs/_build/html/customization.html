@@ -1,0 +1,264 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Customization &mdash; Pinax v0.9a1 documentation</title>
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.9a1',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Pinax v0.9a1 documentation" href="index.html" />
+    <link rel="next" title="Deployment" href="deployment.html" />
+    <link rel="prev" title="Getting started" href="gettingstarted.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="deployment.html" title="Deployment"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="gettingstarted.html" title="Getting started"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Pinax v0.9a1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="customization">
+<span id="ref-customization"></span><h1>Customization<a class="headerlink" href="#customization" title="Permalink to this headline">¶</a></h1>
+<p>As more sites are built using Pinax, more best practices will emerge, but for
+now what we recommend is:</p>
+<ul class="simple">
+<li>Always work off a stable release. The most current release is 0.7.1.</li>
+<li>Use the pinax-admin <a class="reference internal" href="#customization-cloneproject"><em>clone_project</em></a> command.</li>
+<li>Make necessary changes to the <tt class="docutils literal"><span class="pre">settings.py</span></tt> and <tt class="docutils literal"><span class="pre">urls.py</span></tt> files in your
+copied directory.</li>
+<li>Change the domain and display name of the Site in the admin interface.</li>
+<li>Develop your custom apps under your new project or anywhere on Python path.</li>
+<li>Develop your own templates under your new project.</li>
+</ul>
+<div class="section" id="choosing-a-project">
+<span id="ref-project"></span><h2>Choosing a Project<a class="headerlink" href="#choosing-a-project" title="Permalink to this headline">¶</a></h2>
+<p>Pinax provides several projects to use as a starting point for
+customization.  Depending on your development style, you may prefer one project
+over the other.</p>
+<dl class="docutils">
+<dt>basic_project</dt>
+<dd>This project comes with the bare minimum set of applications and templates to
+get you started. It includes no extra tabs, only the profile and notices tabs are
+included by default. From here you can add any extra functionality and
+applications that you would like.</dd>
+<dt>cms_company_project</dt>
+<dd><p class="first">A very simple CMS that lets you set up templates and then edit content,
+including images, right in the frontend of the site.</p>
+<p class="last">The sample media, templates and content including in the project demonstrate
+a basic company website.</p>
+</dd>
+<dt>cms_holidayhouse_project</dt>
+<dd><p class="first">A very simple CMS that lets you set up templates and then edit content,
+including images, right in the frontend of the site.</p>
+<p class="last">The sample media, templates and content including in the project demonstrate
+a basic site for holiday house rentals.</p>
+</dd>
+<dt>code_project</dt>
+<dd>This project demonstrates group functionality and the tasks, wiki and topics
+apps. It is intended to be the starting point for things like code project
+management where each code project gets its own wiki, task tracking system
+and threaded discussions.</dd>
+<dt>intranet_project</dt>
+<dd>This project demonstrates a closed site requiring an invitation to join and
+not exposing any information publicly. It provides a top-level task tracking
+system, wiki and bookmarks. It is intended to be the starting point of sites
+like intranets.</dd>
+<dt>private_beta_project</dt>
+<dd>This project demonstrates the use of a waiting list and signup codes for
+sites in private beta. Otherwise it is the same as basic_project.</dd>
+<dt>sample_group_project</dt>
+<dd>This project demonstrates group functionality with a barebones group
+containing no extra content apps as well as two additional group types,
+tribes and projects, which show different membership approaches and
+content apps such as topics, wiki, photos and task management.</dd>
+<dt>social_project</dt>
+<dd><p class="first">This project demonstrates a social networking site. It provides profiles,
+friends, photos, blogs, tribes, wikis, tweets, bookmarks, swaps,
+locations and user-to-user messaging.</p>
+<p class="last">In 0.5 this was called <tt class="docutils literal"><span class="pre">complete_project</span></tt>.</p>
+</dd>
+<dt>zero_project</dt>
+<dd>This project lays the foundation for all other Pinax starter projects. It
+provides the project directory layout and some key infrastructure apps on
+which the other starter projects are based.</dd>
+</dl>
+</div>
+<div class="section" id="pinax-admin-clone-project">
+<span id="customization-cloneproject"></span><h2>pinax-admin clone_project<a class="headerlink" href="#pinax-admin-clone-project" title="Permalink to this headline">¶</a></h2>
+<p>Pinax provides you with <tt class="docutils literal"><span class="pre">pinax-admin</span></tt>, a command line utility. With
+<tt class="docutils literal"><span class="pre">pinax-admin</span></tt> you can quickly generate a cloned project. For example, if you
+wanted to clone the basic_project you could simply do the following:</p>
+<div class="highlight-python"><pre>(pinax-env)$ pinax-admin clone_project basic_project mysite</pre>
+</div>
+</div>
+<div class="section" id="settings-you-will-possibly-want-to-override">
+<h2>Settings You Will (Possibly) Want To Override<a class="headerlink" href="#settings-you-will-possibly-want-to-override" title="Permalink to this headline">¶</a></h2>
+<p>Pinax-specific:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">PINAX_THEME</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">CONTACT_EMAIL</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">URCHIN_ID</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">BBAUTH_APP_ID</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">BBAUTH_SHARED_SECRET</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">SITE_NAME</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">MAILER_PAUSE_SEND</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">SERVE_MEDIA</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">ACCOUNT_OPEN_SIGNUP</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">ACCOUNT_REQUIRED_EMAIL</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">ACCOUNT_EMAIL_VERIFICATION</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">EMAIL_CONFIRMATION_DAYS</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">LOGIN_REDIRECT_URLNAME</span></tt></li>
+</ul>
+<p>General to Django:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">DEBUG</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">TEMPLATE_DEBUG</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">LOGGING_OUTPUT_ENABLED</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">ADMINS</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">MANAGERS</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">DATABASE_ENGINE</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">DATABASE_NAME</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">DATABASE_USER</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">DATABASE_PASSWORD</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">DATABASE_HOST</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">TIME_ZONE</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">SECRET_KEY</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">DEFAULT_FROM_EMAIL</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">SERVER_EMAIL</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">SEND_BROKEN_LINK_EMAILS</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">EMAIL_HOST</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">EMAIL_HOST_USER</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">EMAIL_HOST_PASSWORD</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">EMAIL_SUBJECT_PREFIX</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">LOGIN_URL</span></tt></li>
+</ul>
+</div>
+<div class="section" id="base-html-versus-site-base-html">
+<h2><tt class="docutils literal"><span class="pre">base.html</span></tt> versus <tt class="docutils literal"><span class="pre">site_base.html</span></tt><a class="headerlink" href="#base-html-versus-site-base-html" title="Permalink to this headline">¶</a></h2>
+<p>In the sample projects, <tt class="docutils literal"><span class="pre">templates/base.html</span></tt> is intended for overall page structure
+whereas <tt class="docutils literal"><span class="pre">templates/site_base.html</span></tt> is intended for adding site-specific content that
+is to be found on all pages (things like logo, navigation or footers).</p>
+<p>If you are writing a theme to be used across multiple sites, you should modify
+<tt class="docutils literal"><span class="pre">base.html</span></tt>, not <tt class="docutils literal"><span class="pre">site_base.html</span></tt>. If you want to keep a particular theme
+but modify content for a specific site, you should modify <tt class="docutils literal"><span class="pre">site_base.html</span></tt>.</p>
+</div>
+<div class="section" id="changing-avatar-gravatar-defaults">
+<h2>Changing Avatar/Gravatar defaults<a class="headerlink" href="#changing-avatar-gravatar-defaults" title="Permalink to this headline">¶</a></h2>
+<p>By default Pinax assigns to users the <a class="reference external" href="http://gravatar.com/">Gravatar</a> icon and uses the Gravatar icon
+system. If you want your own personal site avatar default, simply go to the
+<tt class="docutils literal"><span class="pre">settings.py</span></tt> in your project root and add these two lines of code:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># avatar controls</span>
+<span class="n">AVATAR_DEFAULT_URL</span> <span class="o">=</span>  <span class="n">MEDIA_URL</span> <span class="o">+</span> <span class="s">&#39;&lt;our_custom_avatar.jpg&gt;&#39;</span>
+<span class="n">AVATAR_GRAVATAR_BACKUP</span> <span class="o">=</span> <span class="bp">False</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="adding-tabs">
+<h2>Adding Tabs<a class="headerlink" href="#adding-tabs" title="Permalink to this headline">¶</a></h2>
+<p>See <a class="reference external" href="tabs.html#ref-tabs"><em>Tab Navigation</em></a></p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="#">Customization</a><ul>
+<li><a class="reference external" href="#choosing-a-project">Choosing a Project</a></li>
+<li><a class="reference external" href="#pinax-admin-clone-project">pinax-admin clone_project</a></li>
+<li><a class="reference external" href="#settings-you-will-possibly-want-to-override">Settings You Will (Possibly) Want To Override</a></li>
+<li><a class="reference external" href="#base-html-versus-site-base-html"><tt class="docutils literal"><span class="pre">base.html</span></tt> versus <tt class="docutils literal"><span class="pre">site_base.html</span></tt></a></li>
+<li><a class="reference external" href="#changing-avatar-gravatar-defaults">Changing Avatar/Gravatar defaults</a></li>
+<li><a class="reference external" href="#adding-tabs">Adding Tabs</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="gettingstarted.html"
+                                  title="previous chapter">Getting started</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="deployment.html"
+                                  title="next chapter">Deployment</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="_sources/customization.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="search.html" method="get">
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="modindex.html" title="Global Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="deployment.html" title="Deployment"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="gettingstarted.html" title="Getting started"
+             >previous</a> |</li>
+        <li><a href="index.html">Pinax v0.9a1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2010, James Tauber and Pinax Team.
+      Last updated on Jun 06, 2010.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.7.
+    </div>
+  </body>
+</html>

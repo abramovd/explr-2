@@ -1,0 +1,359 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Reference &mdash; Pinax v0.9a1 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.9a1',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="Pinax v0.9a1 documentation" href="../../index.html" />
+    <link rel="up" title="basic_profiles" href="index.html" />
+    <link rel="next" title="bbauth" href="../bbauth/index.html" />
+    <link rel="prev" title="Getting started" href="gettingstarted.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="../bbauth/index.html" title="bbauth"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="gettingstarted.html" title="Getting started"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">Pinax v0.9a1 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Pinax Apps</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">basic_profiles</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="reference">
+<span id="ref-basic-profiles-reference"></span><h1>Reference<a class="headerlink" href="#reference" title="Permalink to this headline">¶</a></h1>
+<p>This document covers various components of <tt class="docutils literal"><span class="pre">pinax.apps.basic_profiles</span></tt>.</p>
+<div class="section" id="named-urls">
+<h2>Named Urls<a class="headerlink" href="#named-urls" title="Permalink to this headline">¶</a></h2>
+<p>The named urls in this app should enable the use of of the <tt class="docutils literal"><span class="pre">{%</span> <span class="pre">url</span> <span class="pre">%}</span></tt>
+template tag as well as <tt class="docutils literal"><span class="pre">reverse</span></tt> lookups in your project code without having
+to know the implementation details of this app.</p>
+<div class="section" id="profile-username-autocomplete">
+<h3>profile_username_autocomplete<a class="headerlink" href="#profile-username-autocomplete" title="Permalink to this headline">¶</a></h3>
+<p>Provides a call back url that uses the <tt class="docutils literal"><span class="pre">pinax.apps.autocomplete_app</span></tt> views to
+provide data back to the jQuery <a class="reference external" href="http://docs.jquery.com/Plugins/Autocomplete">autocomplete</a> plugin.</p>
+</div>
+<div class="section" id="profile-list">
+<h3>profile_list<a class="headerlink" href="#profile-list" title="Permalink to this headline">¶</a></h3>
+<p>Upon GET request, this url will render a template named <tt class="docutils literal"><span class="pre">basic_profiles/profiles.html</span></tt>
+by default with a list of users in context ordered by either <tt class="docutils literal"><span class="pre">date_joined</span></tt> descending
+or by <tt class="docutils literal"><span class="pre">username</span></tt> ascending.  This is further optionally limited with case-insensitive
+search against the <tt class="docutils literal"><span class="pre">username</span></tt> field if the query parameter <tt class="docutils literal"><span class="pre">search_terms</span></tt> is
+provided.  Likewise, the ordering defaults to <tt class="docutils literal"><span class="pre">date_joined</span></tt> descending which can
+be overridden by supplying the query parameter <tt class="docutils literal"><span class="pre">order</span></tt> with the value of <tt class="docutils literal"><span class="pre">name</span></tt>.</p>
+<p>Examples:</p>
+<div class="highlight-html"><div class="highlight"><pre><span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">&quot;{% url profile_list %}?search_terms=beth&amp;order=name&quot;</span><span class="nt">&gt;</span>Show &quot;beth&quot; Users<span class="nt">&lt;/a&gt;</span>
+</pre></div>
+</div>
+<p>This would result in the <tt class="docutils literal"><span class="pre">users</span></tt> context variable limited to users such as
+<em>Beth, Bethany, Marybeth</em> and would be ordered alphabetically by their username.</p>
+<p>The value of <tt class="docutils literal"><span class="pre">order</span></tt> and <tt class="docutils literal"><span class="pre">search_terms</span></tt> are also passed to the template as
+context variables.</p>
+</div>
+<div class="section" id="profile-detail">
+<h3>profile_detail<a class="headerlink" href="#profile-detail" title="Permalink to this headline">¶</a></h3>
+<p>This url will render a template named <tt class="docutils literal"><span class="pre">basic_profiles/profile.html</span></tt> by
+default with <tt class="docutils literal"><span class="pre">is_me</span></tt> and <tt class="docutils literal"><span class="pre">other_user</span></tt> as context variables where <tt class="docutils literal"><span class="pre">is_me</span></tt>
+is a boolean that indicates whether or not <tt class="docutils literal"><span class="pre">other_user</span></tt> is the same as the
+authenticated user making the request.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name" colspan="2">keyword arguments:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body">The username for the profile to view that matches <tt class="docutils literal"><span class="pre">(?P&lt;username&gt;[\w\._-]+)</span></tt></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="profile-edit">
+<h3>profile_edit<a class="headerlink" href="#profile-edit" title="Permalink to this headline">¶</a></h3>
+<p>This url, when POSTed to will process the variables through a
+<tt class="docutils literal"><span class="pre">pinax.apps.basic_profiles.forms.ProfileForm</span></tt> instance, otherwise it will
+process a GET request by rendering <tt class="docutils literal"><span class="pre">basic_profiles/profile_edit.html</span></tt> by
+default for regular requests and <tt class="docutils literal"><span class="pre">basic_profiles/profile_edit_facebox.html</span></tt>
+for ajax calls.  It renders both of these templates with an instance of the
+<tt class="docutils literal"><span class="pre">pinax.apps.basic_profiles.ProfileForm</span></tt> as <tt class="docutils literal"><span class="pre">profile_form</span></tt> and an instance of
+<tt class="docutils literal"><span class="pre">pinax.apps.basic_profiles.models.Profile</span></tt> as <tt class="docutils literal"><span class="pre">profile</span></tt>.</p>
+</div>
+</div>
+<div class="section" id="templates">
+<h2>Templates<a class="headerlink" href="#templates" title="Permalink to this headline">¶</a></h2>
+<p>Templates should be placed in an <tt class="docutils literal"><span class="pre">basic_profiles/</span></tt> folder at the root of one of your
+template search paths.</p>
+<div class="section" id="profiles-html">
+<h3>profiles.html<a class="headerlink" href="#profiles-html" title="Permalink to this headline">¶</a></h3>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">context:</th><td class="field-body"><tt class="docutils literal"><span class="pre">users</span></tt>, <tt class="docutils literal"><span class="pre">order</span></tt>, <tt class="docutils literal"><span class="pre">search_terms</span></tt></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="profile-html">
+<h3>profile.html<a class="headerlink" href="#profile-html" title="Permalink to this headline">¶</a></h3>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">context:</th><td class="field-body"><tt class="docutils literal"><span class="pre">is_me</span></tt>, <tt class="docutils literal"><span class="pre">other_user</span></tt></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="profile-edit-html">
+<h3>profile_edit.html<a class="headerlink" href="#profile-edit-html" title="Permalink to this headline">¶</a></h3>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">context:</th><td class="field-body"><tt class="docutils literal"><span class="pre">profile</span></tt>, <tt class="docutils literal"><span class="pre">profile_form</span></tt></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="profile-edit-facebox-html">
+<h3>profile_edit_facebox.html<a class="headerlink" href="#profile-edit-facebox-html" title="Permalink to this headline">¶</a></h3>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">context:</th><td class="field-body"><tt class="docutils literal"><span class="pre">profile</span></tt>, <tt class="docutils literal"><span class="pre">profile_form</span></tt></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="modules">
+<h2>Modules<a class="headerlink" href="#modules" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-pinax.apps.basic_profiles.admin">
+<h3><tt class="docutils literal"><span class="pre">pinax.apps.basic_profiles.admin</span></tt><a class="headerlink" href="#module-pinax.apps.basic_profiles.admin" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="module-pinax.apps.basic_profiles.forms">
+<h3><tt class="docutils literal"><span class="pre">pinax.apps.basic_profiles.forms</span></tt><a class="headerlink" href="#module-pinax.apps.basic_profiles.forms" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="pinax.apps.basic_profiles.forms.ProfileForm">
+<em class="property">class </em><tt class="descclassname">pinax.apps.basic_profiles.forms.</tt><tt class="descname">ProfileForm</tt><big>(</big><em>data=None</em>, <em>files=None</em>, <em>auto_id='id_%s'</em>, <em>prefix=None</em>, <em>initial=None</em>, <em>error_class=&lt;class 'django.forms.util.ErrorList'&gt;</em>, <em>label_suffix=':'</em>, <em>empty_permitted=False</em>, <em>instance=None</em><big>)</big><a class="headerlink" href="#pinax.apps.basic_profiles.forms.ProfileForm" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="class">
+<dt id="pinax.apps.basic_profiles.forms.ProfileForm.Meta">
+<em class="property">class </em><tt class="descname">Meta</tt><a class="headerlink" href="#pinax.apps.basic_profiles.forms.ProfileForm.Meta" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="pinax.apps.basic_profiles.forms.ProfileForm.Meta.model">
+<tt class="descname">model</tt><a class="headerlink" href="#pinax.apps.basic_profiles.forms.ProfileForm.Meta.model" title="Permalink to this definition">¶</a></dt>
+<dd>alias of <tt class="xref docutils literal"><span class="pre">Profile</span></tt></dd></dl>
+
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pinax.apps.basic_profiles.forms.ProfileForm.media">
+<tt class="descclassname">ProfileForm.</tt><tt class="descname">media</tt><a class="headerlink" href="#pinax.apps.basic_profiles.forms.ProfileForm.media" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-pinax.apps.basic_profiles.management.commands.create_profiles_for_users">
+<h3><tt class="docutils literal"><span class="pre">pinax.apps.basic_profiles.management.commands.create_profiles_for_users</span></tt><a class="headerlink" href="#module-pinax.apps.basic_profiles.management.commands.create_profiles_for_users" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="pinax.apps.basic_profiles.management.commands.create_profiles_for_users.Command">
+<em class="property">class </em><tt class="descclassname">pinax.apps.basic_profiles.management.commands.create_profiles_for_users.</tt><tt class="descname">Command</tt><a class="headerlink" href="#pinax.apps.basic_profiles.management.commands.create_profiles_for_users.Command" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="pinax.apps.basic_profiles.management.commands.create_profiles_for_users.Command.handle_noargs">
+<tt class="descname">handle_noargs</tt><big>(</big><em>**options</em><big>)</big><a class="headerlink" href="#pinax.apps.basic_profiles.management.commands.create_profiles_for_users.Command.handle_noargs" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-pinax.apps.basic_profiles.models">
+<h3><tt class="docutils literal"><span class="pre">pinax.apps.basic_profiles.models</span></tt><a class="headerlink" href="#module-pinax.apps.basic_profiles.models" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="pinax.apps.basic_profiles.models.Profile">
+<em class="property">class </em><tt class="descclassname">pinax.apps.basic_profiles.models.</tt><tt class="descname">Profile</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#pinax.apps.basic_profiles.models.Profile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Profile(id, user_id, name, about, location, website)</p>
+<dl class="exception">
+<dt id="pinax.apps.basic_profiles.models.Profile.DoesNotExist">
+<em class="property">exception </em><tt class="descname">DoesNotExist</tt><a class="headerlink" href="#pinax.apps.basic_profiles.models.Profile.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="exception">
+<dt id="pinax.apps.basic_profiles.models.Profile.MultipleObjectsReturned">
+<em class="property">exception </em><tt class="descclassname">Profile.</tt><tt class="descname">MultipleObjectsReturned</tt><a class="headerlink" href="#pinax.apps.basic_profiles.models.Profile.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pinax.apps.basic_profiles.models.Profile.get_absolute_url">
+<tt class="descclassname">Profile.</tt><tt class="descname">get_absolute_url</tt><big>(</big><em>*moreargs</em>, <em>**morekwargs</em><big>)</big><a class="headerlink" href="#pinax.apps.basic_profiles.models.Profile.get_absolute_url" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="pinax.apps.basic_profiles.models.Profile.user">
+<tt class="descclassname">Profile.</tt><tt class="descname">user</tt><a class="headerlink" href="#pinax.apps.basic_profiles.models.Profile.user" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="pinax.apps.basic_profiles.models.create_profile">
+<tt class="descclassname">pinax.apps.basic_profiles.models.</tt><tt class="descname">create_profile</tt><big>(</big><em>sender</em>, <em>instance=None</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#pinax.apps.basic_profiles.models.create_profile" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-pinax.apps.basic_profiles.templatetags.basic_profile_tags">
+<h3><tt class="docutils literal"><span class="pre">pinax.apps.basic_profiles.templatetags.basic_profile_tags</span></tt><a class="headerlink" href="#module-pinax.apps.basic_profiles.templatetags.basic_profile_tags" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="pinax.apps.basic_profiles.templatetags.basic_profile_tags.clear_search_url">
+<tt class="descclassname">pinax.apps.basic_profiles.templatetags.basic_profile_tags.</tt><tt class="descname">clear_search_url</tt><big>(</big><em>request</em><big>)</big><a class="headerlink" href="#pinax.apps.basic_profiles.templatetags.basic_profile_tags.clear_search_url" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="pinax.apps.basic_profiles.templatetags.basic_profile_tags.show_profile">
+<tt class="descclassname">pinax.apps.basic_profiles.templatetags.basic_profile_tags.</tt><tt class="descname">show_profile</tt><big>(</big><em>user</em><big>)</big><a class="headerlink" href="#pinax.apps.basic_profiles.templatetags.basic_profile_tags.show_profile" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-pinax.apps.basic_profiles.views">
+<h3><tt class="docutils literal"><span class="pre">pinax.apps.basic_profiles.views</span></tt><a class="headerlink" href="#module-pinax.apps.basic_profiles.views" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="pinax.apps.basic_profiles.views.profile">
+<tt class="descclassname">pinax.apps.basic_profiles.views.</tt><tt class="descname">profile</tt><big>(</big><em>request</em>, <em>username</em>, <em>template_name='basic_profiles/profile.html'</em><big>)</big><a class="headerlink" href="#pinax.apps.basic_profiles.views.profile" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="pinax.apps.basic_profiles.views.profile_edit">
+<tt class="descclassname">pinax.apps.basic_profiles.views.</tt><tt class="descname">profile_edit</tt><big>(</big><em>request</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#pinax.apps.basic_profiles.views.profile_edit" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="pinax.apps.basic_profiles.views.profiles">
+<tt class="descclassname">pinax.apps.basic_profiles.views.</tt><tt class="descname">profiles</tt><big>(</big><em>request</em>, <em>template_name='basic_profiles/profiles.html'</em><big>)</big><a class="headerlink" href="#pinax.apps.basic_profiles.views.profiles" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="#">Reference</a><ul>
+<li><a class="reference external" href="#named-urls">Named Urls</a><ul>
+<li><a class="reference external" href="#profile-username-autocomplete">profile_username_autocomplete</a></li>
+<li><a class="reference external" href="#profile-list">profile_list</a></li>
+<li><a class="reference external" href="#profile-detail">profile_detail</a></li>
+<li><a class="reference external" href="#profile-edit">profile_edit</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#templates">Templates</a><ul>
+<li><a class="reference external" href="#profiles-html">profiles.html</a></li>
+<li><a class="reference external" href="#profile-html">profile.html</a></li>
+<li><a class="reference external" href="#profile-edit-html">profile_edit.html</a></li>
+<li><a class="reference external" href="#profile-edit-facebox-html">profile_edit_facebox.html</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#modules">Modules</a><ul>
+<li><a class="reference external" href="#module-pinax.apps.basic_profiles.admin"><tt class="docutils literal"><span class="pre">pinax.apps.basic_profiles.admin</span></tt></a></li>
+<li><a class="reference external" href="#module-pinax.apps.basic_profiles.forms"><tt class="docutils literal"><span class="pre">pinax.apps.basic_profiles.forms</span></tt></a></li>
+<li><a class="reference external" href="#module-pinax.apps.basic_profiles.management.commands.create_profiles_for_users"><tt class="docutils literal"><span class="pre">pinax.apps.basic_profiles.management.commands.create_profiles_for_users</span></tt></a></li>
+<li><a class="reference external" href="#module-pinax.apps.basic_profiles.models"><tt class="docutils literal"><span class="pre">pinax.apps.basic_profiles.models</span></tt></a></li>
+<li><a class="reference external" href="#module-pinax.apps.basic_profiles.templatetags.basic_profile_tags"><tt class="docutils literal"><span class="pre">pinax.apps.basic_profiles.templatetags.basic_profile_tags</span></tt></a></li>
+<li><a class="reference external" href="#module-pinax.apps.basic_profiles.views"><tt class="docutils literal"><span class="pre">pinax.apps.basic_profiles.views</span></tt></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="gettingstarted.html"
+                                  title="previous chapter">Getting started</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="../bbauth/index.html"
+                                  title="next chapter">bbauth</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/apps/basic_profiles/reference.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="../../search.html" method="get">
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../bbauth/index.html" title="bbauth"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="gettingstarted.html" title="Getting started"
+             >previous</a> |</li>
+        <li><a href="../../index.html">Pinax v0.9a1 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Pinax Apps</a> &raquo;</li>
+          <li><a href="index.html" >basic_profiles</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2010, James Tauber and Pinax Team.
+      Last updated on Jun 06, 2010.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.7.
+    </div>
+  </body>
+</html>

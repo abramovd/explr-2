@@ -1,0 +1,197 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Media Handling &mdash; Pinax v0.9a1 documentation</title>
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.9a1',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Pinax v0.9a1 documentation" href="index.html" />
+    <link rel="next" title="Groups Overview" href="groups.html" />
+    <link rel="prev" title="Deployment" href="deployment.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="groups.html" title="Groups Overview"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="deployment.html" title="Deployment"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Pinax v0.9a1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="media-handling">
+<span id="ref-media"></span><h1>Media Handling<a class="headerlink" href="#media-handling" title="Permalink to this headline">¶</a></h1>
+<p>This document explains how Pinax handles media files across external and
+internal applications and themes.</p>
+<p>Pinax places static media (css, js, and images such as backgrounds, icons and
+logos) in a separate directory from the normal Django media directory (uploads
+and other user generated content stored on the file server). This is done in
+order to allow for easy server optimization and improved security.</p>
+<div class="section" id="basic-media-handling">
+<h2>Basic media handling<a class="headerlink" href="#basic-media-handling" title="Permalink to this headline">¶</a></h2>
+<p>If you want to override default media files, place yours under
+<cite>&lt;project_name&gt;/media/...</cite> with the same path. For example:</p>
+<p>Original file:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">src</span><span class="o">/</span><span class="n">pinax</span><span class="o">/</span><span class="n">media</span><span class="o">/</span><span class="n">default</span><span class="o">/</span><span class="n">pinax</span><span class="o">/</span><span class="n">img</span><span class="o">/</span><span class="n">logo</span><span class="o">.</span><span class="n">png</span>
+</pre></div>
+</div>
+<p>Your file:</p>
+<div class="highlight-python"><pre>&lt;project_name&gt;/media/pinax/img/logo.png</pre>
+</div>
+</div>
+<div class="section" id="locations-of-media-files">
+<h2>Locations of media files<a class="headerlink" href="#locations-of-media-files" title="Permalink to this headline">¶</a></h2>
+<p>If you want to use Pinax&#8217; media handling with your own Django apps, please
+make sure you put the media files like JavaScript, cascading stylesheets (CSS)
+and images in the following directory structure:</p>
+<div class="highlight-python"><pre>&lt;app_name&gt;/media/&lt;app_name&gt;/(js|img|css)</pre>
+</div>
+<p>Doubling your <cite>&lt;app_name&gt;</cite> is required to prevent name collision of media files
+while deploying.</p>
+<p>Site specific media files goes to:</p>
+<div class="highlight-python"><pre>&lt;project_name&gt;/media/siteExample.js</pre>
+</div>
+<p>The special static file service view should be able to serve the media files in
+development.</p>
+</div>
+<div class="section" id="build-static-management-command">
+<span id="ref-media-build-static"></span><h2>build_static management command<a class="headerlink" href="#build-static-management-command" title="Permalink to this headline">¶</a></h2>
+<p>The build_static script collects the media files from Pinax and all the
+installed apps and arranges them under the
+<tt class="docutils literal"><span class="pre">&lt;project_name&gt;/site_media/static</span></tt> folder.</p>
+<p>The command:</p>
+<div class="highlight-python"><pre>&lt;project_name&gt;/python manage.py build_static</pre>
+</div>
+<p>will collect the media files from Pinax and all the apps and places them in
+the folder defined in the <tt class="docutils literal"><span class="pre">STATIC_ROOT</span></tt> setting.</p>
+<p>Please also refer to the help of the build_static management command by running:</p>
+<div class="highlight-python"><pre>&lt;project_name&gt;/python manage.py build_static --help</pre>
+</div>
+</div>
+<div class="section" id="resolve-static-management-command">
+<span id="ref-media-resolve-static"></span><h2>resolve_static management command<a class="headerlink" href="#resolve-static-management-command" title="Permalink to this headline">¶</a></h2>
+<p>To quickly resolve the absolute path of a media file on the filesystem,
+you can pass its expected path(s) to the <tt class="docutils literal"><span class="pre">resolve_static</span></tt> management
+command, e.g.:</p>
+<div class="highlight-python"><pre>$ ./manage resolve_media pinax/css/base.css
+/Users/Jannis/.virtualenvs/mysite/lib/python2.6/site-packages/Pinax-0.9alpha1-py2.6.egg/pinax/media/default/pinax/css/base.css</pre>
+</div>
+<p>If multiple locations are found which match the given path it will list all of
+them, sorted by its importance.</p>
+</div>
+<div class="section" id="serving-static-files-during-development">
+<span id="ref-media-devel"></span><h2>Serving static files during development<a class="headerlink" href="#serving-static-files-during-development" title="Permalink to this headline">¶</a></h2>
+<p>The <tt class="docutils literal"><span class="pre">staticfiles</span></tt> app provides the static file serving view to
+handle the app and theme media as well as other media files found in the
+<tt class="docutils literal"><span class="pre">MEDIA_ROOT</span></tt> directory. Make sure your projects&#8217; urls.py contains the
+following snippet below the rest of the url configuration:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">django.conf</span> <span class="kn">import</span> <span class="n">settings</span>
+<span class="k">if</span> <span class="n">settings</span><span class="o">.</span><span class="n">SERVE_MEDIA</span><span class="p">:</span>
+    <span class="n">urlpatterns</span> <span class="o">+=</span> <span class="n">patterns</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">,</span>
+        <span class="p">(</span><span class="s">r&quot;&quot;</span><span class="p">,</span> <span class="n">include</span><span class="p">(</span><span class="s">&quot;staticfiles.urls&quot;</span><span class="p">)),</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="#">Media Handling</a><ul>
+<li><a class="reference external" href="#basic-media-handling">Basic media handling</a></li>
+<li><a class="reference external" href="#locations-of-media-files">Locations of media files</a></li>
+<li><a class="reference external" href="#build-static-management-command">build_static management command</a></li>
+<li><a class="reference external" href="#resolve-static-management-command">resolve_static management command</a></li>
+<li><a class="reference external" href="#serving-static-files-during-development">Serving static files during development</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="deployment.html"
+                                  title="previous chapter">Deployment</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="groups.html"
+                                  title="next chapter">Groups Overview</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="_sources/media.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="search.html" method="get">
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="modindex.html" title="Global Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="groups.html" title="Groups Overview"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="deployment.html" title="Deployment"
+             >previous</a> |</li>
+        <li><a href="index.html">Pinax v0.9a1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2010, James Tauber and Pinax Team.
+      Last updated on Jun 06, 2010.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.7.
+    </div>
+  </body>
+</html>

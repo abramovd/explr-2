@@ -1,0 +1,1059 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Reference &mdash; Pinax v0.9a1 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.9a1',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="Pinax v0.9a1 documentation" href="../../index.html" />
+    <link rel="up" title="pinax.apps.account" href="index.html" />
+    <link rel="next" title="analytics" href="../analytics/index.html" />
+    <link rel="prev" title="Getting started" href="gettingstarted.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="../analytics/index.html" title="analytics"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="gettingstarted.html" title="Getting started"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">Pinax v0.9a1 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Pinax Apps</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U"><tt class="docutils literal docutils literal"><span class="pre">pinax.apps.account</span></tt></a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="reference">
+<span id="ref-account-reference"></span><h1>Reference<a class="headerlink" href="#reference" title="Permalink to this headline">¶</a></h1>
+<p>This document covers various components of <tt class="docutils literal"><span class="pre">pinax.apps.account</span></tt>.</p>
+<div class="section" id="settings">
+<h2>Settings<a class="headerlink" href="#settings" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="account-email-verification">
+<h3><tt class="docutils literal"><span class="pre">ACCOUNT_EMAIL_VERIFICATION</span></tt><a class="headerlink" href="#account-email-verification" title="Permalink to this headline">¶</a></h3>
+<p><strong>Required</strong>. This setting is used to control whether or not email verification
+is sent upon signup:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">ACCOUNT_EMAIL_VERIFICATION</span> <span class="o">=</span> <span class="bp">True</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="login-redirect-urlname">
+<h3><tt class="docutils literal"><span class="pre">LOGIN_REDIRECT_URLNAME</span></tt><a class="headerlink" href="#login-redirect-urlname" title="Permalink to this headline">¶</a></h3>
+<p>The name defined in the URLconf that maps to the url that the user will be
+redirected to after login success.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">LOGIN_REDIRECT_URLNAME</span> <span class="o">=</span> <span class="s">&quot;home&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="static-url">
+<h3><tt class="docutils literal"><span class="pre">STATIC_URL</span></tt><a class="headerlink" href="#static-url" title="Permalink to this headline">¶</a></h3>
+<p><strong>Required</strong>.  An URL for static files that need serving.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">STATIC_URL</span> <span class="o">=</span> <span class="s">&quot;/static/&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="account-open-signup">
+<h3><tt class="docutils literal"><span class="pre">ACCOUNT_OPEN_SIGNUP</span></tt><a class="headerlink" href="#account-open-signup" title="Permalink to this headline">¶</a></h3>
+<p><strong>Required</strong>.  Permit signing up for an account via OpenID.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">ACCOUNT_OPEN_SIGNUP</span> <span class="o">=</span> <span class="bp">True</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="named-urls">
+<h2>Named URLs<a class="headerlink" href="#named-urls" title="Permalink to this headline">¶</a></h2>
+<p>The named URLs in this app should enable the use of of the <tt class="docutils literal"><span class="pre">{%</span> <span class="pre">url</span> <span class="pre">%}</span></tt>
+template tag as well as <tt class="docutils literal"><span class="pre">reverse</span></tt> lookups in your project code without having
+to know the implementation details of this app.</p>
+<div class="section" id="acct-email">
+<h3>acct_email<a class="headerlink" href="#acct-email" title="Permalink to this headline">¶</a></h3>
+<p>This is the URL that on POST will process a number of actions related to an
+email address on an account and on GET will render a template that provides the
+email form in context.</p>
+</div>
+<div class="section" id="acct-signup">
+<h3>acct_signup<a class="headerlink" href="#acct-signup" title="Permalink to this headline">¶</a></h3>
+<p>This URL will process a form to create an account on POST and render a template
+with a signup form instance in context on GET requests.</p>
+</div>
+<div class="section" id="acct-login">
+<h3>acct_login<a class="headerlink" href="#acct-login" title="Permalink to this headline">¶</a></h3>
+<p>Process a login request from POST requests and render a template with a login
+form instance in context on GET requests.</p>
+</div>
+<div class="section" id="acct-login-openid">
+<h3>acct_login_openid<a class="headerlink" href="#acct-login-openid" title="Permalink to this headline">¶</a></h3>
+<p>Process the login POST request while associating submitted OpenID credentials
+to the account if they don&#8217;t already exist.</p>
+</div>
+<div class="section" id="acct-passwd">
+<h3>acct_passwd<a class="headerlink" href="#acct-passwd" title="Permalink to this headline">¶</a></h3>
+<p>Process a password change form POST or render a template with a password change
+form instance in context.</p>
+</div>
+<div class="section" id="acct-passwd-set">
+<h3>acct_passwd_set<a class="headerlink" href="#acct-passwd-set" title="Permalink to this headline">¶</a></h3>
+<p>Process a password set form POST or render a template with a password set form
+instance in context.</p>
+</div>
+<div class="section" id="acct-passwd-delete">
+<h3>acct_passwd_delete<a class="headerlink" href="#acct-passwd-delete" title="Permalink to this headline">¶</a></h3>
+<p>Process a password delete form POST or render a template with a password delete
+form instance in context.</p>
+</div>
+<div class="section" id="acct-passwd-delete-done">
+<h3>acct_passwd_delete_done<a class="headerlink" href="#acct-passwd-delete-done" title="Permalink to this headline">¶</a></h3>
+<p>Renders static template to inform user that the password delete is complete.</p>
+</div>
+<div class="section" id="acct-timezone-change">
+<h3>acct_timezone_change<a class="headerlink" href="#acct-timezone-change" title="Permalink to this headline">¶</a></h3>
+<p>Processes a timezone form POST request to change a user&#8217;s timezone or renders
+a template with the timezone change form instance in context.</p>
+</div>
+<div class="section" id="acct-other-services">
+<h3>acct_other_services<a class="headerlink" href="#acct-other-services" title="Permalink to this headline">¶</a></h3>
+<p>Adds credentials for Twitter on form POST, or renders a template with the form
+instance in context.</p>
+</div>
+<div class="section" id="acct-other-services-remove">
+<h3>acct_other_services_remove<a class="headerlink" href="#acct-other-services-remove" title="Permalink to this headline">¶</a></h3>
+<p>Removes Twitter account association with user.</p>
+</div>
+<div class="section" id="acct-language-change">
+<h3>acct_language_change<a class="headerlink" href="#acct-language-change" title="Permalink to this headline">¶</a></h3>
+<p>Processes a default language selection form POST request or renders a template
+with the language change form in context.</p>
+</div>
+<div class="section" id="acct-logout">
+<h3>acct_logout<a class="headerlink" href="#acct-logout" title="Permalink to this headline">¶</a></h3>
+<p>Calls the <tt class="docutils literal"><span class="pre">django.contrib.auth.views.logout</span></tt> view.</p>
+</div>
+<div class="section" id="acct-confirm-email">
+<h3>acct_confirm_email<a class="headerlink" href="#acct-confirm-email" title="Permalink to this headline">¶</a></h3>
+<p>Calls the <tt class="docutils literal"><span class="pre">emailconfirmation.views.confirm_email</span></tt> view.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">arguments:</th><td class="field-body">The token generated in the <tt class="docutils literal"><span class="pre">emailconfirmation</span></tt> app that matches <tt class="docutils literal"><span class="pre">(\w+)</span></tt>.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="acct-passwd-reset">
+<h3>acct_passwd_reset<a class="headerlink" href="#acct-passwd-reset" title="Permalink to this headline">¶</a></h3>
+<p>Process a password reset form POST request and redirect to <tt class="docutils literal"><span class="pre">acct_passwd_reset_done</span></tt>
+or render a template with the password reset form instance in context.</p>
+</div>
+<div class="section" id="acct-passwd-reset-done">
+<h3>acct_passwd_reset_done<a class="headerlink" href="#acct-passwd-reset-done" title="Permalink to this headline">¶</a></h3>
+<p>Renders a template confirming the password reset process is complete.</p>
+</div>
+<div class="section" id="acct-passwd-reset-key">
+<h3>acct_passwd_reset_key<a class="headerlink" href="#acct-passwd-reset-key" title="Permalink to this headline">¶</a></h3>
+<p>Process a password reset using user key form POST request or render a template
+with the form in context.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name" colspan="2">keyword arguments:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body">The UUID and Key for the reset reset request that matches <tt class="docutils literal"><span class="pre">(?P&lt;uidb36&gt;[0-9A-Za-z]+)-(?P&lt;key&gt;.+)</span></tt></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="signup-form-validate">
+<h3>signup_form_validate<a class="headerlink" href="#signup-form-validate" title="Permalink to this headline">¶</a></h3>
+<p>Calls the <tt class="docutils literal"><span class="pre">ajax_validation.views.validate</span></tt> view with the
+<tt class="docutils literal"><span class="pre">pinax.apps.account.forms.SignupForm</span></tt>.</p>
+</div>
+</div>
+<div class="section" id="templates">
+<h2>Templates<a class="headerlink" href="#templates" title="Permalink to this headline">¶</a></h2>
+<p>Templates should be placed in an <tt class="docutils literal"><span class="pre">account/</span></tt> folder at the root of one of your
+template search paths.</p>
+<div class="section" id="login-html">
+<h3>login.html<a class="headerlink" href="#login-html" title="Permalink to this headline">¶</a></h3>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">context:</th><td class="field-body"><tt class="docutils literal"><span class="pre">group</span></tt>, <tt class="docutils literal"><span class="pre">form</span></tt>, <tt class="docutils literal"><span class="pre">url_required</span></tt>, <tt class="docutils literal"><span class="pre">redirect_field_name</span></tt>, <tt class="docutils literal"><span class="pre">redirect_field_value</span></tt></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="signup-html">
+<h3>signup.html<a class="headerlink" href="#signup-html" title="Permalink to this headline">¶</a></h3>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">context:</th><td class="field-body"><tt class="docutils literal"><span class="pre">group</span></tt>, <tt class="docutils literal"><span class="pre">form</span></tt>, <tt class="docutils literal"><span class="pre">redirect_field_name</span></tt>, <tt class="docutils literal"><span class="pre">redirect_field_value</span></tt></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="verification-sent-html">
+<h3>verification_sent.html<a class="headerlink" href="#verification-sent-html" title="Permalink to this headline">¶</a></h3>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">context:</th><td class="field-body"><tt class="docutils literal"><span class="pre">group</span></tt>, <tt class="docutils literal"><span class="pre">email</span></tt>, <tt class="docutils literal"><span class="pre">success_url</span></tt></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="email-html">
+<h3>email.html<a class="headerlink" href="#email-html" title="Permalink to this headline">¶</a></h3>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">context:</th><td class="field-body"><tt class="docutils literal"><span class="pre">group</span></tt>, <tt class="docutils literal"><span class="pre">add_email_form</span></tt></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="password-change-html">
+<h3>password_change.html<a class="headerlink" href="#password-change-html" title="Permalink to this headline">¶</a></h3>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">context:</th><td class="field-body"><tt class="docutils literal"><span class="pre">group</span></tt>, <tt class="docutils literal"><span class="pre">password_change_form</span></tt></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="password-set-html">
+<h3>password_set.html<a class="headerlink" href="#password-set-html" title="Permalink to this headline">¶</a></h3>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">context:</th><td class="field-body"><tt class="docutils literal"><span class="pre">group</span></tt>, <tt class="docutils literal"><span class="pre">password_set_form</span></tt></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="password-delete-html">
+<h3>password_delete.html<a class="headerlink" href="#password-delete-html" title="Permalink to this headline">¶</a></h3>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">context:</th><td class="field-body"><tt class="docutils literal"><span class="pre">group</span></tt></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="password-delete-done-html">
+<h3>password_delete_done.html<a class="headerlink" href="#password-delete-done-html" title="Permalink to this headline">¶</a></h3>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">context:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="password-reset-html">
+<h3>password_reset.html<a class="headerlink" href="#password-reset-html" title="Permalink to this headline">¶</a></h3>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">context:</th><td class="field-body"><tt class="docutils literal"><span class="pre">group</span></tt>, <tt class="docutils literal"><span class="pre">password_reset_form</span></tt></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="password-reset-done-html">
+<h3>password_reset_done.html<a class="headerlink" href="#password-reset-done-html" title="Permalink to this headline">¶</a></h3>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">context:</th><td class="field-body"><tt class="docutils literal"><span class="pre">group</span></tt></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="password-reset-from-key-html">
+<h3>password_reset_from_key.html<a class="headerlink" href="#password-reset-from-key-html" title="Permalink to this headline">¶</a></h3>
+<p>If there is a valid token:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">context:</th><td class="field-body"><tt class="docutils literal"><span class="pre">group</span></tt>, <tt class="docutils literal"><span class="pre">form</span></tt></td>
+</tr>
+</tbody>
+</table>
+<p>otherwise:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">context:</th><td class="field-body"><tt class="docutils literal"><span class="pre">group</span></tt>, <tt class="docutils literal"><span class="pre">token_fail</span> <span class="pre">=</span> <span class="pre">True</span></tt></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="timezone-change-html">
+<h3>timezone_change.html<a class="headerlink" href="#timezone-change-html" title="Permalink to this headline">¶</a></h3>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">context:</th><td class="field-body"><tt class="docutils literal"><span class="pre">group</span></tt>, <tt class="docutils literal"><span class="pre">form</span></tt></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="language-change-html">
+<h3>language_change.html<a class="headerlink" href="#language-change-html" title="Permalink to this headline">¶</a></h3>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">context:</th><td class="field-body"><tt class="docutils literal"><span class="pre">group</span></tt>, <tt class="docutils literal"><span class="pre">form</span></tt></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="other-services-html">
+<h3>other_services.html<a class="headerlink" href="#other-services-html" title="Permalink to this headline">¶</a></h3>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">context:</th><td class="field-body"><tt class="docutils literal"><span class="pre">group</span></tt>, <tt class="docutils literal"><span class="pre">twitter_form</span></tt>, <tt class="docutils literal"><span class="pre">twitter_authorized</span></tt></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="modules">
+<h2>Modules<a class="headerlink" href="#modules" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-pinax.apps.account.admin">
+<h3><tt class="docutils literal"><span class="pre">pinax.apps.account.admin</span></tt><a class="headerlink" href="#module-pinax.apps.account.admin" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="pinax.apps.account.admin.PasswordResetAdmin">
+<em class="property">class </em><tt class="descclassname">pinax.apps.account.admin.</tt><tt class="descname">PasswordResetAdmin</tt><big>(</big><em>model</em>, <em>admin_site</em><big>)</big><a class="headerlink" href="#pinax.apps.account.admin.PasswordResetAdmin" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="pinax.apps.account.admin.PasswordResetAdmin.media">
+<tt class="descname">media</tt><a class="headerlink" href="#pinax.apps.account.admin.PasswordResetAdmin.media" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-pinax.apps.account.auth_backends">
+<h3><tt class="docutils literal"><span class="pre">pinax.apps.account.auth_backends</span></tt><a class="headerlink" href="#module-pinax.apps.account.auth_backends" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="pinax.apps.account.auth_backends.EmailModelBackend">
+<em class="property">class </em><tt class="descclassname">pinax.apps.account.auth_backends.</tt><tt class="descname">EmailModelBackend</tt><a class="headerlink" href="#pinax.apps.account.auth_backends.EmailModelBackend" title="Permalink to this definition">¶</a></dt>
+<dd><p>A backend that provides authentication through e-mail instead of username.</p>
+<dl class="method">
+<dt id="pinax.apps.account.auth_backends.EmailModelBackend.authenticate">
+<tt class="descname">authenticate</tt><big>(</big><em>email=None</em>, <em>password=None</em><big>)</big><a class="headerlink" href="#pinax.apps.account.auth_backends.EmailModelBackend.authenticate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-pinax.apps.account.context_processors">
+<h3><tt class="docutils literal"><span class="pre">pinax.apps.account.context_processors</span></tt><a class="headerlink" href="#module-pinax.apps.account.context_processors" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="pinax.apps.account.context_processors.account">
+<tt class="descclassname">pinax.apps.account.context_processors.</tt><tt class="descname">account</tt><big>(</big><em>request</em><big>)</big><a class="headerlink" href="#pinax.apps.account.context_processors.account" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-pinax.apps.account.forms">
+<h3><tt class="docutils literal"><span class="pre">pinax.apps.account.forms</span></tt><a class="headerlink" href="#module-pinax.apps.account.forms" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="pinax.apps.account.forms.AccountForm">
+<em class="property">class </em><tt class="descclassname">pinax.apps.account.forms.</tt><tt class="descname">AccountForm</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#pinax.apps.account.forms.AccountForm" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="pinax.apps.account.forms.AccountForm.media">
+<tt class="descname">media</tt><a class="headerlink" href="#pinax.apps.account.forms.AccountForm.media" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pinax.apps.account.forms.AddEmailForm">
+<em class="property">class </em><tt class="descclassname">pinax.apps.account.forms.</tt><tt class="descname">AddEmailForm</tt><big>(</big><em>user=None</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#pinax.apps.account.forms.AddEmailForm" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="pinax.apps.account.forms.AddEmailForm.clean_email">
+<tt class="descname">clean_email</tt><big>(</big><big>)</big><a class="headerlink" href="#pinax.apps.account.forms.AddEmailForm.clean_email" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="pinax.apps.account.forms.AddEmailForm.media">
+<tt class="descname">media</tt><a class="headerlink" href="#pinax.apps.account.forms.AddEmailForm.media" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pinax.apps.account.forms.AddEmailForm.save">
+<tt class="descname">save</tt><big>(</big><big>)</big><a class="headerlink" href="#pinax.apps.account.forms.AddEmailForm.save" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pinax.apps.account.forms.ChangeLanguageForm">
+<em class="property">class </em><tt class="descclassname">pinax.apps.account.forms.</tt><tt class="descname">ChangeLanguageForm</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#pinax.apps.account.forms.ChangeLanguageForm" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="pinax.apps.account.forms.ChangeLanguageForm.media">
+<tt class="descname">media</tt><a class="headerlink" href="#pinax.apps.account.forms.ChangeLanguageForm.media" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pinax.apps.account.forms.ChangeLanguageForm.save">
+<tt class="descname">save</tt><big>(</big><big>)</big><a class="headerlink" href="#pinax.apps.account.forms.ChangeLanguageForm.save" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pinax.apps.account.forms.ChangePasswordForm">
+<em class="property">class </em><tt class="descclassname">pinax.apps.account.forms.</tt><tt class="descname">ChangePasswordForm</tt><big>(</big><em>user=None</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#pinax.apps.account.forms.ChangePasswordForm" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="pinax.apps.account.forms.ChangePasswordForm.clean_oldpassword">
+<tt class="descname">clean_oldpassword</tt><big>(</big><big>)</big><a class="headerlink" href="#pinax.apps.account.forms.ChangePasswordForm.clean_oldpassword" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pinax.apps.account.forms.ChangePasswordForm.clean_password2">
+<tt class="descname">clean_password2</tt><big>(</big><big>)</big><a class="headerlink" href="#pinax.apps.account.forms.ChangePasswordForm.clean_password2" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="pinax.apps.account.forms.ChangePasswordForm.media">
+<tt class="descname">media</tt><a class="headerlink" href="#pinax.apps.account.forms.ChangePasswordForm.media" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pinax.apps.account.forms.ChangePasswordForm.save">
+<tt class="descname">save</tt><big>(</big><big>)</big><a class="headerlink" href="#pinax.apps.account.forms.ChangePasswordForm.save" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pinax.apps.account.forms.ChangeTimezoneForm">
+<em class="property">class </em><tt class="descclassname">pinax.apps.account.forms.</tt><tt class="descname">ChangeTimezoneForm</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#pinax.apps.account.forms.ChangeTimezoneForm" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="pinax.apps.account.forms.ChangeTimezoneForm.media">
+<tt class="descname">media</tt><a class="headerlink" href="#pinax.apps.account.forms.ChangeTimezoneForm.media" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pinax.apps.account.forms.ChangeTimezoneForm.save">
+<tt class="descname">save</tt><big>(</big><big>)</big><a class="headerlink" href="#pinax.apps.account.forms.ChangeTimezoneForm.save" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pinax.apps.account.forms.GroupForm">
+<em class="property">class </em><tt class="descclassname">pinax.apps.account.forms.</tt><tt class="descname">GroupForm</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#pinax.apps.account.forms.GroupForm" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="pinax.apps.account.forms.GroupForm.media">
+<tt class="descname">media</tt><a class="headerlink" href="#pinax.apps.account.forms.GroupForm.media" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pinax.apps.account.forms.LoginForm">
+<em class="property">class </em><tt class="descclassname">pinax.apps.account.forms.</tt><tt class="descname">LoginForm</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#pinax.apps.account.forms.LoginForm" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="pinax.apps.account.forms.LoginForm.clean">
+<tt class="descname">clean</tt><big>(</big><big>)</big><a class="headerlink" href="#pinax.apps.account.forms.LoginForm.clean" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pinax.apps.account.forms.LoginForm.login">
+<tt class="descname">login</tt><big>(</big><em>request</em><big>)</big><a class="headerlink" href="#pinax.apps.account.forms.LoginForm.login" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="pinax.apps.account.forms.LoginForm.media">
+<tt class="descname">media</tt><a class="headerlink" href="#pinax.apps.account.forms.LoginForm.media" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pinax.apps.account.forms.LoginForm.user_credentials">
+<tt class="descname">user_credentials</tt><big>(</big><big>)</big><a class="headerlink" href="#pinax.apps.account.forms.LoginForm.user_credentials" title="Permalink to this definition">¶</a></dt>
+<dd>Provides the credentials required to authenticate the user for
+login.</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pinax.apps.account.forms.OpenIDSignupForm">
+<em class="property">class </em><tt class="descclassname">pinax.apps.account.forms.</tt><tt class="descname">OpenIDSignupForm</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#pinax.apps.account.forms.OpenIDSignupForm" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="pinax.apps.account.forms.OpenIDSignupForm.media">
+<tt class="descname">media</tt><a class="headerlink" href="#pinax.apps.account.forms.OpenIDSignupForm.media" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pinax.apps.account.forms.ResetPasswordForm">
+<em class="property">class </em><tt class="descclassname">pinax.apps.account.forms.</tt><tt class="descname">ResetPasswordForm</tt><big>(</big><em>data=None</em>, <em>files=None</em>, <em>auto_id='id_%s'</em>, <em>prefix=None</em>, <em>initial=None</em>, <em>error_class=&lt;class 'django.forms.util.ErrorList'&gt;</em>, <em>label_suffix=':'</em>, <em>empty_permitted=False</em><big>)</big><a class="headerlink" href="#pinax.apps.account.forms.ResetPasswordForm" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="pinax.apps.account.forms.ResetPasswordForm.clean_email">
+<tt class="descname">clean_email</tt><big>(</big><big>)</big><a class="headerlink" href="#pinax.apps.account.forms.ResetPasswordForm.clean_email" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="pinax.apps.account.forms.ResetPasswordForm.media">
+<tt class="descname">media</tt><a class="headerlink" href="#pinax.apps.account.forms.ResetPasswordForm.media" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pinax.apps.account.forms.ResetPasswordForm.save">
+<tt class="descname">save</tt><big>(</big><em>**kwargs</em><big>)</big><a class="headerlink" href="#pinax.apps.account.forms.ResetPasswordForm.save" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pinax.apps.account.forms.ResetPasswordKeyForm">
+<em class="property">class </em><tt class="descclassname">pinax.apps.account.forms.</tt><tt class="descname">ResetPasswordKeyForm</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#pinax.apps.account.forms.ResetPasswordKeyForm" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="pinax.apps.account.forms.ResetPasswordKeyForm.clean_password2">
+<tt class="descname">clean_password2</tt><big>(</big><big>)</big><a class="headerlink" href="#pinax.apps.account.forms.ResetPasswordKeyForm.clean_password2" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="pinax.apps.account.forms.ResetPasswordKeyForm.media">
+<tt class="descname">media</tt><a class="headerlink" href="#pinax.apps.account.forms.ResetPasswordKeyForm.media" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pinax.apps.account.forms.ResetPasswordKeyForm.save">
+<tt class="descname">save</tt><big>(</big><big>)</big><a class="headerlink" href="#pinax.apps.account.forms.ResetPasswordKeyForm.save" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pinax.apps.account.forms.SetPasswordForm">
+<em class="property">class </em><tt class="descclassname">pinax.apps.account.forms.</tt><tt class="descname">SetPasswordForm</tt><big>(</big><em>user=None</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#pinax.apps.account.forms.SetPasswordForm" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="pinax.apps.account.forms.SetPasswordForm.clean_password2">
+<tt class="descname">clean_password2</tt><big>(</big><big>)</big><a class="headerlink" href="#pinax.apps.account.forms.SetPasswordForm.clean_password2" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="pinax.apps.account.forms.SetPasswordForm.media">
+<tt class="descname">media</tt><a class="headerlink" href="#pinax.apps.account.forms.SetPasswordForm.media" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pinax.apps.account.forms.SetPasswordForm.save">
+<tt class="descname">save</tt><big>(</big><big>)</big><a class="headerlink" href="#pinax.apps.account.forms.SetPasswordForm.save" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pinax.apps.account.forms.SignupForm">
+<em class="property">class </em><tt class="descclassname">pinax.apps.account.forms.</tt><tt class="descname">SignupForm</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#pinax.apps.account.forms.SignupForm" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="pinax.apps.account.forms.SignupForm.after_signup">
+<tt class="descname">after_signup</tt><big>(</big><em>user</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#pinax.apps.account.forms.SignupForm.after_signup" title="Permalink to this definition">¶</a></dt>
+<dd>An extension point for subclasses.</dd></dl>
+
+<dl class="method">
+<dt id="pinax.apps.account.forms.SignupForm.clean">
+<tt class="descname">clean</tt><big>(</big><big>)</big><a class="headerlink" href="#pinax.apps.account.forms.SignupForm.clean" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pinax.apps.account.forms.SignupForm.clean_email">
+<tt class="descname">clean_email</tt><big>(</big><big>)</big><a class="headerlink" href="#pinax.apps.account.forms.SignupForm.clean_email" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pinax.apps.account.forms.SignupForm.clean_username">
+<tt class="descname">clean_username</tt><big>(</big><big>)</big><a class="headerlink" href="#pinax.apps.account.forms.SignupForm.clean_username" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pinax.apps.account.forms.SignupForm.create_user">
+<tt class="descname">create_user</tt><big>(</big><em>username=None</em>, <em>commit=True</em><big>)</big><a class="headerlink" href="#pinax.apps.account.forms.SignupForm.create_user" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pinax.apps.account.forms.SignupForm.login">
+<tt class="descname">login</tt><big>(</big><em>request</em>, <em>user</em><big>)</big><a class="headerlink" href="#pinax.apps.account.forms.SignupForm.login" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="pinax.apps.account.forms.SignupForm.media">
+<tt class="descname">media</tt><a class="headerlink" href="#pinax.apps.account.forms.SignupForm.media" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pinax.apps.account.forms.SignupForm.save">
+<tt class="descname">save</tt><big>(</big><em>request=None</em><big>)</big><a class="headerlink" href="#pinax.apps.account.forms.SignupForm.save" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pinax.apps.account.forms.TwitterForm">
+<em class="property">class </em><tt class="descclassname">pinax.apps.account.forms.</tt><tt class="descname">TwitterForm</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#pinax.apps.account.forms.TwitterForm" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="pinax.apps.account.forms.TwitterForm.media">
+<tt class="descname">media</tt><a class="headerlink" href="#pinax.apps.account.forms.TwitterForm.media" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pinax.apps.account.forms.TwitterForm.save">
+<tt class="descname">save</tt><big>(</big><big>)</big><a class="headerlink" href="#pinax.apps.account.forms.TwitterForm.save" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pinax.apps.account.forms.UserForm">
+<em class="property">class </em><tt class="descclassname">pinax.apps.account.forms.</tt><tt class="descname">UserForm</tt><big>(</big><em>user=None</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#pinax.apps.account.forms.UserForm" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="pinax.apps.account.forms.UserForm.media">
+<tt class="descname">media</tt><a class="headerlink" href="#pinax.apps.account.forms.UserForm.media" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-pinax.apps.account.middleware">
+<h3><tt class="docutils literal"><span class="pre">pinax.apps.account.middleware</span></tt><a class="headerlink" href="#module-pinax.apps.account.middleware" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="pinax.apps.account.middleware.AuthenticatedMiddleware">
+<em class="property">class </em><tt class="descclassname">pinax.apps.account.middleware.</tt><tt class="descname">AuthenticatedMiddleware</tt><big>(</big><em>login_url=None</em>, <em>redirect_field_name='next'</em><big>)</big><a class="headerlink" href="#pinax.apps.account.middleware.AuthenticatedMiddleware" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="pinax.apps.account.middleware.AuthenticatedMiddleware.process_request">
+<tt class="descname">process_request</tt><big>(</big><em>request</em><big>)</big><a class="headerlink" href="#pinax.apps.account.middleware.AuthenticatedMiddleware.process_request" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pinax.apps.account.middleware.LocaleMiddleware">
+<em class="property">class </em><tt class="descclassname">pinax.apps.account.middleware.</tt><tt class="descname">LocaleMiddleware</tt><a class="headerlink" href="#pinax.apps.account.middleware.LocaleMiddleware" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is a very simple middleware that parses a request
+and decides what translation object to install in the current
+thread context depending on the user&#8217;s account. This allows pages
+to be dynamically translated to the language the user desires
+(if the language is available, of course).</p>
+<dl class="method">
+<dt id="pinax.apps.account.middleware.LocaleMiddleware.get_language_for_user">
+<tt class="descname">get_language_for_user</tt><big>(</big><em>request</em><big>)</big><a class="headerlink" href="#pinax.apps.account.middleware.LocaleMiddleware.get_language_for_user" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pinax.apps.account.middleware.LocaleMiddleware.process_request">
+<tt class="descname">process_request</tt><big>(</big><em>request</em><big>)</big><a class="headerlink" href="#pinax.apps.account.middleware.LocaleMiddleware.process_request" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pinax.apps.account.middleware.LocaleMiddleware.process_response">
+<tt class="descname">process_response</tt><big>(</big><em>request</em>, <em>response</em><big>)</big><a class="headerlink" href="#pinax.apps.account.middleware.LocaleMiddleware.process_response" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-pinax.apps.account.models">
+<h3><tt class="docutils literal"><span class="pre">pinax.apps.account.models</span></tt><a class="headerlink" href="#module-pinax.apps.account.models" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="pinax.apps.account.models.Account">
+<em class="property">class </em><tt class="descclassname">pinax.apps.account.models.</tt><tt class="descname">Account</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#pinax.apps.account.models.Account" title="Permalink to this definition">¶</a></dt>
+<dd><p>Account(id, user_id, timezone, language)</p>
+<dl class="exception">
+<dt id="pinax.apps.account.models.Account.DoesNotExist">
+<em class="property">exception </em><tt class="descname">DoesNotExist</tt><a class="headerlink" href="#pinax.apps.account.models.Account.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="exception">
+<dt id="pinax.apps.account.models.Account.MultipleObjectsReturned">
+<em class="property">exception </em><tt class="descclassname">Account.</tt><tt class="descname">MultipleObjectsReturned</tt><a class="headerlink" href="#pinax.apps.account.models.Account.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pinax.apps.account.models.Account.get_language_display">
+<tt class="descclassname">Account.</tt><tt class="descname">get_language_display</tt><big>(</big><em>*moreargs</em>, <em>**morekwargs</em><big>)</big><a class="headerlink" href="#pinax.apps.account.models.Account.get_language_display" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pinax.apps.account.models.Account.get_timezone_display">
+<tt class="descclassname">Account.</tt><tt class="descname">get_timezone_display</tt><big>(</big><em>*moreargs</em>, <em>**morekwargs</em><big>)</big><a class="headerlink" href="#pinax.apps.account.models.Account.get_timezone_display" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="pinax.apps.account.models.Account.user">
+<tt class="descclassname">Account.</tt><tt class="descname">user</tt><a class="headerlink" href="#pinax.apps.account.models.Account.user" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pinax.apps.account.models.AnonymousAccount">
+<em class="property">class </em><tt class="descclassname">pinax.apps.account.models.</tt><tt class="descname">AnonymousAccount</tt><big>(</big><em>request=None</em><big>)</big><a class="headerlink" href="#pinax.apps.account.models.AnonymousAccount" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="pinax.apps.account.models.OtherServiceInfo">
+<em class="property">class </em><tt class="descclassname">pinax.apps.account.models.</tt><tt class="descname">OtherServiceInfo</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#pinax.apps.account.models.OtherServiceInfo" title="Permalink to this definition">¶</a></dt>
+<dd><p>OtherServiceInfo(id, user_id, key, value)</p>
+<dl class="exception">
+<dt id="pinax.apps.account.models.OtherServiceInfo.DoesNotExist">
+<em class="property">exception </em><tt class="descname">DoesNotExist</tt><a class="headerlink" href="#pinax.apps.account.models.OtherServiceInfo.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="exception">
+<dt id="pinax.apps.account.models.OtherServiceInfo.MultipleObjectsReturned">
+<em class="property">exception </em><tt class="descclassname">OtherServiceInfo.</tt><tt class="descname">MultipleObjectsReturned</tt><a class="headerlink" href="#pinax.apps.account.models.OtherServiceInfo.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="pinax.apps.account.models.OtherServiceInfo.user">
+<tt class="descclassname">OtherServiceInfo.</tt><tt class="descname">user</tt><a class="headerlink" href="#pinax.apps.account.models.OtherServiceInfo.user" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pinax.apps.account.models.PasswordReset">
+<em class="property">class </em><tt class="descclassname">pinax.apps.account.models.</tt><tt class="descname">PasswordReset</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#pinax.apps.account.models.PasswordReset" title="Permalink to this definition">¶</a></dt>
+<dd><p>PasswordReset(id, user_id, temp_key, timestamp, reset)</p>
+<dl class="exception">
+<dt id="pinax.apps.account.models.PasswordReset.DoesNotExist">
+<em class="property">exception </em><tt class="descname">DoesNotExist</tt><a class="headerlink" href="#pinax.apps.account.models.PasswordReset.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="exception">
+<dt id="pinax.apps.account.models.PasswordReset.MultipleObjectsReturned">
+<em class="property">exception </em><tt class="descclassname">PasswordReset.</tt><tt class="descname">MultipleObjectsReturned</tt><a class="headerlink" href="#pinax.apps.account.models.PasswordReset.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pinax.apps.account.models.PasswordReset.get_next_by_timestamp">
+<tt class="descclassname">PasswordReset.</tt><tt class="descname">get_next_by_timestamp</tt><big>(</big><em>*moreargs</em>, <em>**morekwargs</em><big>)</big><a class="headerlink" href="#pinax.apps.account.models.PasswordReset.get_next_by_timestamp" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pinax.apps.account.models.PasswordReset.get_previous_by_timestamp">
+<tt class="descclassname">PasswordReset.</tt><tt class="descname">get_previous_by_timestamp</tt><big>(</big><em>*moreargs</em>, <em>**morekwargs</em><big>)</big><a class="headerlink" href="#pinax.apps.account.models.PasswordReset.get_previous_by_timestamp" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="pinax.apps.account.models.PasswordReset.user">
+<tt class="descclassname">PasswordReset.</tt><tt class="descname">user</tt><a class="headerlink" href="#pinax.apps.account.models.PasswordReset.user" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="pinax.apps.account.models.create_account">
+<tt class="descclassname">pinax.apps.account.models.</tt><tt class="descname">create_account</tt><big>(</big><em>sender</em>, <em>instance=None</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#pinax.apps.account.models.create_account" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="pinax.apps.account.models.mark_user_active">
+<tt class="descclassname">pinax.apps.account.models.</tt><tt class="descname">mark_user_active</tt><big>(</big><em>sender</em>, <em>instance=None</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#pinax.apps.account.models.mark_user_active" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="pinax.apps.account.models.other_service">
+<tt class="descclassname">pinax.apps.account.models.</tt><tt class="descname">other_service</tt><big>(</big><em>user</em>, <em>key</em>, <em>default_value=''</em><big>)</big><a class="headerlink" href="#pinax.apps.account.models.other_service" title="Permalink to this definition">¶</a></dt>
+<dd><p>retrieve the other service info for given key for the given user.</p>
+<p>return default_value (&#8220;&#8221;) if no value.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pinax.apps.account.models.superuser_email_address">
+<tt class="descclassname">pinax.apps.account.models.</tt><tt class="descname">superuser_email_address</tt><big>(</big><em>sender</em>, <em>instance=None</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#pinax.apps.account.models.superuser_email_address" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="pinax.apps.account.models.update_other_services">
+<tt class="descclassname">pinax.apps.account.models.</tt><tt class="descname">update_other_services</tt><big>(</big><em>user</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#pinax.apps.account.models.update_other_services" title="Permalink to this definition">¶</a></dt>
+<dd><p>update the other service info for the given user using the given keyword args.</p>
+<p>e.g. update_other_services(user, twitter_user=..., twitter_password=...)</p>
+</dd></dl>
+
+</div>
+<div class="section" id="pinax-apps-account-openid-consumer">
+<h3><tt class="docutils literal"><span class="pre">pinax.apps.account.openid_consumer</span></tt><a class="headerlink" href="#pinax-apps-account-openid-consumer" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="module-pinax.apps.account.signals">
+<h3><tt class="docutils literal"><span class="pre">pinax.apps.account.signals</span></tt><a class="headerlink" href="#module-pinax.apps.account.signals" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="module-pinax.apps.account.templatetags.account_tags">
+<h3><tt class="docutils literal"><span class="pre">pinax.apps.account.templatetags.account_tags</span></tt><a class="headerlink" href="#module-pinax.apps.account.templatetags.account_tags" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="pinax.apps.account.templatetags.account_tags.UserDisplayNode">
+<em class="property">class </em><tt class="descclassname">pinax.apps.account.templatetags.account_tags.</tt><tt class="descname">UserDisplayNode</tt><big>(</big><em>user</em>, <em>as_var=None</em><big>)</big><a class="headerlink" href="#pinax.apps.account.templatetags.account_tags.UserDisplayNode" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="pinax.apps.account.templatetags.account_tags.UserDisplayNode.render">
+<tt class="descname">render</tt><big>(</big><em>context</em><big>)</big><a class="headerlink" href="#pinax.apps.account.templatetags.account_tags.UserDisplayNode.render" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="pinax.apps.account.templatetags.account_tags.do_user_display">
+<tt class="descclassname">pinax.apps.account.templatetags.account_tags.</tt><tt class="descname">do_user_display</tt><big>(</big><em>parser</em>, <em>token</em><big>)</big><a class="headerlink" href="#pinax.apps.account.templatetags.account_tags.do_user_display" title="Permalink to this definition">¶</a></dt>
+<dd><p>Example usage:</p>
+<div class="highlight-python"><pre>{% user_display user %}</pre>
+</div>
+<p>or if you need to use in a {% blocktrans %}:</p>
+<div class="highlight-python"><pre>{% user_display user as user_display}
+{% blocktrans %}{{ user_display }} has sent you a gift.{% endblocktrans %}</pre>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="module-pinax.apps.account.templatetags.openid_tags">
+<h3><tt class="docutils literal"><span class="pre">pinax.apps.account.templatetags.openid_tags</span></tt><a class="headerlink" href="#module-pinax.apps.account.templatetags.openid_tags" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="pinax.apps.account.templatetags.openid_tags.IfOpenidNode">
+<em class="property">class </em><tt class="descclassname">pinax.apps.account.templatetags.openid_tags.</tt><tt class="descname">IfOpenidNode</tt><big>(</big><em>nodelist_true</em>, <em>nodelist_false</em><big>)</big><a class="headerlink" href="#pinax.apps.account.templatetags.openid_tags.IfOpenidNode" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="pinax.apps.account.templatetags.openid_tags.IfOpenidNode.render">
+<tt class="descname">render</tt><big>(</big><em>context</em><big>)</big><a class="headerlink" href="#pinax.apps.account.templatetags.openid_tags.IfOpenidNode.render" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="pinax.apps.account.templatetags.openid_tags.ifopenid">
+<tt class="descclassname">pinax.apps.account.templatetags.openid_tags.</tt><tt class="descname">ifopenid</tt><big>(</big><em>parser</em>, <em>token</em><big>)</big><a class="headerlink" href="#pinax.apps.account.templatetags.openid_tags.ifopenid" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-pinax.apps.account.templatetags.other_service_tags">
+<h3><tt class="docutils literal"><span class="pre">pinax.apps.account.templatetags.other_service_tags</span></tt><a class="headerlink" href="#module-pinax.apps.account.templatetags.other_service_tags" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="pinax.apps.account.templatetags.other_service_tags.OtherServiceNode">
+<em class="property">class </em><tt class="descclassname">pinax.apps.account.templatetags.other_service_tags.</tt><tt class="descname">OtherServiceNode</tt><big>(</big><em>user</em>, <em>key</em>, <em>asvar</em><big>)</big><a class="headerlink" href="#pinax.apps.account.templatetags.other_service_tags.OtherServiceNode" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="pinax.apps.account.templatetags.other_service_tags.OtherServiceNode.render">
+<tt class="descname">render</tt><big>(</big><em>context</em><big>)</big><a class="headerlink" href="#pinax.apps.account.templatetags.other_service_tags.OtherServiceNode.render" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="pinax.apps.account.templatetags.other_service_tags.other_service_tag">
+<tt class="descclassname">pinax.apps.account.templatetags.other_service_tags.</tt><tt class="descname">other_service_tag</tt><big>(</big><em>parser</em>, <em>token</em><big>)</big><a class="headerlink" href="#pinax.apps.account.templatetags.other_service_tags.other_service_tag" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-pinax.apps.account.utils">
+<h3><tt class="docutils literal"><span class="pre">pinax.apps.account.utils</span></tt><a class="headerlink" href="#module-pinax.apps.account.utils" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="pinax.apps.account.utils.get_default_redirect">
+<tt class="descclassname">pinax.apps.account.utils.</tt><tt class="descname">get_default_redirect</tt><big>(</big><em>request</em>, <em>redirect_field_name='next'</em>, <em>login_redirect_urlname=''</em>, <em>session_key_value='redirect_to'</em><big>)</big><a class="headerlink" href="#pinax.apps.account.utils.get_default_redirect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the URL to be used in login procedures by looking at different
+values in the following order:</p>
+<ul class="simple">
+<li>a REQUEST value, GET or POST, named &#8220;next&#8221; by default.</li>
+<li>LOGIN_REDIRECT_URL - the URL in the setting</li>
+<li>LOGIN_REDIRECT_URLNAME - the name of a URLconf entry in the settings</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="pinax.apps.account.utils.has_openid">
+<tt class="descclassname">pinax.apps.account.utils.</tt><tt class="descname">has_openid</tt><big>(</big><em>request</em><big>)</big><a class="headerlink" href="#pinax.apps.account.utils.has_openid" title="Permalink to this definition">¶</a></dt>
+<dd>Given a HttpRequest determine whether the OpenID on it is associated thus
+allowing caller to know whether OpenID is good to depend on.</dd></dl>
+
+<dl class="function">
+<dt id="pinax.apps.account.utils.perform_login">
+<tt class="descclassname">pinax.apps.account.utils.</tt><tt class="descname">perform_login</tt><big>(</big><em>request</em>, <em>user</em><big>)</big><a class="headerlink" href="#pinax.apps.account.utils.perform_login" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="pinax.apps.account.utils.user_display">
+<tt class="descclassname">pinax.apps.account.utils.</tt><tt class="descname">user_display</tt><big>(</big><em>user</em><big>)</big><a class="headerlink" href="#pinax.apps.account.utils.user_display" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="pinax-apps-account-views">
+<h3><tt class="docutils literal"><span class="pre">pinax.apps.account.views</span></tt><a class="headerlink" href="#pinax-apps-account-views" title="Permalink to this headline">¶</a></h3>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="#">Reference</a><ul>
+<li><a class="reference external" href="#settings">Settings</a><ul>
+<li><a class="reference external" href="#account-email-verification"><tt class="docutils literal"><span class="pre">ACCOUNT_EMAIL_VERIFICATION</span></tt></a></li>
+<li><a class="reference external" href="#login-redirect-urlname"><tt class="docutils literal"><span class="pre">LOGIN_REDIRECT_URLNAME</span></tt></a></li>
+<li><a class="reference external" href="#static-url"><tt class="docutils literal"><span class="pre">STATIC_URL</span></tt></a></li>
+<li><a class="reference external" href="#account-open-signup"><tt class="docutils literal"><span class="pre">ACCOUNT_OPEN_SIGNUP</span></tt></a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#named-urls">Named URLs</a><ul>
+<li><a class="reference external" href="#acct-email">acct_email</a></li>
+<li><a class="reference external" href="#acct-signup">acct_signup</a></li>
+<li><a class="reference external" href="#acct-login">acct_login</a></li>
+<li><a class="reference external" href="#acct-login-openid">acct_login_openid</a></li>
+<li><a class="reference external" href="#acct-passwd">acct_passwd</a></li>
+<li><a class="reference external" href="#acct-passwd-set">acct_passwd_set</a></li>
+<li><a class="reference external" href="#acct-passwd-delete">acct_passwd_delete</a></li>
+<li><a class="reference external" href="#acct-passwd-delete-done">acct_passwd_delete_done</a></li>
+<li><a class="reference external" href="#acct-timezone-change">acct_timezone_change</a></li>
+<li><a class="reference external" href="#acct-other-services">acct_other_services</a></li>
+<li><a class="reference external" href="#acct-other-services-remove">acct_other_services_remove</a></li>
+<li><a class="reference external" href="#acct-language-change">acct_language_change</a></li>
+<li><a class="reference external" href="#acct-logout">acct_logout</a></li>
+<li><a class="reference external" href="#acct-confirm-email">acct_confirm_email</a></li>
+<li><a class="reference external" href="#acct-passwd-reset">acct_passwd_reset</a></li>
+<li><a class="reference external" href="#acct-passwd-reset-done">acct_passwd_reset_done</a></li>
+<li><a class="reference external" href="#acct-passwd-reset-key">acct_passwd_reset_key</a></li>
+<li><a class="reference external" href="#signup-form-validate">signup_form_validate</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#templates">Templates</a><ul>
+<li><a class="reference external" href="#login-html">login.html</a></li>
+<li><a class="reference external" href="#signup-html">signup.html</a></li>
+<li><a class="reference external" href="#verification-sent-html">verification_sent.html</a></li>
+<li><a class="reference external" href="#email-html">email.html</a></li>
+<li><a class="reference external" href="#password-change-html">password_change.html</a></li>
+<li><a class="reference external" href="#password-set-html">password_set.html</a></li>
+<li><a class="reference external" href="#password-delete-html">password_delete.html</a></li>
+<li><a class="reference external" href="#password-delete-done-html">password_delete_done.html</a></li>
+<li><a class="reference external" href="#password-reset-html">password_reset.html</a></li>
+<li><a class="reference external" href="#password-reset-done-html">password_reset_done.html</a></li>
+<li><a class="reference external" href="#password-reset-from-key-html">password_reset_from_key.html</a></li>
+<li><a class="reference external" href="#timezone-change-html">timezone_change.html</a></li>
+<li><a class="reference external" href="#language-change-html">language_change.html</a></li>
+<li><a class="reference external" href="#other-services-html">other_services.html</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#modules">Modules</a><ul>
+<li><a class="reference external" href="#module-pinax.apps.account.admin"><tt class="docutils literal"><span class="pre">pinax.apps.account.admin</span></tt></a></li>
+<li><a class="reference external" href="#module-pinax.apps.account.auth_backends"><tt class="docutils literal"><span class="pre">pinax.apps.account.auth_backends</span></tt></a></li>
+<li><a class="reference external" href="#module-pinax.apps.account.context_processors"><tt class="docutils literal"><span class="pre">pinax.apps.account.context_processors</span></tt></a></li>
+<li><a class="reference external" href="#module-pinax.apps.account.forms"><tt class="docutils literal"><span class="pre">pinax.apps.account.forms</span></tt></a></li>
+<li><a class="reference external" href="#module-pinax.apps.account.middleware"><tt class="docutils literal"><span class="pre">pinax.apps.account.middleware</span></tt></a></li>
+<li><a class="reference external" href="#module-pinax.apps.account.models"><tt class="docutils literal"><span class="pre">pinax.apps.account.models</span></tt></a></li>
+<li><a class="reference external" href="#pinax-apps-account-openid-consumer"><tt class="docutils literal"><span class="pre">pinax.apps.account.openid_consumer</span></tt></a></li>
+<li><a class="reference external" href="#module-pinax.apps.account.signals"><tt class="docutils literal"><span class="pre">pinax.apps.account.signals</span></tt></a></li>
+<li><a class="reference external" href="#module-pinax.apps.account.templatetags.account_tags"><tt class="docutils literal"><span class="pre">pinax.apps.account.templatetags.account_tags</span></tt></a></li>
+<li><a class="reference external" href="#module-pinax.apps.account.templatetags.openid_tags"><tt class="docutils literal"><span class="pre">pinax.apps.account.templatetags.openid_tags</span></tt></a></li>
+<li><a class="reference external" href="#module-pinax.apps.account.templatetags.other_service_tags"><tt class="docutils literal"><span class="pre">pinax.apps.account.templatetags.other_service_tags</span></tt></a></li>
+<li><a class="reference external" href="#module-pinax.apps.account.utils"><tt class="docutils literal"><span class="pre">pinax.apps.account.utils</span></tt></a></li>
+<li><a class="reference external" href="#pinax-apps-account-views"><tt class="docutils literal"><span class="pre">pinax.apps.account.views</span></tt></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="gettingstarted.html"
+                                  title="previous chapter">Getting started</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="../analytics/index.html"
+                                  title="next chapter">analytics</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/apps/account/reference.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="../../search.html" method="get">
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../analytics/index.html" title="analytics"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="gettingstarted.html" title="Getting started"
+             >previous</a> |</li>
+        <li><a href="../../index.html">Pinax v0.9a1 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Pinax Apps</a> &raquo;</li>
+          <li><a href="index.html" ><tt class="docutils literal docutils literal"><span class="pre">pinax.apps.account</span></tt></a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2010, James Tauber and Pinax Team.
+      Last updated on Jun 06, 2010.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.7.
+    </div>
+  </body>
+</html>

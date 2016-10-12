@@ -1,0 +1,478 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Groups Overview &mdash; Pinax v0.9a1 documentation</title>
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.9a1',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Pinax v0.9a1 documentation" href="index.html" />
+    <link rel="next" title="Settings" href="settings.html" />
+    <link rel="prev" title="Media Handling" href="media.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="settings.html" title="Settings"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="media.html" title="Media Handling"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Pinax v0.9a1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="groups-overview">
+<h1>Groups Overview<a class="headerlink" href="#groups-overview" title="Permalink to this headline">¶</a></h1>
+<p>Groups in Pinax are simply container application/models that contain other
+application/models. For example, if we had something called &#8216;Project&#8217; it
+might have &#8216;Tasks&#8217; within it. The Pinax Groups system is designed to make this
+scenario easy to implement. It allows you to convert an application and model
+to become a container, henceforce called respectively a <em>Group App</em> and the
+model is called a &#8216;<em>Group Model</em>&#8216;. It also allows you to convert an
+application and associated models to become &#8216;<em>Group-Aware</em>&#8216;, which if done
+properly makes it capable of working inside a group or as a stand-alone
+application.</p>
+<p>To summarize, Pinax gives you the ability to:</p>
+<blockquote>
+<ul class="simple">
+<li>Create a <em>Group App</em> that can hold another application that is <em>Group-Aware</em>.</li>
+<li>Create a <em>Group-Aware</em> application that can either stand-alone or be held inside a <em>Group App</em>.</li>
+</ul>
+</blockquote>
+<p>Pinax comes with a number of built-in applications of both <em>Group Apps</em>
+and <em>Group-Aware</em> apps detailed in this page&#8217;s appendix, but its easy enough
+to create your own.</p>
+<div class="section" id="writing-your-own-group-aware-domain-objects">
+<h2>Writing your own group aware domain objects<a class="headerlink" href="#writing-your-own-group-aware-domain-objects" title="Permalink to this headline">¶</a></h2>
+<p>First lets make a Task application. Please keep in mind that our example, when
+complete, can be quicklybrought into any Pinax Group-App, not just projects:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">datetime</span>
+
+<span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">models</span>
+<span class="kn">from</span> <span class="nn">django.utils.translation</span> <span class="kn">import</span> <span class="n">ugettext_lazy</span> <span class="k">as</span> <span class="n">_</span>
+
+<span class="kn">from</span> <span class="nn">django.contrib.auth.models</span> <span class="kn">import</span> <span class="n">User</span>
+<span class="kn">from</span> <span class="nn">django.contrib.contenttypes</span> <span class="kn">import</span> <span class="n">generic</span>
+<span class="kn">from</span> <span class="nn">django.contrib.contenttypes.models</span> <span class="kn">import</span> <span class="n">ContentType</span>
+
+
+
+<span class="k">class</span> <span class="nc">Task</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    We don&#39;t use anything Pinax specific in this model. In fact, we</span>
+<span class="sd">    make a point with the *get_absolute_url* method of making it able</span>
+<span class="sd">    to handle being in a group or as a stand-alone Django application.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c"># Some sample fields below to show individual distinction of this model</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">140</span><span class="p">)</span>
+    <span class="n">description</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">TextField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">140</span><span class="p">)</span>
+    <span class="n">creator</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">User</span><span class="p">,</span>
+        <span class="n">verbose_name</span><span class="o">=</span><span class="n">_</span><span class="p">(</span><span class="s">&quot;creator&quot;</span><span class="p">),</span>
+        <span class="n">related_name</span><span class="o">=</span><span class="s">&quot;</span><span class="si">%(class)s</span><span class="s">_created&quot;</span>
+    <span class="p">)</span>
+    <span class="n">created</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">DateTimeField</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s">&quot;created&quot;</span><span class="p">),</span> <span class="n">default</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">)</span>
+
+    <span class="c"># The following three fields are required for being group aware.</span>
+    <span class="c"># We use a nullable generic foreign key to enable it to be optional</span>
+    <span class="c"># and we don&#39;t know what group model it will point to.</span>
+    <span class="n">object_id</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">IntegerField</span><span class="p">(</span><span class="n">null</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">content_type</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">ContentType</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">group</span> <span class="o">=</span> <span class="n">generic</span><span class="o">.</span><span class="n">GenericForeignKey</span><span class="p">(</span><span class="s">&quot;content_type&quot;</span><span class="p">,</span> <span class="s">&quot;object_id&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__unicode__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">title</span>
+
+    <span class="k">def</span> <span class="nf">get_absolute_url</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">group</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="n">kwargs</span> <span class="o">=</span> <span class="p">{</span><span class="s">&quot;id&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">}</span>
+        <span class="c"># We check for attachment of a group. This way if the Task object</span>
+        <span class="c"># is not attached to the group the application continues to function.</span>
+        <span class="k">if</span> <span class="n">group</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">group</span><span class="o">.</span><span class="n">content_bridge</span><span class="o">.</span><span class="n">reverse</span><span class="p">(</span><span class="s">&quot;task_detail&quot;</span><span class="p">,</span> <span class="n">group</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">reverse</span><span class="p">(</span><span class="s">&quot;task_detail&quot;</span><span class="p">,</span> <span class="n">kwargs</span><span class="o">=</span><span class="n">kwargs</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="section" id="forms">
+<h3>Forms<a class="headerlink" href="#forms" title="Permalink to this headline">¶</a></h3>
+<p>We don&#8217;t want to display the special object_id, content_type, and group fields
+to end clients and users. So we use Django forms to control what is displayed:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">django</span> <span class="kn">import</span> <span class="n">forms</span>
+<span class="kn">from</span> <span class="nn">django.utils.translation</span> <span class="kn">import</span> <span class="n">ugettext</span> <span class="k">as</span> <span class="n">_</span>
+
+<span class="kn">from</span> <span class="nn">pinax.apps.tasks.models</span> <span class="kn">import</span> <span class="n">Task</span>
+
+
+
+<span class="k">class</span> <span class="nc">TaskForm</span><span class="p">(</span><span class="n">forms</span><span class="o">.</span><span class="n">ModelForm</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Our Task form is just like the Task model in that it can work with</span>
+<span class="sd">    groups or independantly.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">group</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">user</span> <span class="o">=</span> <span class="n">user</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">group</span> <span class="o">=</span> <span class="n">group</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">TaskForm</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">commit</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">TaskForm</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">commit</span><span class="p">)</span>
+
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">Task</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;title&quot;</span><span class="p">,</span> <span class="s">&quot;description&quot;</span><span class="p">]</span> <span class="c"># only display 2 fields</span>
+
+    <span class="k">def</span> <span class="nf">clean</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">check_group_membership</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">cleaned_data</span>
+
+    <span class="k">def</span> <span class="nf">check_group_membership</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        We only let valid group members add new tasks. If the Task is</span>
+<span class="sd">        *not* attached to a group then it ignores this step.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">group</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">group</span>
+        <span class="k">if</span> <span class="n">group</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">group</span><span class="o">.</span><span class="n">user_is_member</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">forms</span><span class="o">.</span><span class="n">ValidationError</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s">&quot;You must be a member to create new Tasks&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="views">
+<h3>Views<a class="headerlink" href="#views" title="Permalink to this headline">¶</a></h3>
+<p>Just like the models and forms, we build our Task views in such a way that
+they can handle being within or without a group:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">django.core.exceptions</span> <span class="kn">import</span> <span class="n">ObjectDoesNotExist</span>
+<span class="kn">from</span> <span class="nn">django.http</span> <span class="kn">import</span> <span class="n">Http404</span>
+<span class="kn">from</span> <span class="nn">django.template</span> <span class="kn">import</span> <span class="n">RequestContext</span>
+<span class="kn">from</span> <span class="nn">django.shortcuts</span> <span class="kn">import</span> <span class="n">render_to_response</span>
+
+<span class="kn">from</span> <span class="nn">pinax.apps.tasks.models</span> <span class="kn">import</span> <span class="n">Task</span>
+
+
+
+<span class="k">def</span> <span class="nf">task_list</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">group_slug</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">bridge</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+
+    <span class="c"># if a bridge is supplied but does not exist in the database that</span>
+    <span class="c"># means someone is trying to look at a non-existant object.</span>
+    <span class="k">if</span> <span class="n">bridge</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">group</span> <span class="o">=</span> <span class="n">bridge</span><span class="o">.</span><span class="n">get_group</span><span class="p">(</span><span class="n">group_slug</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">ObjectDoesNotExist</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">Http404</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">group</span> <span class="o">=</span> <span class="bp">None</span>
+
+    <span class="c"># If we are in a group we fetch the Task list of content via a special</span>
+    <span class="c"># utility method. Otherwise we just use a standard ORM call.</span>
+    <span class="k">if</span> <span class="n">group</span><span class="p">:</span>
+        <span class="n">tasks</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">content_objects</span><span class="p">(</span><span class="n">Task</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">tasks</span> <span class="o">=</span> <span class="n">Task</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+
+    <span class="c"># Is the user a member of the parent group?</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">request</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">is_authenticated</span><span class="p">():</span>
+        <span class="n">is_member</span> <span class="o">=</span> <span class="bp">False</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">group</span><span class="p">:</span>
+            <span class="n">is_member</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">user_is_member</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">user</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">is_member</span> <span class="o">=</span> <span class="bp">True</span>
+
+    <span class="k">return</span> <span class="n">render_to_response</span><span class="p">(</span><span class="s">&quot;tasks/task_list.html&quot;</span><span class="p">,</span> <span class="p">{</span>
+        <span class="s">&quot;group&quot;</span><span class="p">:</span> <span class="n">group</span><span class="p">,</span>
+        <span class="s">&quot;blogs&quot;</span><span class="p">:</span> <span class="n">blogs</span><span class="p">,</span>
+        <span class="s">&quot;is_member&quot;</span><span class="p">:</span> <span class="n">is_member</span><span class="p">,</span>
+    <span class="p">},</span> <span class="n">context_instance</span><span class="o">=</span><span class="n">RequestContext</span><span class="p">(</span><span class="n">request</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>In many cases you might want to check if the authenticated user has membership
+in the group. To do this:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">if</span> <span class="ow">not</span> <span class="n">request</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">is_authenticated</span><span class="p">():</span>
+    <span class="n">is_member</span> <span class="o">=</span> <span class="bp">False</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">is_member</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">user_is_member</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">user</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="urls">
+<h3>URLs<a class="headerlink" href="#urls" title="Permalink to this headline">¶</a></h3>
+<p>The <tt class="docutils literal"><span class="pre">urls.py</span></tt> file of your app will not need anything special. Most of that
+is handled by Pinax. However, URL reversal needs to be group aware. We have
+some helpers to help you work with this easily.</p>
+<p>Let&#8217;s say you have the following code in <tt class="docutils literal"><span class="pre">tasks.urls.py</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">django.conf.urls.defaults</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">urlpatterns</span> <span class="o">=</span> <span class="n">patterns</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">,</span>
+    <span class="n">url</span><span class="p">(</span><span class="s">r&quot;^tasks/$&quot;</span><span class="p">,</span> <span class="s">&quot;pinax.apps.tasks.views.task_list&quot;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;task_list&quot;</span><span class="p">),</span>
+    <span class="n">url</span><span class="p">(</span><span class="s">r&quot;^tasks/(?P&lt;slug&gt;[-\w]+)/$&quot;</span><span class="p">,</span> <span class="s">&quot;pinax.apps.tasks.views.blog_detail&quot;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;task_detail&quot;</span><span class="p">),</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>To ensure URLs to <tt class="docutils literal"><span class="pre">task_list</span></tt> are correctly generated you will need to use
+<tt class="docutils literal"><span class="pre">reverse</span></tt> located on the <tt class="docutils literal"><span class="pre">ContentBridge</span></tt> object:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">some_view_with_redirect</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">bridge</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="o">...</span>
+    <span class="k">return</span> <span class="n">HttpResponseRedirect</span><span class="p">(</span><span class="n">bridge</span><span class="o">.</span><span class="n">reverse</span><span class="p">(</span><span class="s">&quot;blog_list&quot;</span><span class="p">,</span> <span class="n">group</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>The <tt class="docutils literal"><span class="pre">reverse</span></tt> method work almost identical to Django&#8217;s <tt class="docutils literal"><span class="pre">reverse</span></tt>. It is
+essentially a wrapper. To reverse the <tt class="docutils literal"><span class="pre">taskdetail</span></tt> URL:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">task</span> <span class="o">=</span> <span class="n">Task</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">pk</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">bridge</span><span class="o">.</span><span class="n">reverse</span><span class="p">(</span><span class="s">&quot;task_detail&quot;</span><span class="p">,</span> <span class="n">group</span><span class="p">,</span> <span class="n">kwargs</span><span class="o">=</span><span class="p">{</span><span class="s">&quot;slug&quot;</span><span class="p">:</span> <span class="n">task</span><span class="o">.</span><span class="n">slug</span><span class="p">})</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">You should be aware that <strong>only</strong> <tt class="docutils literal"><span class="pre">kwargs</span></tt> work with the bridge <tt class="docutils literal"><span class="pre">reverse</span></tt>.
+This is significant because URLs with <tt class="docutils literal"><span class="pre">args</span></tt> mapping will fail reversal.
+The reason behind this is because Django does not allow mixing of <tt class="docutils literal"><span class="pre">args</span></tt>
+and <tt class="docutils literal"><span class="pre">kwargs</span></tt> when performing URL reversal.</p>
+</div>
+<p>There are some cases when you don&#8217;t have easy access to the <tt class="docutils literal"><span class="pre">ContentBridge</span></tt>.
+You may only have access to a domain object instance. You can get access to
+the <tt class="docutils literal"><span class="pre">ContentBridge</span></tt> from the instance. For example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">task</span> <span class="o">=</span> <span class="n">Task</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">pk</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">task</span><span class="o">.</span><span class="n">content_bridge</span><span class="o">.</span><span class="n">reverse</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="url-reversal-in-templates">
+<h3>URL reversal in templates<a class="headerlink" href="#url-reversal-in-templates" title="Permalink to this headline">¶</a></h3>
+<p>In Django you may be familiar with the <tt class="docutils literal"><span class="pre">{%</span> <span class="pre">url</span> <span class="pre">%}</span></tt> templatetag. This is
+basically a wrapper around <tt class="docutils literal"><span class="pre">reverse</span></tt>. We provide a similar tag, but works
+with our <tt class="docutils literal"><span class="pre">ContentBridge.reverse</span></tt>. Here is how you might use it:</p>
+<div class="highlight-python"><pre>{% load group_tags %}
+
+&lt;a href="{% groupurl task_detail group slug=task.slug %}"&gt;{{ task.title }}&lt;/a&gt;</pre>
+</div>
+<p>The <tt class="docutils literal"><span class="pre">{%</span> <span class="pre">groupurl</span> <span class="pre">%}</span></tt> templatetag will fall back to normal Django URL reversal
+if the value of the passed in <tt class="docutils literal"><span class="pre">group</span></tt> is <tt class="xref docutils literal"><span class="pre">None</span></tt>. This enables the ability
+to work with no group association.</p>
+</div>
+</div>
+<div class="section" id="writing-your-own-group-app">
+<h2>Writing your own group app<a class="headerlink" href="#writing-your-own-group-app" title="Permalink to this headline">¶</a></h2>
+<p>We will continue with the Project/Task corollary. Our group application will
+be a Project (which contain tasks, members, and more):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">django.core.urlresolvers</span> <span class="kn">import</span> <span class="n">reverse</span>
+<span class="kn">from</span> <span class="nn">django.contrib.auth.models</span> <span class="kn">import</span> <span class="n">User</span>
+<span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">models</span>
+<span class="kn">from</span> <span class="nn">django.utils.translation</span> <span class="kn">import</span> <span class="n">ugettext_lazy</span> <span class="k">as</span> <span class="n">_</span>
+
+<span class="kn">from</span> <span class="nn">groups.base</span> <span class="kn">import</span> <span class="n">Group</span>
+
+
+
+<span class="k">class</span> <span class="nc">Project</span><span class="p">(</span><span class="n">Group</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Doesn&#39;t inherit the normal *models.Model*. Group comes with a title,</span>
+<span class="sd">    description, created, creator and some glue pieces and utility</span>
+<span class="sd">    methods built in for convenience.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">members</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ManyToManyField</span><span class="p">(</span><span class="n">User</span><span class="p">,</span>
+        <span class="n">related_name</span> <span class="o">=</span> <span class="s">&quot;projects&quot;</span><span class="p">,</span>
+        <span class="n">verbose_name</span><span class="o">=</span><span class="n">_</span><span class="p">(</span><span class="s">&quot;members&quot;</span><span class="p">)</span>
+    <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">get_absolute_url</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">reverse</span><span class="p">(</span><span class="s">&quot;group_detail&quot;</span><span class="p">,</span> <span class="n">kwargs</span><span class="o">=</span><span class="p">{</span>
+            <span class="s">&quot;group_slug&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">slug</span>
+        <span class="p">})</span>
+
+    <span class="k">def</span> <span class="nf">get_url_kwargs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s">&quot;group_slug&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">slug</span><span class="p">}</span>
+</pre></div>
+</div>
+<div class="section" id="adding-in-a-a-group-aware-project">
+<h3>Adding in a a group-aware project<a class="headerlink" href="#adding-in-a-a-group-aware-project" title="Permalink to this headline">¶</a></h3>
+<p>In order for a <tt class="docutils literal"><span class="pre">group-app</span></tt> to be able to display a <tt class="docutils literal"><span class="pre">group-aware</span></tt>
+application there needs to be a bridge. We take a sample projects.urls.py:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># Standard urlsconf import</span>
+<span class="kn">from</span> <span class="nn">django.conf.urls.defaults</span> <span class="kn">import</span> <span class="o">*</span>
+
+
+<span class="c"># Create your normal project url views</span>
+<span class="n">urlpatterns</span> <span class="o">=</span> <span class="n">patterns</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">,</span>
+    <span class="n">url</span><span class="p">(</span><span class="s">r&quot;^add_project$&quot;</span><span class="p">,</span> <span class="s">&quot;pinax.apps.projects.views.add&quot;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;project_add&quot;</span><span class="p">),</span>
+    <span class="n">url</span><span class="p">(</span><span class="s">r&quot;^your_projects/$&quot;</span><span class="p">,</span> <span class="s">&quot;pinax.apps.projects.views.your_project&quot;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;your_projects&quot;</span><span class="p">),</span>
+    <span class="n">url</span><span class="p">(</span><span class="s">r&quot;^(?P&lt;slug&gt;[-\w]+)$&quot;</span><span class="p">,</span> <span class="s">&quot;pinax.apps.projects.views.project_detail&quot;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;project_detail&quot;</span><span class="p">),</span>
+    <span class="n">url</span><span class="p">(</span><span class="s">r&quot;^$&quot;</span><span class="p">,</span> <span class="s">&quot;pinax.apps.projects.views.projects&quot;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;project_list&quot;</span><span class="p">),</span>
+    <span class="o">...</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>So we can render a URL such as <tt class="docutils literal"><span class="pre">/projects/&lt;my-project&gt;</span></tt>.</p>
+<p>And then we add in the following code underneath the urlpatterns definition:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># Pinax groups special object</span>
+<span class="kn">from</span> <span class="nn">groups.bridge</span> <span class="kn">import</span> <span class="n">ContentBridge</span>
+
+<span class="c"># Fetch the group-aware model</span>
+<span class="kn">from</span> <span class="nn">pinax.apps.tasks.models</span> <span class="kn">import</span> <span class="n">Task</span>
+
+
+
+<span class="c"># Create the bridge object</span>
+<span class="n">bridge</span> <span class="o">=</span> <span class="n">ContentBridge</span><span class="p">(</span><span class="n">Task</span><span class="p">,</span> <span class="s">&quot;tasks&quot;</span><span class="p">)</span>
+
+
+<span class="c"># Add in the bridged url</span>
+<span class="n">urlpatterns</span> <span class="o">+=</span> <span class="n">bridge</span><span class="o">.</span><span class="n">include_urls</span><span class="p">(</span><span class="s">&quot;task.urls&quot;</span><span class="p">,</span> <span class="s">r&quot;^projects/(?P&lt;group_slug&gt;[-\w]+)/tasks&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>And that lets us render a URL such as <tt class="docutils literal"><span class="pre">/projects/&lt;my-project&gt;/tasks</span></tt>.</p>
+</div>
+</div>
+<div class="section" id="appendix">
+<h2>Appendix<a class="headerlink" href="#appendix" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="appendix-a-group-apps-provided-by-pinax">
+<h3>Appendix A - Group Apps provided by Pinax<a class="headerlink" href="#appendix-a-group-apps-provided-by-pinax" title="Permalink to this headline">¶</a></h3>
+<p>Pinax comes bundled with two types of group-apps:</p>
+<blockquote>
+<ul class="simple">
+<li>tribes — used in social_project</li>
+<li>projects — used in code_project</li>
+</ul>
+</blockquote>
+</div>
+<div class="section" id="appendix-b-group-aware-apps-provided-by-pinax">
+<h3>Appendix B - Group Aware Apps provided by Pinax<a class="headerlink" href="#appendix-b-group-aware-apps-provided-by-pinax" title="Permalink to this headline">¶</a></h3>
+<p>Pinax includes several apps that are group aware:</p>
+<blockquote>
+<ul class="simple">
+<li>photos</li>
+<li>tasks</li>
+<li>topics</li>
+<li>wiki</li>
+</ul>
+</blockquote>
+</div>
+<div class="section" id="appendix-c-group-apps-available-on-pypi">
+<h3>Appendix C - Group Apps available on PyPI<a class="headerlink" href="#appendix-c-group-apps-available-on-pypi" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<ul class="simple">
+<li>pinax-dances (tutorial application)</li>
+</ul>
+</blockquote>
+</div>
+<div class="section" id="appendix-d-group-aware-apps-available-on-pypi">
+<h3>Appendix D - Group Aware Apps available on PyPI<a class="headerlink" href="#appendix-d-group-aware-apps-available-on-pypi" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<ul class="simple">
+<li>pinax-wall (tutorial application)</li>
+</ul>
+</blockquote>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="#">Groups Overview</a><ul>
+<li><a class="reference external" href="#writing-your-own-group-aware-domain-objects">Writing your own group aware domain objects</a><ul>
+<li><a class="reference external" href="#forms">Forms</a></li>
+<li><a class="reference external" href="#views">Views</a></li>
+<li><a class="reference external" href="#urls">URLs</a></li>
+<li><a class="reference external" href="#url-reversal-in-templates">URL reversal in templates</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#writing-your-own-group-app">Writing your own group app</a><ul>
+<li><a class="reference external" href="#adding-in-a-a-group-aware-project">Adding in a a group-aware project</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#appendix">Appendix</a><ul>
+<li><a class="reference external" href="#appendix-a-group-apps-provided-by-pinax">Appendix A - Group Apps provided by Pinax</a></li>
+<li><a class="reference external" href="#appendix-b-group-aware-apps-provided-by-pinax">Appendix B - Group Aware Apps provided by Pinax</a></li>
+<li><a class="reference external" href="#appendix-c-group-apps-available-on-pypi">Appendix C - Group Apps available on PyPI</a></li>
+<li><a class="reference external" href="#appendix-d-group-aware-apps-available-on-pypi">Appendix D - Group Aware Apps available on PyPI</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="media.html"
+                                  title="previous chapter">Media Handling</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="settings.html"
+                                  title="next chapter">Settings</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="_sources/groups.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="search.html" method="get">
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="modindex.html" title="Global Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="settings.html" title="Settings"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="media.html" title="Media Handling"
+             >previous</a> |</li>
+        <li><a href="index.html">Pinax v0.9a1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2010, James Tauber and Pinax Team.
+      Last updated on Jun 06, 2010.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.7.
+    </div>
+  </body>
+</html>

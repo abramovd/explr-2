@@ -1,0 +1,260 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Buildout &mdash; Pinax v0.9a1 documentation</title>
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.9a1',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Pinax v0.9a1 documentation" href="index.html" />
+    <link rel="next" title="Installing PIL" href="pil.html" />
+    <link rel="prev" title="Contributing to Pinax" href="contributing.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="pil.html" title="Installing PIL"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="contributing.html" title="Contributing to Pinax"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Pinax v0.9a1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="buildout">
+<span id="ref-buildout"></span><h1>Buildout<a class="headerlink" href="#buildout" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="intro">
+<h2>Intro<a class="headerlink" href="#intro" title="Permalink to this headline">¶</a></h2>
+<p>The de facto <a class="reference external" href="http://pinaxproject.com/">Pinax</a> build process has a couple manual steps but the
+bulk of the work is done by the <tt class="docutils literal"><span class="pre">pinax-boot.py</span></tt> script. The 0.7
+series introduced the use of <a class="reference external" href="http://pypi.python.org/pypi/pip">pip</a> which installs python parts into the
+<tt class="docutils literal"><span class="pre">site-packages</span></tt> directory, presuming a <a class="reference external" href="http://pypi.python.org/pypi/virtualenv">virtualenv</a> to avoid
+polluting the system python.</p>
+<p>Many folks like using <a class="reference external" href="http://pypi.python.org/pypi/zc.buildout">zc.buildout</a>, a generic tool frequently used to
+build projects, especially when there are a number of components
+involved. It came from the <a class="reference external" href="http://www.zope.org/">Zope</a> world and is heavily used by the <a class="reference external" href="http://plone.org/">Plone</a>
+community for building sites. Rather than installing libraries into
+<tt class="docutils literal"><span class="pre">site-packages</span></tt>, interpreters and running systems have their sys.path
+set to include all the eggs and libraries and parts as required by the
+buildout definitions.</p>
+<p>The <a class="reference external" href="http://www.djangoproject.com/">Django</a> community has typically not been big on using <a class="reference external" href="http://www.buildout.org/">buildout</a>,
+but recently Jacob Kaplan-Moss has written a <a class="reference external" href="http://jacobian.org/writing/django-apps-with-buildout/">couple</a> enthusiastic
+<a class="reference external" href="http://jacobian.org/writing/more-buildout-notes/">tutorials</a> on how to use it.</p>
+<p>Pinax has many many components so it seems a natural candidate for
+buildout.</p>
+</div>
+<div class="section" id="virtualenv-optional">
+<h2>Virtualenv (optional)<a class="headerlink" href="#virtualenv-optional" title="Permalink to this headline">¶</a></h2>
+<p>In the bad old days developers installed libraries into the system
+Python&#8217;s <tt class="docutils literal"><span class="pre">site-packages</span></tt>; your operating system packager may have
+done the same thing for their own needs. This of course leads to
+problems akin to &#8220;DLL Hell&#8221;, with different applications needing
+different libraries or versions.</p>
+<p>Virtualenv creates a private copy of your python with its own
+<tt class="docutils literal"><span class="pre">site-packages</span></tt> directory so you can install as a normal user and each
+project can have it&#8217;s own set of libraries.</p>
+<p>I tend to install a very minimal set of critical tools into my system
+python: setuptools and virtualenv.  All my application&#8217;s libraries are
+installed into the running code&#8217;s sys.path by buildout, so I don&#8217;t end
+up with conflicts.</p>
+<p>If, however, you do keep a bunch of libraries in your system
+<tt class="docutils literal"><span class="pre">site-packages</span></tt>, they will be visible to an application you create with
+buildout &#8211; buildout doesn&#8217;t isolate you from <tt class="docutils literal"><span class="pre">site-packages</span></tt> [<a class="reference external" href="http://svn.zope.org/zc.buildout/trunk/buildout.cfg?rev=97819&amp;view=rev">why
+not?</a>].  It&#8217;s safest to create a virtual environment:</p>
+<div class="highlight-python"><pre>virtualenv --no-site-packages .</pre>
+</div>
+<p>The dot indicates to create the virtualenv in this current directory,
+where our Pinax build will be done. Then activate it:</p>
+<div class="highlight-python"><pre>source bin/activate</pre>
+</div>
+<p>Now when you say &#8220;python&#8221; it should get your private python.</p>
+</div>
+<div class="section" id="building">
+<h2>Building<a class="headerlink" href="#building" title="Permalink to this headline">¶</a></h2>
+<p>Before you can start to bootstrap the buildout you need to get the necessary
+files by cloning the Git repository <a class="reference external" href="http://github.com/pinax/pinax-buildout/">pinax-buildout</a>:</p>
+<div class="highlight-python"><pre>$ git clone git://github.com/pinax/pinax-buildout.git</pre>
+</div>
+<p>Since it&#8217;s a good idea to create a new buildout for each Pinax based project
+don&#8217;t hesitate to rename the <tt class="docutils literal"><span class="pre">pinax-buildout</span></tt> directory to your liking.</p>
+<div class="section" id="bootstrap">
+<h3>Bootstrap<a class="headerlink" href="#bootstrap" title="Permalink to this headline">¶</a></h3>
+<p>If you created and activated a virtual python, or want to use the
+system one that&#8217;s on your PATH, bootstrap the buildout:</p>
+<div class="highlight-python"><pre>$ python bootstrap.py</pre>
+</div>
+<p>If you create a private python or need to use a specific one (e.g., a
+non-default python version) do something like:</p>
+<div class="highlight-python"><pre>$ /path/to/specific/python bootstrap.py</pre>
+</div>
+<p>This creates the bin/buildout command used next:</p>
+<div class="highlight-python"><pre>Creating directory '/path/to/pinax-buildout/bin'.
+Creating directory '/path/to/pinax-buildout/parts'.
+Creating directory '/path/to/pinax-buildout/eggs'.
+Creating directory '/path/to/pinax-buildout/develop-eggs'.
+Generated script '/path/to/pinax-buildout/bin/buildout'.</pre>
+</div>
+<p>You should only need to do this once, before you run your buildout.</p>
+</div>
+<div class="section" id="id1">
+<h3>Buildout<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<p>Now you can run the buildout. It uses the configuration <tt class="docutils literal"><span class="pre">buildout.cfg</span></tt>
+file to drive the build.  You can create layered buildout config files,
+like for the project base then variants for development and
+deployment, but we&#8217;ll only worry about a single configuration here.</p>
+<p>The <tt class="docutils literal"><span class="pre">buildout.cfg</span></tt> file specifies various parts and
+dependencies. Run the buildout with a bit of verbosity like:</p>
+<div class="highlight-python"><pre>$ bin/buildout -v
+
+Installing 'zc.buildout', 'setuptools'.
+...
+Generated script '/path/to/pinax-buildout/bin/ipython'.
+Generated script '/path/to/pinax-buildout/bin/pinax-admin'.
+Generated script '/path/to/pinax-buildout/bin/django-admin'.</pre>
+</div>
+<p>Since our <tt class="docutils literal"><span class="pre">buildout.cfg</span></tt> specifies a lot of pieces needed by Pinax,
+this can take a little time the first time its run. Subsequent times
+should take less time.</p>
+<p>I&#8217;ve specified parts in the buildout to build pieces that can be a bit
+troublesome, specifically <a class="reference external" href="http://www.pythonware.com/products/pil/">PIL</a> and the <a class="reference external" href="http://www.zlib.net/">zlib</a> that it depends on.</p>
+<p>When finished, the buildout creates a <tt class="docutils literal"><span class="pre">bin/django-admin</span></tt> command that&#8217;s
+analogous to Django&#8217;s <tt class="docutils literal"><span class="pre">django-admin.py</span></tt>.  It also creates a
+<tt class="docutils literal"><span class="pre">bin/pinax-admin</span></tt> script to call
+<a class="reference external" href="customization.html#customization-cloneproject"><em>clone_project</em></a> for example.</p>
+<p>You will need to re-rerun this if you modify the <tt class="docutils literal"><span class="pre">buildout.cfg</span></tt> &#8211;
+perhaps to add other components your application needs.</p>
+</div>
+</div>
+<div class="section" id="running">
+<h2>Running<a class="headerlink" href="#running" title="Permalink to this headline">¶</a></h2>
+<p>After your buildout completes, you can use the <tt class="docutils literal"><span class="pre">bin/django-admin</span></tt> commands
+as to initialize your database and run your site.</p>
+<div class="section" id="syncdb">
+<h3>Syncdb<a class="headerlink" href="#syncdb" title="Permalink to this headline">¶</a></h3>
+<p>At this point you should have the <tt class="docutils literal"><span class="pre">bin/pinax</span></tt> command and be able to
+create your database from the Pinax models:</p>
+<div class="highlight-python"><pre>$ bin/django-admin syncdb</pre>
+</div>
+</div>
+<div class="section" id="runserver">
+<h3>Runserver<a class="headerlink" href="#runserver" title="Permalink to this headline">¶</a></h3>
+<p>Then you can run your application:</p>
+<div class="highlight-python"><pre>$ bin/django-admin runserver</pre>
+</div>
+</div>
+<div class="section" id="python-interpreter">
+<h3>Python Interpreter<a class="headerlink" href="#python-interpreter" title="Permalink to this headline">¶</a></h3>
+<p>The buildout also creates a python interpreter that has all the eggs
+and libraries configured into it, which you can run like:</p>
+<div class="highlight-python"><pre>$ bin/python</pre>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="#">Buildout</a><ul>
+<li><a class="reference external" href="#intro">Intro</a></li>
+<li><a class="reference external" href="#virtualenv-optional">Virtualenv (optional)</a></li>
+<li><a class="reference external" href="#building">Building</a><ul>
+<li><a class="reference external" href="#bootstrap">Bootstrap</a></li>
+<li><a class="reference external" href="#id1">Buildout</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#running">Running</a><ul>
+<li><a class="reference external" href="#syncdb">Syncdb</a></li>
+<li><a class="reference external" href="#runserver">Runserver</a></li>
+<li><a class="reference external" href="#python-interpreter">Python Interpreter</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="contributing.html"
+                                  title="previous chapter">Contributing to Pinax</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="pil.html"
+                                  title="next chapter">Installing PIL</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="_sources/buildout.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="search.html" method="get">
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="modindex.html" title="Global Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="pil.html" title="Installing PIL"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="contributing.html" title="Contributing to Pinax"
+             >previous</a> |</li>
+        <li><a href="index.html">Pinax v0.9a1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2010, James Tauber and Pinax Team.
+      Last updated on Jun 06, 2010.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.7.
+    </div>
+  </body>
+</html>

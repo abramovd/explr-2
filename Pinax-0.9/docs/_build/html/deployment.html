@@ -1,0 +1,223 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Deployment &mdash; Pinax v0.9a1 documentation</title>
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.9a1',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Pinax v0.9a1 documentation" href="index.html" />
+    <link rel="next" title="Media Handling" href="media.html" />
+    <link rel="prev" title="Customization" href="customization.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="media.html" title="Media Handling"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="customization.html" title="Customization"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Pinax v0.9a1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="deployment">
+<span id="ref-deployment"></span><h1>Deployment<a class="headerlink" href="#deployment" title="Permalink to this headline">¶</a></h1>
+<p>In short:</p>
+<ul class="simple">
+<li>Create a <tt class="docutils literal"><span class="pre">local_settings.py</span></tt> alongside <tt class="docutils literal"><span class="pre">settings.py</span></tt> for your
+host-specific settings (like database connection, e-mail, etc).</li>
+<li>Configure mod_wsgi or mod_python.</li>
+<li>Set up <tt class="docutils literal"><span class="pre">cron</span></tt> job for mailer and asynchronous notifications.</li>
+</ul>
+<div class="section" id="using-mod-wsgi">
+<h2>Using mod_wsgi<a class="headerlink" href="#using-mod-wsgi" title="Permalink to this headline">¶</a></h2>
+<p>If you are using mod_wsgi, which we recommend, you will need to provide a WSGI
+script. All projects include a <tt class="docutils literal"><span class="pre">deploy/</span></tt> directory which contains this
+script named <tt class="docutils literal"><span class="pre">pinax.wsgi</span></tt>. You may modify this file as it best suits you.</p>
+<p>Here is a basic configuration for Apache (assuming you are using Python 2.5):</p>
+<div class="highlight-python"><pre>WSGIDaemonProcess mysite-production python-path=/path/to/virtualenvs/pinax-env/lib/python2.5/site-packages
+WSGIProcessGroup mysite-production
+
+WSGIScriptAlias / /path/to/project/deploy/pinax.wsgi
+&lt;Directory /path/to/project/deploy&gt;
+    Order deny,allow
+    Allow from all
+&lt;/Directory&gt;</pre>
+</div>
+<p>The above configuration will likely need to be modified before use. Most
+specifically make sure the <tt class="docutils literal"><span class="pre">python-path</span></tt> option points to the right Python
+version. We encourage you to read about <a class="reference external" href="http://code.google.com/p/modwsgi/wiki/ConfigurationDirectives#WSGIDaemonProcess">WSGIDaemonProcess</a> to learn more
+about what you can configure.</p>
+</div>
+<div class="section" id="using-mod-python">
+<h2>Using mod_python<a class="headerlink" href="#using-mod-python" title="Permalink to this headline">¶</a></h2>
+<p>While we highly recommend you use mod_wsgi you may need to use mod_python. In
+this case we have provided the correct hooks for you to use Pinax. Here is a
+sample Apache config that you can use:</p>
+<div class="highlight-python"><pre>&lt;Location "/"&gt;
+    SetHandler python-program
+    PythonHandler social_project.deploy.modpython
+    SetEnv DJANGO_SETTINGS_MODULE social_project.settings
+    PythonDebug On
+    PythonPath "['/path/to/pinax/projects'] + sys.path"
+&lt;/Location&gt;</pre>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">It is important to note that you should pay careful attention to the
+value of <tt class="docutils literal"><span class="pre">PythonHandler</span></tt> above. It is <em>not</em> using
+<tt class="docutils literal"><span class="pre">django.core.handlers.modpython</span></tt>. It is using a mod_python handler
+located in your project&#8217;s <tt class="docutils literal"><span class="pre">deploy/</span></tt> directory. The reason why we have
+our own mod_python handler is because we need to setup the Pinax
+environment otherwise you will see failing imports.</p>
+</div>
+</div>
+<div class="section" id="sending-mail-and-notices">
+<span id="ref-sending-mail-and-notices"></span><h2>Sending Mail and Notices<a class="headerlink" href="#sending-mail-and-notices" title="Permalink to this headline">¶</a></h2>
+<p>Both mail messages and (some) notifications are queued for asynchronous
+delivery. To actually deliver them you need to run:</p>
+<div class="highlight-python"><pre>python manage.py send_mail</pre>
+</div>
+<p>and:</p>
+<div class="highlight-python"><pre>python manage.py emit_notices</pre>
+</div>
+<p>on a frequent, regular basis.</p>
+<p>Because failed mail will be deferred, you need an additional, less
+frequent, run of:</p>
+<div class="highlight-python"><pre>python manage.py retry_deferred</pre>
+</div>
+<p>We recommend setting up some scripts to run these commands within your
+virtual environment. You can use the following shell script as the basis for
+each management command:</p>
+<div class="highlight-python"><pre>#!/bin/sh
+
+WORKON_HOME=/home/user/virtualenvs
+PROJECT_ROOT=/path/to/project
+
+# activate virtual environment
+. $WORKON_HOME/pinax-env/bin/activate
+
+cd $PROJECT_ROOT
+python manage.py send_mail &gt;&gt; $PROJECT_ROOT/logs/cron_mail.log 2&gt;&amp;1</pre>
+</div>
+<p>Let&#8217;s assume the scripts you create from above are stored in
+<tt class="docutils literal"><span class="pre">$PROJECT_ROOT/cron</span></tt>. You can now setup the cron job similar to:</p>
+<div class="highlight-python"><pre>* * * * * /path/to/project/cron/send_mail.sh
+* * * * * /path/to/project/cron/emit_notices.sh
+
+0,20,40 * * * * /path/to/project/cron/retry_deferred.sh</pre>
+</div>
+<p>This runs <tt class="docutils literal"><span class="pre">send_mail</span></tt> and <tt class="docutils literal"><span class="pre">emit_notices</span></tt> every minute and
+<tt class="docutils literal"><span class="pre">retry_deferred</span></tt> every 20 minutes.</p>
+</div>
+<div class="section" id="media-files">
+<h2>Media files<a class="headerlink" href="#media-files" title="Permalink to this headline">¶</a></h2>
+<p>Pinax makes it very easy to combine all your applications&#8217; media files into
+one single location (see <a class="reference external" href="media.html#ref-media"><em>Media Handling</em></a> for details). Serving them more or
+less comes down again to how you do it with Django itself.</p>
+<p>There is an example on how to serve those files with the development server in
+<a class="reference external" href="media.html#ref-media-devel"><em>Serving static files during development</em></a>.</p>
+<p>In a production environment you, too, have to merge those files before you can
+serve them. Regarding actually serving those files then, see <a class="reference external" href="http://docs.djangoproject.com/en/dev/howto/deployment/">Django&#8217;s
+deployment documentation</a> for details.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="#">Deployment</a><ul>
+<li><a class="reference external" href="#using-mod-wsgi">Using mod_wsgi</a></li>
+<li><a class="reference external" href="#using-mod-python">Using mod_python</a></li>
+<li><a class="reference external" href="#sending-mail-and-notices">Sending Mail and Notices</a></li>
+<li><a class="reference external" href="#media-files">Media files</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="customization.html"
+                                  title="previous chapter">Customization</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="media.html"
+                                  title="next chapter">Media Handling</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="_sources/deployment.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="search.html" method="get">
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="modindex.html" title="Global Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="media.html" title="Media Handling"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="customization.html" title="Customization"
+             >previous</a> |</li>
+        <li><a href="index.html">Pinax v0.9a1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2010, James Tauber and Pinax Team.
+      Last updated on Jun 06, 2010.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.7.
+    </div>
+  </body>
+</html>

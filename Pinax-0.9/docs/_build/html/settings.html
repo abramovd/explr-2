@@ -1,0 +1,551 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Settings &mdash; Pinax v0.9a1 documentation</title>
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.9a1',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Pinax v0.9a1 documentation" href="index.html" />
+    <link rel="next" title="Dependencies" href="dependencies.html" />
+    <link rel="prev" title="Groups Overview" href="groups.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="dependencies.html" title="Dependencies"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="groups.html" title="Groups Overview"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Pinax v0.9a1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="settings">
+<span id="ref-settings"></span><h1>Settings<a class="headerlink" href="#settings" title="Permalink to this headline">¶</a></h1>
+<p>Depending on what profile and which apps out of it you&#8217;re using with your
+Pinax project you have a collection of options for your <tt class="docutils literal"><span class="pre">settings.py</span></tt> at
+your disposal. This listing only includes those that are supported by the
+internal applications or are used in the sample project settings (excluding
+those that are already described by <a class="reference external" href="http://docs.djangoproject.com/en/dev/ref/settings/">Django&#8217;s settings reference</a>.  If you
+want to know the available settings for any of the external apps, please refer
+to its docoumentation.</p>
+<div class="section" id="account-open-signup">
+<span id="ref-settings-account-open-signup"></span><h2>ACCOUNT_OPEN_SIGNUP<a class="headerlink" href="#account-open-signup" title="Permalink to this headline">¶</a></h2>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Applications:</th><td class="field-body"><tt class="docutils literal"><span class="pre">pinax.apps.signup_codes</span></tt></td>
+</tr>
+</tbody>
+</table>
+<p>This setting lets you configure whether the site should allow new users to
+register accounts if they don&#8217;t provide any kind of signup code.</p>
+</div>
+<div class="section" id="bbauth-app-id">
+<span id="ref-settings-bbauth-app-id"></span><h2>BBAUTH_APP_ID<a class="headerlink" href="#bbauth-app-id" title="Permalink to this headline">¶</a></h2>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Applications:</th><td class="field-body"><tt class="docutils literal"><span class="pre">pinax.apps.bbauth</span></tt></td>
+</tr>
+</tbody>
+</table>
+<p>This setting is used to allow auth through <a class="reference external" href="http://developer.yahoo.com/auth/">Yahoo!&#8217;s Browser-Based Authentication service</a>.</p>
+</div>
+<div class="section" id="bbauth-shared-secret">
+<span id="ref-settings-bbauth-shared-secret"></span><h2>BBAUTH_SHARED_SECRET<a class="headerlink" href="#bbauth-shared-secret" title="Permalink to this headline">¶</a></h2>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Applications:</th><td class="field-body"><tt class="docutils literal"><span class="pre">pinax.apps.bbauth</span></tt></td>
+</tr>
+</tbody>
+</table>
+<p>This setting is used to allow auth through <a class="reference external" href="http://developer.yahoo.com/auth/">Yahoo!&#8217;s Browser-Based Authentication service</a>.</p>
+</div>
+<div class="section" id="behind-proxy">
+<span id="ref-settings-behind-proxy"></span><h2>BEHIND_PROXY<a class="headerlink" href="#behind-proxy" title="Permalink to this headline">¶</a></h2>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Applications:</th><td class="field-body"><tt class="docutils literal"><span class="pre">pinax.apps.blog</span></tt></td>
+</tr>
+</tbody>
+</table>
+<p>If your site is behind a proxy server, set this setting accordingly so that
+the users&#8217; real IP addresses are stored when they create blog posts. When
+activated the blog takes the user&#8217;s IP addresse from
+<tt class="docutils literal"><span class="pre">request.META['HTTP_X_FORWARDED_FOR']</span></tt> instead of
+<tt class="docutils literal"><span class="pre">request.META['REMOTE_ADDR']</span></tt>.</p>
+</div>
+<div class="section" id="combined-inbox-count-sources">
+<span id="ref-settings-combined-inbox-count-sources"></span><h2>COMBINED_INBOX_COUNT_SOURCES<a class="headerlink" href="#combined-inbox-count-sources" title="Permalink to this headline">¶</a></h2>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Applications:</th><td class="field-body"><tt class="docutils literal"><span class="pre">pinax.apps.misc</span></tt></td>
+</tr>
+</tbody>
+</table>
+<p>With this setting you can specify a list applications that write to the users
+inbox in order to get the current inbox count for the current user. In fact
+you don&#8217;t specify the application but a context processor function which you
+specify here. If you for example create a project based on the
+<tt class="docutils literal"><span class="pre">social_project</span></tt> template, the <tt class="docutils literal"><span class="pre">messages</span></tt>, <tt class="docutils literal"><span class="pre">notification</span></tt> and
+<tt class="docutils literal"><span class="pre">friends_app</span></tt> all provide information that affects the inbox count.</p>
+<p>Such a context processor should return a dictionary with one or more entries
+for the additional inbox count.</p>
+</div>
+<div class="section" id="email-confirmation-days">
+<span id="rst-settings-email-confirmation-days"></span><h2>EMAIL_CONFIRMATION_DAYS<a class="headerlink" href="#email-confirmation-days" title="Permalink to this headline">¶</a></h2>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Applications:</th><td class="field-body"><tt class="docutils literal"><span class="pre">emailnotification</span></tt> (<a class="reference external" href="http://github.com/jtauber/django-email-confirmation/">external</a>)</td>
+</tr>
+</tbody>
+</table>
+<p>This way you can configure the number of days, confirmation email should be
+valid. For further details please see the documentation of the application
+itself.</p>
+</div>
+<div class="section" id="feedutil-summary-len">
+<span id="ref-settings-feedutil-summary-len"></span><h2>FEEDUTIL_SUMMARY_LEN<a class="headerlink" href="#feedutil-summary-len" title="Permalink to this headline">¶</a></h2>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Applications:</th><td class="field-body"><tt class="docutils literal"><span class="pre">feedutil</span></tt> (<a class="reference external" href="http://code.google.com/p/django-feedutil/">external</a>)</td>
+</tr>
+<tr class="field"><th class="field-name">Default:</th><td class="field-body">150</td>
+</tr>
+</tbody>
+</table>
+<p>Number of characters used for summary-attributes in feeds.</p>
+</div>
+<div class="section" id="force-lowercase-tags">
+<h2>FORCE_LOWERCASE_TAGS<a class="headerlink" href="#force-lowercase-tags" title="Permalink to this headline">¶</a></h2>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Applications:</th><td class="field-body"><tt class="docutils literal"><span class="pre">tagging</span></tt> (<a class="reference external" href="http://code.google.com/p/django-tagging/">external</a>)</td>
+</tr>
+<tr class="field"><th class="field-name">Default:</th><td class="field-body"><tt class="xref docutils literal"><span class="pre">False</span></tt></td>
+</tr>
+</tbody>
+</table>
+<p>If set to <tt class="xref docutils literal"><span class="pre">True</span></tt> all tags will first be converted to lowercase before they
+are saved to the database.</p>
+</div>
+<div class="section" id="login-redirect-urlname">
+<span id="ref-settings-login-redirect-urlname"></span><h2>LOGIN_REDIRECT_URLNAME<a class="headerlink" href="#login-redirect-urlname" title="Permalink to this headline">¶</a></h2>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Applications:</th><td class="field-body"><tt class="docutils literal"><span class="pre">pinax.apps.account</span></tt></td>
+</tr>
+</tbody>
+</table>
+<p>This setting is used by <tt class="docutils literal"><span class="pre">pinax.apps.account</span></tt> and allows you to specify the
+name of a named URL as redirection target. If it is not set,
+<tt class="docutils literal"><span class="pre">LOGIN_REDIRECT_URL</span></tt> will get used instead.</p>
+</div>
+<div class="section" id="notification-language-module">
+<h2>NOTIFICATION_LANGUAGE_MODULE<a class="headerlink" href="#notification-language-module" title="Permalink to this headline">¶</a></h2>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Application:</th><td class="field-body"><tt class="docutils literal"><span class="pre">notification</span></tt> (<a class="reference external" href="http://github.com/jtauber/django-notification/">external</a>)</td>
+</tr>
+<tr class="field"><th class="field-name">Default:</th><td class="field-body"><tt class="xref docutils literal"><span class="pre">False</span></tt></td>
+</tr>
+</tbody>
+</table>
+<p>This way you can specify what model holds the language selection of a specific
+user &#8211; e.g. <tt class="docutils literal"><span class="pre">account.Account</span></tt>. The model has to have a foreign key to the
+the user model (<tt class="docutils literal"><span class="pre">user</span></tt>) and also provide a <tt class="docutils literal"><span class="pre">language</span></tt> field, which is then
+used by the <tt class="docutils literal"><span class="pre">notification</span></tt> application.</p>
+</div>
+<div class="section" id="pinax-items-per-feed">
+<span id="ref-settings-pinax-items-per-feed"></span><h2>PINAX_ITEMS_PER_FEED<a class="headerlink" href="#pinax-items-per-feed" title="Permalink to this headline">¶</a></h2>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Applications:</th><td class="field-body"><tt class="docutils literal"><span class="pre">pinax.apps.blog</span></tt></td>
+</tr>
+<tr class="field"><th class="field-name">Default:</th><td class="field-body"><tt class="docutils literal"><span class="pre">20</span></tt></td>
+</tr>
+</tbody>
+</table>
+<p>With this option the number of posts that should be served in the feeds
+generated by Pinax&#8217; blogging application can be configured.</p>
+</div>
+<div class="section" id="pinax-root">
+<span id="ref-settings-pinax-root"></span><h2>PINAX_ROOT<a class="headerlink" href="#pinax-root" title="Permalink to this headline">¶</a></h2>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Application:</th><td class="field-body"><tt class="docutils literal"><span class="pre">staticfiles</span></tt></td>
+</tr>
+</tbody>
+</table>
+<p>Normally you shouldn&#8217;t need to change this setting. It&#8217;s a reference to where
+Pinax itself is installed so that you can easily re-use for instance templates
+from that location or work with the original static files like
+the <tt class="docutils literal"><span class="pre">build_media</span></tt> command does. There this settng is used to find the
+media files of those internal applications used in your project, which are
+then copied into one central location.</p>
+<p>For more on this topic take a look at <a class="reference external" href="media.html#ref-media"><em>Media Handling</em></a>.</p>
+<p>It is also used by default in project settings for determining a template
+directory.</p>
+</div>
+<div class="section" id="pinax-theme">
+<span id="ref-settings-pinax-theme"></span><h2>PINAX_THEME<a class="headerlink" href="#pinax-theme" title="Permalink to this headline">¶</a></h2>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Applications:</th><td class="field-body"></td>
+</tr>
+<tr class="field"><th class="field-name">Default:</th><td class="field-body"><tt class="docutils literal"><span class="pre">&quot;default&quot;</span></tt></td>
+</tr>
+</tbody>
+</table>
+<p>With Pinax your site can have multiple themes available. This option now
+determines, which one of these should be used. In practice the value of
+<tt class="docutils literal"><span class="pre">PINAX_THEME</span></tt> becomes part of the file-paths the <tt class="docutils literal"><span class="pre">build_media</span></tt> command is
+looking for when trying to combine all your media files into one single
+location. A small example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">src</span><span class="o">/</span><span class="n">pinax</span><span class="o">/</span><span class="n">media</span><span class="o">/</span><span class="n">default</span><span class="o">/</span><span class="n">pinax</span><span class="o">/</span><span class="n">img</span><span class="o">/</span><span class="n">logo</span><span class="o">.</span><span class="n">png</span>
+</pre></div>
+</div>
+<p>is a file that is specific to the &#8220;default&#8221; theme for Pinax while:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">src</span><span class="o">/</span><span class="n">pinax</span><span class="o">/</span><span class="n">media</span><span class="o">/</span><span class="n">new_hotness</span><span class="o">/</span><span class="n">pinax</span><span class="o">/</span><span class="n">img</span><span class="o">/</span><span class="n">logo</span><span class="o">.</span><span class="n">png</span>
+</pre></div>
+</div>
+<p>would only be available in the &#8220;new_hotness&#8221; theme.</p>
+<p>This setting is also used for the core templates that are provided with Pinax
+by default. The default <tt class="docutils literal"><span class="pre">settings.py</span></tt> files provided by Pinax for instance
+load templates from following locations:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">TEMPLATE_DIRS</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">PROJECT_ROOT</span><span class="p">,</span> <span class="s">&quot;templates&quot;</span><span class="p">),</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">PINAX_ROOT</span><span class="p">,</span> <span class="s">&quot;templates&quot;</span><span class="p">,</span> <span class="n">PINAX_THEME</span><span class="p">),</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p>Note that this setting only applies to Pinax&#8217; core media files and templates
+and is not used either in the internal nor the external apps by default.</p>
+</div>
+<div class="section" id="restructuredtext-filter-settings">
+<span id="ref-settings-restructuredtext-filter-settings"></span><h2>RESTRUCTUREDTEXT_FILTER_SETTINGS<a class="headerlink" href="#restructuredtext-filter-settings" title="Permalink to this headline">¶</a></h2>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Applications:</th><td class="field-body"><tt class="docutils literal"><span class="pre">pinax.apps.blog</span></tt></td>
+</tr>
+<tr class="field"><th class="field-name">Default:</th><td class="field-body"><tt class="docutils literal"><span class="pre">{}</span></tt></td>
+</tr>
+</tbody>
+</table>
+<p>Using this option you can pass additional settings as dictionary through the
+<tt class="docutils literal"><span class="pre">restructuredtext</span></tt> template library to the underlying
+<tt class="docutils literal"><span class="pre">docutils.core.publish_parts</span></tt> function.</p>
+</div>
+<div class="section" id="serve-media">
+<span id="ref-settings-serve-media"></span><h2>SERVE_MEDIA<a class="headerlink" href="#serve-media" title="Permalink to this headline">¶</a></h2>
+<p>This option is used in the standard projects&#8217; URLconf to determine, if
+<tt class="docutils literal"><span class="pre">django.views.static.serve</span></tt> should be used to serve static files. By default
+this settings is bound to the <tt class="docutils literal"><span class="pre">DEBUG</span></tt> setting in the default
+<tt class="docutils literal"><span class="pre">settings.py</span></tt>.</p>
+</div>
+<div class="section" id="static-root">
+<h2>STATIC_ROOT<a class="headerlink" href="#static-root" title="Permalink to this headline">¶</a></h2>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Default:</th><td class="field-body"><tt class="docutils literal"><span class="pre">&quot;&lt;PROJECT_ROOT&gt;/site_media/static&quot;</span></tt></td>
+</tr>
+</tbody>
+</table>
+<p>The absolute path to the directory that holds static files like app media:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">STATIC_ROOT</span> <span class="o">=</span> <span class="s">&quot;/home/polls.com/polls/site_media/static/&quot;</span>
+</pre></div>
+</div>
+<p>This is only used by the default static files storage (i.e. if you use a
+different <tt class="docutils literal"><span class="pre">STATICFILES_STORAGE_</span></tt>, you don&#8217;t need to set this).</p>
+</div>
+<div class="section" id="static-url">
+<h2>STATIC_URL<a class="headerlink" href="#static-url" title="Permalink to this headline">¶</a></h2>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Default:</th><td class="field-body"><tt class="docutils literal"><span class="pre">&quot;/site_media/static/&quot;</span></tt></td>
+</tr>
+</tbody>
+</table>
+<p>URL that handles the files served from STATIC_ROOT, e.g.:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">STATIC_URL</span> <span class="o">=</span> <span class="s">&quot;/site_media/static/&quot;</span>
+</pre></div>
+</div>
+<p>Note that this should <strong>always</strong> have a trailing slash.</p>
+</div>
+<div class="section" id="staticfiles-dirs">
+<h2>STATICFILES_DIRS<a class="headerlink" href="#staticfiles-dirs" title="Permalink to this headline">¶</a></h2>
+<p>This setting defines the additional locations the <tt class="docutils literal"><span class="pre">staticfiles</span></tt> app will
+traverse when looking for media files, e.g. if you use the
+<a class="reference external" href="media.html#ref-media-build-static"><em>build_static</em></a> or
+<a class="reference external" href="media.html#ref-media-resolve-static"><em>resolve_static</em></a> management command or
+use the <a class="reference external" href="media.html#ref-media-devel"><em>static file serving view</em></a>.</p>
+<p>It should be defined as a sequence of paths to static file directories, e.g.:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">STATICFILES_DIRS</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">PROJECT_ROOT</span><span class="p">,</span> <span class="s">&quot;media&quot;</span><span class="p">),</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">PINAX_ROOT</span><span class="p">,</span> <span class="s">&quot;media&quot;</span><span class="p">,</span> <span class="n">PINAX_THEME</span><span class="p">),</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p>In case you specifically want to load media from a certain location you can
+prefix the path of the media file by using a <tt class="docutils literal"><span class="pre">(prefix,</span> <span class="pre">path)</span></tt> tuple instead,
+e.g.:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">STATICFILES_DIRS</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">PROJECT_ROOT</span><span class="p">,</span> <span class="s">&quot;media&quot;</span><span class="p">),</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">PINAX_ROOT</span><span class="p">,</span> <span class="s">&quot;media&quot;</span><span class="p">,</span> <span class="n">PINAX_THEME</span><span class="p">),</span>
+    <span class="p">(</span><span class="s">&quot;xmas&quot;</span><span class="p">,</span> <span class="s">&quot;/var/www/xmax-special/media&quot;</span><span class="p">),</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p>In your HTML you then would be able to use the following snippet to load the
+fancy christmas stylesheet:</p>
+<div class="highlight-python"><pre>&lt;link rel="stylesheet" href="{{ STATIC_URL }}xmas/css/base.css" type="text/css" media="screen" /&gt;</pre>
+</div>
+<p>The directory <tt class="docutils literal"><span class="pre">/var/www/xmax-special</span></tt> would look like this:</p>
+<div class="highlight-python"><pre>media/
+`-- css
+    `-- base.css</pre>
+</div>
+</div>
+<div class="section" id="staticfiles-prepend-label-apps">
+<h2>STATICFILES_PREPEND_LABEL_APPS<a class="headerlink" href="#staticfiles-prepend-label-apps" title="Permalink to this headline">¶</a></h2>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Default:</th><td class="field-body"><tt class="docutils literal"><span class="pre">[&quot;django.contrib.admin&quot;]</span></tt></td>
+</tr>
+</tbody>
+</table>
+<p>A sequence of app paths that have the media files in <tt class="docutils literal"><span class="pre">&lt;app&gt;/media</span></tt>, not in
+<tt class="docutils literal"><span class="pre">&lt;app&gt;/media/&lt;app&gt;</span></tt>, e.g. <tt class="docutils literal"><span class="pre">django.contrib.admin</span></tt>.</p>
+</div>
+<div class="section" id="staticfiles-media-dirnames">
+<h2>STATICFILES_MEDIA_DIRNAMES<a class="headerlink" href="#staticfiles-media-dirnames" title="Permalink to this headline">¶</a></h2>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Default:</th><td class="field-body"><tt class="docutils literal"><span class="pre">[&quot;media&quot;]</span></tt></td>
+</tr>
+</tbody>
+</table>
+<p>A sequence of directory names to be used when searching for media files in
+installed apps, e.g. if an app has its media files in <tt class="docutils literal"><span class="pre">&lt;app&gt;/static</span></tt>
+use:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">STATICFILES_MEDIA_DIRNAMES</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s">&quot;media&quot;</span><span class="p">,</span>
+    <span class="s">&quot;static&quot;</span><span class="p">,</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="staticfiles-storage">
+<h2>STATICFILES_STORAGE<a class="headerlink" href="#staticfiles-storage" title="Permalink to this headline">¶</a></h2>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Default:</th><td class="field-body"><tt class="docutils literal"><span class="pre">&quot;staticfiles.storage.StaticFileStorage&quot;</span></tt></td>
+</tr>
+</tbody>
+</table>
+<p>The storage backend to use for copying static files to a single location.</p>
+</div>
+<div class="section" id="urchin-id">
+<span id="ref-settings-urchin-id"></span><h2>URCHIN_ID<a class="headerlink" href="#urchin-id" title="Permalink to this headline">¶</a></h2>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Applications:</th><td class="field-body"><tt class="docutils literal"><span class="pre">pinax.apps.analytics</span></tt></td>
+</tr>
+</tbody>
+</table>
+<p>Used by <tt class="docutils literal"><span class="pre">pinax.apps.analytics</span></tt> as part of your account information on <a class="reference external" href="http://analytics.google.com/">Google
+Analytics</a>. Based on this setting the JavaScript is generated that is then
+embedded into your website to allow Google Analytics to track your traffic.</p>
+<p>Tracking code will not be outputted if <tt class="docutils literal"><span class="pre">DEBUG</span></tt> is <tt class="xref docutils literal"><span class="pre">True</span></tt> to prevent
+unnecessary tracking.</p>
+</div>
+<div class="section" id="markup-choices">
+<span id="ref-settings-wiki-markup-choices"></span><h2>MARKUP_CHOICES<a class="headerlink" href="#markup-choices" title="Permalink to this headline">¶</a></h2>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Applications:</th><td class="field-body"><tt class="docutils literal"><span class="pre">pinax.apps.blog</span></tt>, <tt class="docutils literal"><span class="pre">pinax.apps.tasks</span></tt></td>
+</tr>
+<tr class="field"><th class="field-name">Default:</th><td class="field-body"><tt class="docutils literal"><span class="pre">[(&quot;restructuredtext&quot;,</span> <span class="pre">u&quot;reStructuredText&quot;),</span> <span class="pre">(&quot;textile&quot;,</span> <span class="pre">u&quot;Textile&quot;),</span> <span class="pre">(&quot;markdown&quot;,</span> <span class="pre">u&quot;Markdown&quot;),</span> <span class="pre">(&quot;creole&quot;,</span> <span class="pre">u&quot;Creole&quot;)]</span></tt></td>
+</tr>
+</tbody>
+</table>
+<p>The actual origin of this setting is <a class="reference external" href="http://code.google.com/p/django-wikiapp/">django-wikiapp</a> which is one of the
+external applications Pinax integrates. <tt class="docutils literal"><span class="pre">pinax.apps.blog</span></tt> uses it to
+determine, how a post&#8217;s content should be converted from plain text to HTML.</p>
+</div>
+<div class="section" id="wiki-requires-login">
+<span id="ref-settings-wiki-requires-login"></span><h2>WIKI_REQUIRES_LOGIN<a class="headerlink" href="#wiki-requires-login" title="Permalink to this headline">¶</a></h2>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Applications:</th><td class="field-body"><tt class="docutils literal"><span class="pre">wiki</span></tt> (<a class="reference external" href="http://code.google.com/p/django-wikiapp/">external</a>)</td>
+</tr>
+<tr class="field"><th class="field-name">Default:</th><td class="field-body"><tt class="xref docutils literal"><span class="pre">False</span></tt></td>
+</tr>
+</tbody>
+</table>
+<p>With this setting you configure the Wiki to be only accessible to people who
+are logged in.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="#">Settings</a><ul>
+<li><a class="reference external" href="#account-open-signup">ACCOUNT_OPEN_SIGNUP</a></li>
+<li><a class="reference external" href="#bbauth-app-id">BBAUTH_APP_ID</a></li>
+<li><a class="reference external" href="#bbauth-shared-secret">BBAUTH_SHARED_SECRET</a></li>
+<li><a class="reference external" href="#behind-proxy">BEHIND_PROXY</a></li>
+<li><a class="reference external" href="#combined-inbox-count-sources">COMBINED_INBOX_COUNT_SOURCES</a></li>
+<li><a class="reference external" href="#email-confirmation-days">EMAIL_CONFIRMATION_DAYS</a></li>
+<li><a class="reference external" href="#feedutil-summary-len">FEEDUTIL_SUMMARY_LEN</a></li>
+<li><a class="reference external" href="#force-lowercase-tags">FORCE_LOWERCASE_TAGS</a></li>
+<li><a class="reference external" href="#login-redirect-urlname">LOGIN_REDIRECT_URLNAME</a></li>
+<li><a class="reference external" href="#notification-language-module">NOTIFICATION_LANGUAGE_MODULE</a></li>
+<li><a class="reference external" href="#pinax-items-per-feed">PINAX_ITEMS_PER_FEED</a></li>
+<li><a class="reference external" href="#pinax-root">PINAX_ROOT</a></li>
+<li><a class="reference external" href="#pinax-theme">PINAX_THEME</a></li>
+<li><a class="reference external" href="#restructuredtext-filter-settings">RESTRUCTUREDTEXT_FILTER_SETTINGS</a></li>
+<li><a class="reference external" href="#serve-media">SERVE_MEDIA</a></li>
+<li><a class="reference external" href="#static-root">STATIC_ROOT</a></li>
+<li><a class="reference external" href="#static-url">STATIC_URL</a></li>
+<li><a class="reference external" href="#staticfiles-dirs">STATICFILES_DIRS</a></li>
+<li><a class="reference external" href="#staticfiles-prepend-label-apps">STATICFILES_PREPEND_LABEL_APPS</a></li>
+<li><a class="reference external" href="#staticfiles-media-dirnames">STATICFILES_MEDIA_DIRNAMES</a></li>
+<li><a class="reference external" href="#staticfiles-storage">STATICFILES_STORAGE</a></li>
+<li><a class="reference external" href="#urchin-id">URCHIN_ID</a></li>
+<li><a class="reference external" href="#markup-choices">MARKUP_CHOICES</a></li>
+<li><a class="reference external" href="#wiki-requires-login">WIKI_REQUIRES_LOGIN</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="groups.html"
+                                  title="previous chapter">Groups Overview</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="dependencies.html"
+                                  title="next chapter">Dependencies</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="_sources/settings.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="search.html" method="get">
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="modindex.html" title="Global Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="dependencies.html" title="Dependencies"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="groups.html" title="Groups Overview"
+             >previous</a> |</li>
+        <li><a href="index.html">Pinax v0.9a1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2010, James Tauber and Pinax Team.
+      Last updated on Jun 06, 2010.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.7.
+    </div>
+  </body>
+</html>

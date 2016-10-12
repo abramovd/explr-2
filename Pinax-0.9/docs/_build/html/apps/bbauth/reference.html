@@ -1,0 +1,201 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Reference &mdash; Pinax v0.9a1 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.9a1',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="Pinax v0.9a1 documentation" href="../../index.html" />
+    <link rel="up" title="bbauth" href="index.html" />
+    <link rel="next" title="blog" href="../blog/index.html" />
+    <link rel="prev" title="Getting started" href="gettingstarted.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="../blog/index.html" title="blog"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="gettingstarted.html" title="Getting started"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">Pinax v0.9a1 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Pinax Apps</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">bbauth</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="reference">
+<span id="ref-bbauth-reference"></span><h1>Reference<a class="headerlink" href="#reference" title="Permalink to this headline">¶</a></h1>
+<p>This document covers various components of <tt class="docutils literal"><span class="pre">pinax.apps.bbauth</span></tt>.</p>
+<div class="section" id="settings">
+<h2>Settings<a class="headerlink" href="#settings" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="bbauth-app-id">
+<h3><tt class="docutils literal"><span class="pre">BBAUTH_APP_ID</span></tt><a class="headerlink" href="#bbauth-app-id" title="Permalink to this headline">¶</a></h3>
+<p><strong>Required</strong>. The identification string assigned to your app from <a class="reference external" href="http://developer.yahoo.com/auth/appreg.html">registering
+with Yahoo</a>!:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">BBAUTH_APP_ID</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="bbauth-shared-secret">
+<h3><tt class="docutils literal"><span class="pre">BBAUTH_SHARED_SECRET</span></tt><a class="headerlink" href="#bbauth-shared-secret" title="Permalink to this headline">¶</a></h3>
+<p><strong>Required</strong>. The shared secret that when paired with your <tt class="docutils literal"><span class="pre">BBAUTH_APP_ID</span></tt>
+authenticates your application with Yahoo! via a call to
+<tt class="docutils literal"><span class="pre">ybrowserauth.YBrowserAuth</span></tt>.  This value is also assigned via <a class="reference external" href="http://developer.yahoo.com/auth/appreg.html">registering with Yahoo</a>!:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">BBAUTH_SHARED_SECRET</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="named-urls">
+<h2>Named Urls<a class="headerlink" href="#named-urls" title="Permalink to this headline">¶</a></h2>
+<p>The named urls in this app should enable the use of of the <tt class="docutils literal"><span class="pre">{%</span> <span class="pre">url</span> <span class="pre">%}</span></tt>
+template tag as well as <tt class="docutils literal"><span class="pre">reverse</span></tt> lookups in your project code without having
+to know the implementation details of this app.</p>
+<div class="section" id="bbauth-login">
+<h3>bbauth_login<a class="headerlink" href="#bbauth-login" title="Permalink to this headline">¶</a></h3>
+<p>Authenticates user through Yahoo! redirecting user to Yahoo! login if not
+already authenticated.</p>
+</div>
+<div class="section" id="bbauth-success">
+<h3>bbauth_success<a class="headerlink" href="#bbauth-success" title="Permalink to this headline">¶</a></h3>
+<p>Validates Yahoo! session and sets token into session.</p>
+</div>
+<div class="section" id="bbauth-logout">
+<h3>bbauth_logout<a class="headerlink" href="#bbauth-logout" title="Permalink to this headline">¶</a></h3>
+<p>Destroys Yahoo! based app session.</p>
+</div>
+</div>
+<div class="section" id="modules">
+<h2>Modules<a class="headerlink" href="#modules" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-pinax.apps.bbauth.views">
+<h3><tt class="docutils literal"><span class="pre">pinax.apps.bbauth.views</span></tt><a class="headerlink" href="#module-pinax.apps.bbauth.views" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="pinax.apps.bbauth.views.login">
+<tt class="descclassname">pinax.apps.bbauth.views.</tt><tt class="descname">login</tt><big>(</big><em>request</em>, <em>redirect_to='/invitations/contacts'</em><big>)</big><a class="headerlink" href="#pinax.apps.bbauth.views.login" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="pinax.apps.bbauth.views.logout">
+<tt class="descclassname">pinax.apps.bbauth.views.</tt><tt class="descname">logout</tt><big>(</big><em>request</em>, <em>redirect_to='/'</em><big>)</big><a class="headerlink" href="#pinax.apps.bbauth.views.logout" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="pinax.apps.bbauth.views.success">
+<tt class="descclassname">pinax.apps.bbauth.views.</tt><tt class="descname">success</tt><big>(</big><em>request</em><big>)</big><a class="headerlink" href="#pinax.apps.bbauth.views.success" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="#">Reference</a><ul>
+<li><a class="reference external" href="#settings">Settings</a><ul>
+<li><a class="reference external" href="#bbauth-app-id"><tt class="docutils literal"><span class="pre">BBAUTH_APP_ID</span></tt></a></li>
+<li><a class="reference external" href="#bbauth-shared-secret"><tt class="docutils literal"><span class="pre">BBAUTH_SHARED_SECRET</span></tt></a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#named-urls">Named Urls</a><ul>
+<li><a class="reference external" href="#bbauth-login">bbauth_login</a></li>
+<li><a class="reference external" href="#bbauth-success">bbauth_success</a></li>
+<li><a class="reference external" href="#bbauth-logout">bbauth_logout</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#modules">Modules</a><ul>
+<li><a class="reference external" href="#module-pinax.apps.bbauth.views"><tt class="docutils literal"><span class="pre">pinax.apps.bbauth.views</span></tt></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="gettingstarted.html"
+                                  title="previous chapter">Getting started</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="../blog/index.html"
+                                  title="next chapter">blog</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/apps/bbauth/reference.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="../../search.html" method="get">
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../blog/index.html" title="blog"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="gettingstarted.html" title="Getting started"
+             >previous</a> |</li>
+        <li><a href="../../index.html">Pinax v0.9a1 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Pinax Apps</a> &raquo;</li>
+          <li><a href="index.html" >bbauth</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2010, James Tauber and Pinax Team.
+      Last updated on Jun 06, 2010.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.7.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,230 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Tab Navigation &mdash; Pinax v0.9a1 documentation</title>
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.9a1',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Pinax v0.9a1 documentation" href="index.html" />
+    <link rel="next" title="Pinax Release Notes" href="releases/index.html" />
+    <link rel="prev" title="Installing PIL" href="pil.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="releases/index.html" title="Pinax Release Notes"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="pil.html" title="Installing PIL"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Pinax v0.9a1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="tab-navigation">
+<span id="ref-tabs"></span><h1>Tab Navigation<a class="headerlink" href="#tab-navigation" title="Permalink to this headline">¶</a></h1>
+<p>You can completely control the look and feel of your Pinax-based site
+via the templates, so if you don&#8217;t like the way the tabs are done, you
+can always do it a completely different way.</p>
+<p>But this is how tab navigation is done in most of the sample projects.</p>
+<div class="section" id="quick-start">
+<h2>Quick Start<a class="headerlink" href="#quick-start" title="Permalink to this headline">¶</a></h2>
+<p>Here is how to add a new tab for your app <tt class="docutils literal"><span class="pre">myapp</span></tt>:</p>
+<blockquote>
+<ol class="arabic simple">
+<li>In <tt class="docutils literal"><span class="pre">site_base.html</span></tt> add a new <tt class="docutils literal"><span class="pre">li</span></tt> in the <tt class="docutils literal"><span class="pre">right_tabs</span></tt> block.
+Make sure that <tt class="docutils literal"><span class="pre">li</span></tt> has and <tt class="docutils literal"><span class="pre">id</span></tt> specific to that to that tab,
+e.g. <tt class="docutils literal"><span class="pre">tab_myapp</span></tt></li>
+<li>Create a <tt class="docutils literal"><span class="pre">myapps/base.html</span></tt> template that all pages under that tab will
+extend. Make sure it defines a block <tt class="docutils literal"><span class="pre">body_class</span></tt> with content
+<tt class="docutils literal"><span class="pre">myapp</span></tt></li>
+<li>edit the CSS file (<tt class="docutils literal"><span class="pre">site_tabs.css</span></tt> if it exists) and at the
+appropriate points add the selectors:<ul>
+<li><tt class="docutils literal"><span class="pre">body.myapp</span> <span class="pre">#tab_myapp</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">body.myapp</span> <span class="pre">#tab_myapp</span> <span class="pre">a</span></tt></li>
+</ul>
+</li>
+</ol>
+</blockquote>
+</div>
+<div class="section" id="details">
+<h2>Details<a class="headerlink" href="#details" title="Permalink to this headline">¶</a></h2>
+<p>The global <tt class="docutils literal"><span class="pre">base.html</span></tt> (under <tt class="docutils literal"><span class="pre">pinax/templates/default/</span></tt>) has the following:</p>
+<div class="highlight-python"><pre>...
+&lt;body class="{% block body_class %}{% endblock %}"&gt;
+
+...
+&lt;div id="tabhead"&gt;
+    ...
+    &lt;div id="left_tabs" &gt;{% block left_tabs %}{% endblock %}&lt;/div&gt;
+    &lt;div id="right_tabs" &gt;{% block right_tabs %}{% endblock %}&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id="subnav" class="clearfix"&gt;{% block subnav_base %}{% block subnav %}&amp;nbsp;{% endblock %}{% endblock %}&lt;/div&gt;</pre>
+</div>
+<p>Note that this defines five blocks:</p>
+<blockquote>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">body_class</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">left_tabs</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">right_tabs</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">subnav</span></tt></li>
+</ul>
+</blockquote>
+<p>You shouldn&#8217;t normally need to change this at all for your site unless
+you want to make a change like move where the subnav goes.</p>
+<p><tt class="docutils literal"><span class="pre">site_base.html</span></tt> in your project&#8217;s templates then overrides the <tt class="docutils literal"><span class="pre">left_tabs</span></tt>
+and or <tt class="docutils literal"><span class="pre">right_tabs</span></tt> blocks with the actual site-wide tabs. For example, here is a
+<tt class="docutils literal"><span class="pre">right_tabs</span></tt> with three tabs defined that only show when the user is
+logged in:</p>
+<div class="highlight-python"><pre>{% block right_tabs %}
+    {% if user.is_authenticated %}
+        &lt;ul class="tabs"&gt;{% spaceless %}
+            &lt;li id="tab_profile"&gt;&lt;a href="{% url profile_detail user.username %}"&gt;Profile&lt;/a&gt;&lt;/li&gt;
+            &lt;li id="tab_blogs"&gt;&lt;a href="{% url blog_list_user %}"&gt;Blogs&lt;/a&gt;&lt;/li&gt;
+            &lt;li id="tab_bookmarks"&gt;&lt;a href="{% url all_bookmarks %}"&gt;Bookmarks&lt;/a&gt;&lt;/li&gt;
+        {% endspaceless %}&lt;/ul&gt;
+    {% endif %}
+{% endblock %}</pre>
+</div>
+<p>Note that each <tt class="docutils literal"><span class="pre">li</span></tt> is given an <tt class="docutils literal"><span class="pre">id</span></tt> specific to the tab, e.g. <tt class="docutils literal"><span class="pre">tab_bookmarks</span></tt>
+for the bookmarks tab.</p>
+<p>Now, any page under the bookmarks tab extends the template
+<tt class="docutils literal"><span class="pre">bookmarks/base.html</span></tt> which looks something like this:</p>
+<div class="highlight-python"><pre>{% extends "site_base.html" %}
+
+{% block body_class %}bookmarks{% endblock %}
+
+{% block subnav %}
+    &lt;ul&gt;
+        &lt;li&gt;&lt;a href="{% url add_bookmark %}"&gt;Add Bookmark&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href="{% url your_bookmarks %}"&gt;Your Bookmarks&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href="{% url all_bookmarks %}"&gt;All Bookmarks&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+{% endblock %}</pre>
+</div>
+<p>Notice that this bookmarks-specific base template defines the <tt class="docutils literal"><span class="pre">subnav</span></tt>
+block which provides the subnav for all bookmarks pages.</p>
+<p>It also defines the <tt class="docutils literal"><span class="pre">body_class</span></tt> block we saw used by the global <tt class="docutils literal"><span class="pre">base.html</span></tt>.</p>
+<p>Now all that remains is the CSS that ties the <tt class="docutils literal"><span class="pre">body</span></tt> in <tt class="docutils literal"><span class="pre">base.html</span></tt>
+with <tt class="docutils literal"><span class="pre">class=&quot;bookmarks</span></tt>&#8221; to the <tt class="docutils literal"><span class="pre">li</span></tt> in <tt class="docutils literal"><span class="pre">site_base.html</span></tt> that has
+<tt class="docutils literal"><span class="pre">id=&quot;tab_bookmarks&quot;</span></tt>.</p>
+<p>This is done in CSS.</p>
+<div class="highlight-python"><pre>/* SITE-SPECIFIC TAB STYLING */
+
+body.profile #tab_profile a,
+body.blogs #tab_blogs a,
+body.bookmarks #tab_bookmarks a
+{
+    color: #000; /* selected tab text colour */
+}
+body.profile #tab_profile,
+body.blogs #tab_blogs,
+body.bookmarks #tab_bookmarks
+{
+    margin: 0; /* to compensate for border */
+    padding: 5px 0 5px;
+    background-color: #DEF; /* selected tab colour */
+    border-left: 1px solid #000; /* tab border */
+    border-top: 1px solid #000; /* tab border */
+    border-right: 1px solid #000; /* tab border */
+}</pre>
+</div>
+<p>Notice that the selector <tt class="docutils literal"><span class="pre">body.bookmarks</span> <span class="pre">#tab_bookmarks</span></tt> appears twice.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="#">Tab Navigation</a><ul>
+<li><a class="reference external" href="#quick-start">Quick Start</a></li>
+<li><a class="reference external" href="#details">Details</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="pil.html"
+                                  title="previous chapter">Installing PIL</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="releases/index.html"
+                                  title="next chapter">Pinax Release Notes</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="_sources/tabs.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="search.html" method="get">
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="modindex.html" title="Global Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="releases/index.html" title="Pinax Release Notes"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="pil.html" title="Installing PIL"
+             >previous</a> |</li>
+        <li><a href="index.html">Pinax v0.9a1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2010, James Tauber and Pinax Team.
+      Last updated on Jun 06, 2010.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.7.
+    </div>
+  </body>
+</html>

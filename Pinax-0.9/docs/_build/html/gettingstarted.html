@@ -1,0 +1,255 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Getting started &mdash; Pinax v0.9a1 documentation</title>
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.9a1',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Pinax v0.9a1 documentation" href="index.html" />
+    <link rel="next" title="Customization" href="customization.html" />
+    <link rel="prev" title="Introduction" href="intro.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="customization.html" title="Customization"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="intro.html" title="Introduction"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Pinax v0.9a1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="getting-started">
+<span id="ref-gettingstarted"></span><h1>Getting started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h1>
+<p>This guide is designed to point you to the best information about getting
+started with Pinax. Pinax is built on top of Python and Django. We leverage
+these technologies to their fullest. It is ideal you have some level of
+experience with these tools before moving on. Here are some good first
+resources if you need to learn about Python and Django:</p>
+<blockquote>
+<ul class="simple">
+<li><strong>Python</strong>: <a class="reference external" href="http://docs.python.org/tutorial/">Official Python tutorial</a></li>
+<li><strong>Python</strong>: <a class="reference external" href="http://diveintopython.org/">Dive into Python</a></li>
+<li><strong>Django</strong>: <a class="reference external" href="http://docs.djangoproject.com/en/dev/intro/tutorial01/">Official Django tutorial</a></li>
+<li><strong>Django</strong>: <a class="reference external" href="http://docs.djangoproject.com/en/dev/">Official Django documentation</a></li>
+</ul>
+</blockquote>
+<p>Those resources will be excellent reading material if you are not familiar
+with Python or Django. The Django tutorial is especially important as many
+core Pinax concepts are simply ones you find in Django.</p>
+<div class="section" id="prerequisites">
+<h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this headline">¶</a></h2>
+<p>To get started with Pinax you must have the following installed:</p>
+<blockquote>
+<ul class="simple">
+<li>Python 2.4+ — many OSes come with an adequate version of Python. If you are
+on Windows you will need to install it from <a class="reference external" href="http://python.org/">python.org</a>. Do <strong>not</strong>
+install Python 3+. Pinax is not compatible with Python 3 yet.</li>
+<li><a class="reference external" href="http://pypi.python.org/pypi/virtualenv">virtualenv</a> 1.4.7+</li>
+<li><a class="reference external" href="http://code.google.com/p/pysqlite/">pysqlite</a> — this is only required if you are running <strong>Python 2.4</strong>.
+Later versions of Python have this bundled.</li>
+<li><a class="reference external" href="pil.html#ref-pil"><em>PIL</em></a> — this is only required if you are using a project
+which requires imaging capabilites (includes projects which support
+avatars and/or photos). It is likely the best idea to install it anyways.</li>
+</ul>
+</blockquote>
+</div>
+<div class="section" id="installation">
+<span id="ref-install"></span><h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<p>Pinax highly encourges the use of virtual environments. We will use a tool
+called <a class="reference external" href="http://pypi.python.org/pypi/virtualenv">virtualenv</a> which provides a way to create isolated Python
+environments.</p>
+<p>Create yourself a virtual environment and activate it:</p>
+<div class="highlight-python"><pre>$ virtualenv mysite-env
+$ source mysite-env/bin/activate
+(mysite-env)$</pre>
+</div>
+<p>If you use Windows this will become:</p>
+<div class="highlight-python"><pre>$ virtualenv mysite-env
+$ mysite-env\Scripts\activate.bat
+(mysite-env)$</pre>
+</div>
+<p>The directory <tt class="docutils literal"><span class="pre">mysite-env</span></tt> is the environment for your project. It is
+recommended you do not edit or create new files/directories within it. The
+reason this is important is that this directory should remain reproducible
+at all times. Reproducible environments is a good idea.</p>
+<p>Notice the <tt class="docutils literal"><span class="pre">(mysite-env)</span></tt> bit? This is done for you by the <tt class="docutils literal"><span class="pre">activate</span></tt>
+script to help you identify which environment is currently activated. Under
+the hood your <tt class="docutils literal"><span class="pre">PATH</span></tt> has been modified to use the Python binary for this
+environment.</p>
+<p>Go ahead and install Pinax:</p>
+<div class="highlight-python"><pre>(mysite-env)$ pip install Pinax</pre>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p><tt class="docutils literal"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">Pinax</span></tt> will fail</p>
+<p>This is a temporary note for readers of the 0.9 development version. The
+above will not work as-is at current time. You should instead run:</p>
+<div class="last highlight-python"><pre>(mysite-env)$ pip install --extra-index-url=http://dist.pinaxproject.com/dev/ Pinax</pre>
+</div>
+</div>
+<p>If you want to be a bit more adventurous you can install the development
+version of Pinax (which gives you the latest commit in our git repository):</p>
+<div class="highlight-python"><pre>(mysite-env)$ pip install Pinax==dev</pre>
+</div>
+<p>Keep in mind the development version may not be 100% stable. If you are
+looking to help out with development you should read our
+<a class="reference external" href="contributing.html#ref-contributing"><em>contributing documentation</em></a>.</p>
+<p><tt class="docutils literal"><span class="pre">pip</span></tt> you say? <a class="reference external" href="http://pip.openplans.org/">pip</a> is a tool bundled with virtualenv to install Python
+packages. It is super handy and it is used in Pinax extensively to handle
+dependencies. You should become very familiar with this tool.</p>
+<p>Pinax is now installed!</p>
+</div>
+<div class="section" id="creating-a-project">
+<h2>Creating a project<a class="headerlink" href="#creating-a-project" title="Permalink to this headline">¶</a></h2>
+<p>Now that Pinax is installed the next step is to create a project. A project is
+not much more than a Django project. Pinax provides many more defaults for you
+out of the box.</p>
+<div class="highlight-python"><pre>(mysite-env)$ pinax-admin setup_project mysite</pre>
+</div>
+<p>This will create a new project named <tt class="docutils literal"><span class="pre">mysite</span></tt>. By default it will install
+dependencies for you. You can turn that behavior off by giving <tt class="docutils literal"><span class="pre">setup_project</span></tt>
+the <tt class="docutils literal"><span class="pre">--no-reqs</span></tt> option.</p>
+<p>Pinax comes with many different project bases. The default project based is
+what we call <strong>layer zero</strong>. It is simply a Django project with some extra
+integrated dependencies that will make getting started faster.</p>
+<div class="section" id="specifying-a-different-project-base">
+<h3>Specifying a different project base<a class="headerlink" href="#specifying-a-different-project-base" title="Permalink to this headline">¶</a></h3>
+<p>To see what Pinax has to offer run:</p>
+<div class="highlight-python"><pre>(mysite-env)$ pinax-admin setup_project -l</pre>
+</div>
+<p>This will list all available project bases and a short description about
+each. To base your project off of any of these you&#8217;d run:</p>
+<div class="highlight-python"><pre>(mysite-env)$ pinax-admin setup_project -b basic mysite</pre>
+</div>
+<p>In many cases the default (<tt class="docutils literal"><span class="pre">zero</span></tt>) is enough to get you going, but others
+may provide a better starting point for your project.</p>
+</div>
+</div>
+<div class="section" id="running-a-project">
+<h2>Running a project<a class="headerlink" href="#running-a-project" title="Permalink to this headline">¶</a></h2>
+<p>At this point you are now working with Django. Pinax has helped you bootstrap
+your project into life. Inside your project you should run:</p>
+<div class="highlight-python"><pre>(mysite-env)$ python manage.py syncdb
+(mysite-env)$ python manage.py runserver</pre>
+</div>
+<p><tt class="docutils literal"><span class="pre">syncdb</span></tt> will create a SQLite database named <tt class="docutils literal"><span class="pre">dev.db</span></tt> in your current
+directory. We&#8217;ve configured your project to do this, but you can change this
+simply by modifying <tt class="docutils literal"><span class="pre">settings.py</span></tt> where <tt class="docutils literal"><span class="pre">DATABASES</span></tt> dictionary is
+constructed. You can find more information about this at the <a class="reference external" href="http://docs.djangoproject.com/en/dev/topics/install/#get-your-database-running">get your
+database running</a> Django documentation.</p>
+<p><tt class="docutils literal"><span class="pre">runserver</span></tt> runs an embedded webserver to test your site with. By default
+it will run on <a class="reference external" href="http://localhost:8000">http://localhost:8000</a>. This is configurable and more
+information can be found on <a class="reference external" href="http://docs.djangoproject.com/en/dev/ref/django-admin/#runserver-port-or-ipaddr-port">runserver in Django documentation</a>.</p>
+</div>
+<div class="section" id="what-s-next">
+<h2>What&#8217;s next?<a class="headerlink" href="#what-s-next" title="Permalink to this headline">¶</a></h2>
+<p>Look at our <a class="reference external" href="customization.html"><em>customization</em></a> documentation to learn how you
+might customize your project. If you are ready to deploy your project check
+out the <a class="reference external" href="deployment.html"><em>deployment</em></a> documentation.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="#">Getting started</a><ul>
+<li><a class="reference external" href="#prerequisites">Prerequisites</a></li>
+<li><a class="reference external" href="#installation">Installation</a></li>
+<li><a class="reference external" href="#creating-a-project">Creating a project</a><ul>
+<li><a class="reference external" href="#specifying-a-different-project-base">Specifying a different project base</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#running-a-project">Running a project</a></li>
+<li><a class="reference external" href="#what-s-next">What&#8217;s next?</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="intro.html"
+                                  title="previous chapter">Introduction</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="customization.html"
+                                  title="next chapter">Customization</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="_sources/gettingstarted.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="search.html" method="get">
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="modindex.html" title="Global Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="customization.html" title="Customization"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="intro.html" title="Introduction"
+             >previous</a> |</li>
+        <li><a href="index.html">Pinax v0.9a1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2010, James Tauber and Pinax Team.
+      Last updated on Jun 06, 2010.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.7.
+    </div>
+  </body>
+</html>

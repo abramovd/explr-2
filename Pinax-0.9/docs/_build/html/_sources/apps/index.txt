@@ -1,0 +1,16 @@
+.. _ref-pinax.apps-index:
+
+==========
+Pinax Apps
+==========
+
+.. toctree::
+   :maxdepth: 3
+
+   account/index
+   analytics/index
+   authsub/index
+   autocomplete_app/index
+   basic_profiles/index
+   bbauth/index
+   blog/index

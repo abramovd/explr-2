@@ -1,0 +1,129 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Installing PIL &mdash; Pinax v0.9a1 documentation</title>
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.9a1',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Pinax v0.9a1 documentation" href="index.html" />
+    <link rel="next" title="Tab Navigation" href="tabs.html" />
+    <link rel="prev" title="Buildout" href="buildout.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="tabs.html" title="Tab Navigation"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="buildout.html" title="Buildout"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Pinax v0.9a1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="installing-pil">
+<span id="ref-pil"></span><h1>Installing PIL<a class="headerlink" href="#installing-pil" title="Permalink to this headline">¶</a></h1>
+<p>To be able to run the <tt class="docutils literal"><span class="pre">social_project</span></tt> or any photo support provided with
+Pinax you will need the <a class="reference external" href="http://www.pythonware.com/products/pil/">Python Imaging Library</a> (aka PIL). We don&#8217;t install
+this for you because its installation will vary and requires compilation.
+First, check with your OS package manager (if applicable) to see if it can
+provide PIL for you. Windows users can simply use the binaries provided on the
+PIL website.</p>
+<p>This command has worked for some users; it installs a tweaked version:</p>
+<div class="highlight-python"><pre>(pinax-env)$ pip install PIL</pre>
+</div>
+<p>Of course you&#8217;ll need a C compiler <a class="reference external" href="http://freshmeat.net/projects/libjpeg/">libjpeg</a> and <a class="reference external" href="http://www.zlib.net/">libz</a> libraries upon which
+PIL depends.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">PIL will install <em>without</em> <a class="reference external" href="http://freshmeat.net/projects/libjpeg/">libjpeg</a> and <a class="reference external" href="http://www.zlib.net/">libz</a>. It simply won&#8217;t support
+JPEGs or PNGs.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="buildout.html"
+                                  title="previous chapter">Buildout</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="tabs.html"
+                                  title="next chapter">Tab Navigation</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="_sources/pil.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="search.html" method="get">
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="modindex.html" title="Global Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="tabs.html" title="Tab Navigation"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="buildout.html" title="Buildout"
+             >previous</a> |</li>
+        <li><a href="index.html">Pinax v0.9a1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2010, James Tauber and Pinax Team.
+      Last updated on Jun 06, 2010.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.7.
+    </div>
+  </body>
+</html>

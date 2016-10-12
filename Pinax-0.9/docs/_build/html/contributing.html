@@ -1,0 +1,358 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Contributing to Pinax &mdash; Pinax v0.9a1 documentation</title>
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.9a1',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Pinax v0.9a1 documentation" href="index.html" />
+    <link rel="next" title="Buildout" href="buildout.html" />
+    <link rel="prev" title="Frequently asked questions" href="faq.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="buildout.html" title="Buildout"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="faq.html" title="Frequently asked questions"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Pinax v0.9a1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="contributing-to-pinax">
+<span id="ref-contributing"></span><h1>Contributing to Pinax<a class="headerlink" href="#contributing-to-pinax" title="Permalink to this headline">¶</a></h1>
+<p>We are always looking for people wanting to improve Pinax itself. This
+document outlines the necessary bits to begin contributing to Pinax.</p>
+<div class="section" id="getting-started">
+<h2>Getting started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h2>
+<p>The Pinax source code is hosted on <a class="reference external" href="http://github.com/pinax/pinax/tree/master">GitHub</a>. This means you must have <a class="reference external" href="http://git-scm.com">git</a>
+installed locally. We recommend you create an account on GitHub allowing you
+to watch and fork the Pinax source code.</p>
+<p>You will want to be sure that your git configuration is set for making commits
+to a repository. Check the following:</p>
+<div class="highlight-python"><pre>git config user.name
+git config user.email</pre>
+</div>
+<p>If the output of any of the two commands above are not entirely correct you
+can easily correct them:</p>
+<div class="highlight-python"><pre>git config --global user.name "First Last"
+git config --global user.email "email@somewhere.com"</pre>
+</div>
+<p>It is critical you set this information up correctly. It helps us identify
+who you are when you start giving us those awesome patches.</p>
+<div class="section" id="grabbing-the-source-code">
+<h3>Grabbing the source code<a class="headerlink" href="#grabbing-the-source-code" title="Permalink to this headline">¶</a></h3>
+<p>Once you have forked the Pinax source code you can now make a clone of it to
+your local disk. To do this:</p>
+<div class="highlight-python"><pre>git clone git@github.com:&lt;username&gt;/pinax.git</pre>
+</div>
+<p>This will create new directory named <tt class="docutils literal"><span class="pre">pinax</span></tt> which now contains the Pinax
+source tree ready for you to get started.</p>
+</div>
+<div class="section" id="setting-up-your-environment">
+<h3>Setting up your environment<a class="headerlink" href="#setting-up-your-environment" title="Permalink to this headline">¶</a></h3>
+<p>Now that you&#8217;ve cloned the source code you are ready to get your environment
+setup to work on Pinax. You should be a running a recent release of
+<a class="reference external" href="http://pypi.python.org/pypi/virtualenv">virtualenv</a> to setup Pinax. We&#8217;ll assume that your current working directory
+is from within the clone (the <tt class="docutils literal"><span class="pre">pinax</span></tt> directory):</p>
+<div class="highlight-python"><pre>virtualenv ../pinax-dev
+source ../pinax-dev/bin/activate
+pip install -e .</pre>
+</div>
+<p>Finally, you need to install the dependencies for the development version:</p>
+<div class="highlight-python"><pre>pip install --no-deps --requirement requirements/external_apps.txt</pre>
+</div>
+<p>In order to run the test suite, you&#8217;ll also need PIL installed:</p>
+<div class="highlight-python"><pre>pip install PIL</pre>
+</div>
+</div>
+</div>
+<div class="section" id="staying-up-to-date">
+<h2>Staying up-to-date<a class="headerlink" href="#staying-up-to-date" title="Permalink to this headline">¶</a></h2>
+<p>The development version of Pinax is always being updated. You&#8217;ll want to make
+sure you keep up. Your clone of Pinax can easily stay in-sync using git. You
+will need to setup a git remote to pull in changes from upstream Pinax:</p>
+<div class="highlight-python"><pre>git remote add upstream git://github.com/pinax/pinax.git</pre>
+</div>
+<p>Now you will be able to merge in changes that are made upstream:</p>
+<div class="highlight-python"><pre>git fetch upstream
+git merge upstream/master</pre>
+</div>
+<p>The above will pull in all changes upstream and merge them with your current
+branch. This can be simplified:</p>
+<div class="highlight-python"><pre>git pull upstream master</pre>
+</div>
+<p>To keep your virtual environment in-sync you will need to use pip (make sure
+you are <strong>inside</strong> your virtual environment):</p>
+<div class="highlight-python"><pre>pip install --no-deps --requirement requirements/external_apps.txt</pre>
+</div>
+</div>
+<div class="section" id="running-the-tests">
+<h2>Running the tests<a class="headerlink" href="#running-the-tests" title="Permalink to this headline">¶</a></h2>
+<p>Before you begin committing code you&#8217;ll want to make sure the Pinax test suite
+passes. Running the test suite is simple. At the root of your Pinax clone
+run:</p>
+<div class="highlight-python"><pre>python tests/runner.py</pre>
+</div>
+<p>You must be inside the development virtual environment for this to work. If
+you only want to run a subset of tests (all tests are inside apps) you can
+specify them explicitly:</p>
+<div class="highlight-python"><pre>python tests/runner.py tasks projects</pre>
+</div>
+<p>This useful while developing. However, be sure to run the full suite before
+committing any code to ensure it doesn&#8217;t break other parts of Pinax.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The test runner is new as of November 29, 2009. There are currently many
+failing tests. We are working on it. This message will be removed when
+the test suite is generally usable for contributors.</p>
+</div>
+</div>
+<div class="section" id="committing-code">
+<h2>Committing code<a class="headerlink" href="#committing-code" title="Permalink to this headline">¶</a></h2>
+<p>The great thing about using a distributed versioning control system like git
+is that everyone becomes a committer. When other people write good patches
+it makes it very easy to include their fixes/features and give them proper
+credit for the work.</p>
+<p>We recommend that you do all your work on Pinax in a separate branch. When you
+are ready to work on a bug or a new feature create yourself a new branch. The
+reason why this is important is you can commit as often you like. When you are
+ready you can merge in the change. Let&#8217;s take a look at a common workflow:</p>
+<div class="highlight-python"><pre>git checkout -b task-566
+... fix and git commit often ...
+git push origin task-566</pre>
+</div>
+<p>The reason we have created two new branches is to stay off of <tt class="docutils literal"><span class="pre">master</span></tt>.
+Keeping master clean of only upstream changes makes yours and ours lives
+easier. You can then send us a pull request for the fix/feature. Then we can
+easily review it and merge it when ready.</p>
+<div class="section" id="writing-commit-messages">
+<h3>Writing commit messages<a class="headerlink" href="#writing-commit-messages" title="Permalink to this headline">¶</a></h3>
+<p>Writing a good commit message makes it simple for us to identify what your
+commit does from a high-level. We are not too picky, but there are some basic
+guidelines we&#8217;d like to ask you to follow.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">Fixed</span> <span class="c">#1 — added some feature</span>
+</pre></div>
+</div>
+<p>We ask that you indicate which task you have fixed (if the commit fixes it) or
+if you are working something complex you may want or be asked to only commits
+parts:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">Refs</span> <span class="c">#1 — added part one of feature X</span>
+</pre></div>
+</div>
+<p>As said earlier we are not too picky (some core developers may change commit
+messages before pulling in your changes), but as you get the basics down you
+make the process of getting your patch into core faster.</p>
+<p>Another critical part is that you keep the <strong>first</strong> line as short and sweet
+as possible. This line is important because when git shows commits and it has
+limited space or a different formatting option is used the first line becomes
+all someone might see. If you need to explain why you made this change or
+explain something in detail use this format:</p>
+<div class="highlight-python"><pre>Fixed #13 — added time travel
+
+You need to be driving 88 miles per hour to generate 1.21 gigawatts of
+power to properly use this feature.</pre>
+</div>
+</div>
+</div>
+<div class="section" id="coding-style">
+<h2>Coding style<a class="headerlink" href="#coding-style" title="Permalink to this headline">¶</a></h2>
+<p>When writing code to be included in Pinax keep our style in mind:</p>
+<blockquote>
+<ul class="simple">
+<li>Follow <a class="reference external" href="http://www.python.org/dev/peps/pep-0008/">PEP8</a> — there are some cases where we do not follow PEP8. It is an
+excellent starting point.</li>
+<li>Follow <a class="reference external" href="http://docs.djangoproject.com/en/dev/internals/contributing/#coding-style">Django&#8217;s coding style</a> — we&#8217;re pretty much in agreement on
+Django style outlined there.</li>
+</ul>
+</blockquote>
+<p>We would like to enforce a few more strict guides not outlined by PEP8 or
+Django&#8217;s coding style:</p>
+<blockquote>
+<ul class="simple">
+<li>PEP8 tries to keep line length at 80 characters. We follow it when we can,
+but not when it makes a line harder to read. It is okay to go a little bit
+over 80 characters if not breaking the line improves readability.</li>
+<li>Use double quotes not single quotes. Single quotes are allowed in cases
+where a double quote is needed in the string. This makes the code read
+cleaner in those cases.</li>
+<li>Blank lines are indented to the appropriate level for the block they are
+in.</li>
+<li>Docstrings always use three double quotes on a line of their own, so, for
+example, a single line docstring should take up three lines not one.</li>
+<li>Imports are grouped specifically and ordered alphabetically. This is shown
+in the example below.</li>
+<li>Always use <tt class="docutils literal"><span class="pre">reverse</span></tt> and never <tt class="docutils literal"><span class="pre">&#64;models.permalink</span></tt>.</li>
+<li>Tuples should be reserved for positional data structures and not used
+where a list is more appropriate.</li>
+</ul>
+</blockquote>
+<p>Here is an example of these rules applied:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># first set of imports are stdlib imports</span>
+<span class="c"># non-from imports go first then from style import in their own group</span>
+<span class="kn">import</span> <span class="nn">csv</span>
+
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+
+<span class="c"># second set of imports are Django imports with contrib in their own</span>
+<span class="c"># group.</span>
+<span class="kn">from</span> <span class="nn">django.core.urlresolvers</span> <span class="kn">import</span> <span class="n">reverse</span>
+<span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">models</span>
+<span class="kn">from</span> <span class="nn">django.utils.translation</span> <span class="kn">import</span> <span class="n">ugettext_lazy</span> <span class="k">as</span> <span class="n">_</span>
+
+<span class="kn">from</span> <span class="nn">django.contrib.auth.models</span> <span class="kn">import</span> <span class="n">User</span>
+
+<span class="c"># third set of imports are Pinax imports</span>
+<span class="kn">from</span> <span class="nn">pinax.utils.examplelib</span> <span class="kn">import</span> <span class="n">function_name</span>
+
+<span class="c"># forth set of imports are external apps (if applicable)</span>
+<span class="kn">from</span> <span class="nn">tagging.fields</span> <span class="kn">import</span> <span class="n">TagField</span>
+
+<span class="c"># fifth set of imports are local apps</span>
+<span class="kn">from</span> <span class="nn">pinax.apps.tasks.fields</span> <span class="kn">import</span> <span class="n">MarkupField</span>
+
+
+
+<span class="k">class</span> <span class="nc">Task</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A model for storing a task.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">creator</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">User</span><span class="p">)</span>
+    <span class="n">created</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">DateTimeField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">)</span>
+    <span class="n">modified</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">DateTimeField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">)</span>
+
+    <span class="n">objects</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">Manager</span><span class="p">()</span>
+
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">verbose_name</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s">&quot;task&quot;</span><span class="p">)</span>
+        <span class="n">verbose_name_plural</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s">&quot;tasks&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__unicode__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">summary</span>
+
+    <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">modified</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Task</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">get_absolute_url</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">reverse</span><span class="p">(</span><span class="s">&quot;task_detail&quot;</span><span class="p">,</span> <span class="n">kwargs</span><span class="o">=</span><span class="p">{</span><span class="s">&quot;task_id&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">pk</span><span class="p">})</span>
+
+    <span class="c"># custom methods</span>
+
+
+<span class="k">class</span> <span class="nc">TaskComment</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="c"># ... you get the point ...</span>
+    <span class="k">pass</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="#">Contributing to Pinax</a><ul>
+<li><a class="reference external" href="#getting-started">Getting started</a><ul>
+<li><a class="reference external" href="#grabbing-the-source-code">Grabbing the source code</a></li>
+<li><a class="reference external" href="#setting-up-your-environment">Setting up your environment</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#staying-up-to-date">Staying up-to-date</a></li>
+<li><a class="reference external" href="#running-the-tests">Running the tests</a></li>
+<li><a class="reference external" href="#committing-code">Committing code</a><ul>
+<li><a class="reference external" href="#writing-commit-messages">Writing commit messages</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#coding-style">Coding style</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="faq.html"
+                                  title="previous chapter">Frequently asked questions</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="buildout.html"
+                                  title="next chapter">Buildout</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="_sources/contributing.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="search.html" method="get">
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="modindex.html" title="Global Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="buildout.html" title="Buildout"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="faq.html" title="Frequently asked questions"
+             >previous</a> |</li>
+        <li><a href="index.html">Pinax v0.9a1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2010, James Tauber and Pinax Team.
+      Last updated on Jun 06, 2010.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.7.
+    </div>
+  </body>
+</html>

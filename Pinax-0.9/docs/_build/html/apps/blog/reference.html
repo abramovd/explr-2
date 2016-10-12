@@ -1,0 +1,758 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Reference &mdash; Pinax v0.9a1 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.9a1',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="Pinax v0.9a1 documentation" href="../../index.html" />
+    <link rel="up" title="blog" href="index.html" />
+    <link rel="prev" title="Getting started" href="gettingstarted.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="gettingstarted.html" title="Getting started"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">Pinax v0.9a1 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Pinax Apps</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">blog</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="reference">
+<span id="ref-blog-reference"></span><h1>Reference<a class="headerlink" href="#reference" title="Permalink to this headline">¶</a></h1>
+<p>This document covers various components of <tt class="docutils literal"><span class="pre">pinax.apps.blog</span></tt>.</p>
+<div class="section" id="settings">
+<h2>Settings<a class="headerlink" href="#settings" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="pinax-items-per-feed">
+<h3><tt class="docutils literal"><span class="pre">PINAX_ITEMS_PER_FEED</span></tt><a class="headerlink" href="#pinax-items-per-feed" title="Permalink to this headline">¶</a></h3>
+<p>This setting is used to control how many items in a feed.  Defaults to 20:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">PINAX_ITEMS_PER_FEED</span> <span class="o">=</span> <span class="mi">50</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="markup-choices">
+<h3><tt class="docutils literal"><span class="pre">MARKUP_CHOICES</span></tt><a class="headerlink" href="#markup-choices" title="Permalink to this headline">¶</a></h3>
+<p>A list of markup choices to make available in the blog.  Defaults to an empty
+list.  Available choices are: <tt class="docutils literal"><span class="pre">[(&quot;restructuredtext&quot;,</span> <span class="pre">u&quot;reStructuredText&quot;),</span> <span class="pre">(&quot;textile&quot;,</span> <span class="pre">u&quot;Textile&quot;),</span> <span class="pre">(&quot;markdown&quot;,</span> <span class="pre">u&quot;Markdown&quot;),</span> <span class="pre">(&quot;creole&quot;,</span> <span class="pre">u&quot;Creole&quot;)]</span></tt></p>
+<p>The actual origin of this setting is <a class="reference external" href="http://code.google.com/p/django-wikiapp/">django-wikiapp</a> which is one of the
+external applications Pinax integrates. <tt class="docutils literal"><span class="pre">pinax.apps.blog</span></tt> uses it to
+determine, how a post&#8217;s content should be converted from plain text to HTML.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">MARKUP_CHOICES</span> <span class="o">=</span> <span class="p">[(</span><span class="s">&quot;textile&quot;</span><span class="p">,</span> <span class="s">&quot;Textile&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s">&quot;markdown&quot;</span><span class="p">,</span> <span class="s">&quot;Markdown&quot;</span><span class="p">)]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="restructuredtext-filter-settings">
+<h3><tt class="docutils literal"><span class="pre">RESTRUCTUREDTEXT_FILTER_SETTINGS</span></tt><a class="headerlink" href="#restructuredtext-filter-settings" title="Permalink to this headline">¶</a></h3>
+<p>Using this option you can pass additional settings as dictionary through the
+<tt class="docutils literal"><span class="pre">restructuredtext</span></tt> template library to the underlying
+<tt class="docutils literal"><span class="pre">docutils.core.publish_parts</span></tt> function.  Defaults to empty <tt class="docutils literal"><span class="pre">dict</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">RESTRUCTUREDTEXT_FILTER_SETTINGS</span> <span class="o">=</span> <span class="p">{}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="behind-proxy">
+<h3><tt class="docutils literal"><span class="pre">BEHIND_PROXY</span></tt><a class="headerlink" href="#behind-proxy" title="Permalink to this headline">¶</a></h3>
+<p>the users&#8217; real IP addresses are stored when they create blog posts. When
+activated the blog takes the user&#8217;s IP address from
+<tt class="docutils literal"><span class="pre">request.META['HTTP_X_FORWARDED_FOR']</span></tt> instead of
+<tt class="docutils literal"><span class="pre">request.META['REMOTE_ADDR']</span></tt>.  Defaults to False.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">BEHIND_PROXY</span> <span class="o">=</span> <span class="bp">True</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="named-urls">
+<h2>Named Urls<a class="headerlink" href="#named-urls" title="Permalink to this headline">¶</a></h2>
+<p>The named urls in this app should enable the use of of the <tt class="docutils literal"><span class="pre">{%</span> <span class="pre">url</span> <span class="pre">%}</span></tt>
+template tag as well as <tt class="docutils literal"><span class="pre">reverse</span></tt> lookups in your project code without having
+to know the implementation details of this app.</p>
+<div class="section" id="blog-post">
+<h3>blog_post<a class="headerlink" href="#blog-post" title="Permalink to this headline">¶</a></h3>
+<p>Render a template with a specific blog post entry in context.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name" colspan="2">keyword arguments:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body"><tt class="docutils literal"><span class="pre">(?P&lt;username&gt;[-\w]+)/(?P&lt;year&gt;\d{4})/(?P&lt;month&gt;\d{2})/(?P&lt;slug&gt;[-\w]+)</span></tt></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="blog-list-all">
+<h3>blog_list_all<a class="headerlink" href="#blog-list-all" title="Permalink to this headline">¶</a></h3>
+<p>Render a template with a queryset in context of all blog posts.</p>
+</div>
+<div class="section" id="blog-list-user">
+<h3>blog_list_user<a class="headerlink" href="#blog-list-user" title="Permalink to this headline">¶</a></h3>
+<p>Renders a template with a queryset in context of blog posts that are owned by a
+specified username.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name" colspan="2">keyword arguments:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body">The username to list blog posts for matching <tt class="docutils literal"><span class="pre">(?P&lt;username&gt;\w+)</span></tt>.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="blog-list-yours">
+<h3>blog_list_yours<a class="headerlink" href="#blog-list-yours" title="Permalink to this headline">¶</a></h3>
+<p>Renders a template with a queryset in context of blog posts that are owned by
+the logged in user.</p>
+</div>
+<div class="section" id="blog-new">
+<h3>blog_new<a class="headerlink" href="#blog-new" title="Permalink to this headline">¶</a></h3>
+<p>A GET request renders a template with a form instance in context.  A POST request
+processes the data from this form and redirects user to <a class="reference internal" href="#blog-list-yours">blog_list_yours</a>.</p>
+</div>
+<div class="section" id="blog-edit">
+<h3>blog_edit<a class="headerlink" href="#blog-edit" title="Permalink to this headline">¶</a></h3>
+<p>Upon a GET request a form is rendered to edit the blog entry.  This urls also
+will process the POST request from submitting the form.  After updating the post
+the response will be redirected to <a class="reference internal" href="#blog-list-yours">blog_list_yours</a>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">arguments:</th><td class="field-body">The id for the blog post that matches <tt class="docutils literal"><span class="pre">(\d+)</span></tt>.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="blog-destroy">
+<h3>blog_destroy<a class="headerlink" href="#blog-destroy" title="Permalink to this headline">¶</a></h3>
+<p>Delete a blog post that is yours on POST requests.  Otherwise, it redirects
+the user to <a class="reference internal" href="#blog-list-yours">blog_list_yours</a>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">arguments:</th><td class="field-body">The id for the blog post that matches <tt class="docutils literal"><span class="pre">(\d+)</span></tt>.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="blog-form-validate">
+<h3>blog_form_validate<a class="headerlink" href="#blog-form-validate" title="Permalink to this headline">¶</a></h3>
+<p>Uses the ajax_validation app, it validates the blog post with the <tt class="docutils literal"><span class="pre">pinax.apps.blog.forms.BlogForm</span></tt>.</p>
+</div>
+</div>
+<div class="section" id="templates">
+<h2>Templates<a class="headerlink" href="#templates" title="Permalink to this headline">¶</a></h2>
+<p>Templates should be placed in an <tt class="docutils literal"><span class="pre">blog/</span></tt> folder at the root of one of your
+template search paths.</p>
+<div class="section" id="blogs-html">
+<h3>blogs.html<a class="headerlink" href="#blogs-html" title="Permalink to this headline">¶</a></h3>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">context:</th><td class="field-body"><tt class="docutils literal"><span class="pre">blogs</span></tt></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="post-html">
+<h3>post.html<a class="headerlink" href="#post-html" title="Permalink to this headline">¶</a></h3>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">context:</th><td class="field-body"><tt class="docutils literal"><span class="pre">post</span></tt></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="your-posts-html">
+<h3>your_posts.html<a class="headerlink" href="#your-posts-html" title="Permalink to this headline">¶</a></h3>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">context:</th><td class="field-body"><tt class="docutils literal"><span class="pre">blogs</span></tt></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="new-html">
+<h3>new.html<a class="headerlink" href="#new-html" title="Permalink to this headline">¶</a></h3>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">context:</th><td class="field-body"><tt class="docutils literal"><span class="pre">blog_form</span></tt></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="edit-html">
+<h3>edit.html<a class="headerlink" href="#edit-html" title="Permalink to this headline">¶</a></h3>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">context:</th><td class="field-body"><tt class="docutils literal"><span class="pre">blog_form</span></tt>, <tt class="docutils literal"><span class="pre">post</span></tt></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="modules">
+<h2>Modules<a class="headerlink" href="#modules" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-pinax.apps.blog.admin">
+<h3><tt class="docutils literal"><span class="pre">pinax.apps.blog.admin</span></tt><a class="headerlink" href="#module-pinax.apps.blog.admin" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="pinax.apps.blog.admin.PostAdmin">
+<em class="property">class </em><tt class="descclassname">pinax.apps.blog.admin.</tt><tt class="descname">PostAdmin</tt><big>(</big><em>model</em>, <em>admin_site</em><big>)</big><a class="headerlink" href="#pinax.apps.blog.admin.PostAdmin" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="pinax.apps.blog.admin.PostAdmin.media">
+<tt class="descname">media</tt><a class="headerlink" href="#pinax.apps.blog.admin.PostAdmin.media" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-pinax.apps.blog.feeds">
+<h3><tt class="docutils literal"><span class="pre">pinax.apps.blog.feeds</span></tt><a class="headerlink" href="#module-pinax.apps.blog.feeds" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="pinax.apps.blog.feeds.BasePostFeed">
+<em class="property">class </em><tt class="descclassname">pinax.apps.blog.feeds.</tt><tt class="descname">BasePostFeed</tt><big>(</big><em>slug</em>, <em>feed_url</em><big>)</big><a class="headerlink" href="#pinax.apps.blog.feeds.BasePostFeed" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="pinax.apps.blog.feeds.BasePostFeed.item_authors">
+<tt class="descname">item_authors</tt><big>(</big><em>post</em><big>)</big><a class="headerlink" href="#pinax.apps.blog.feeds.BasePostFeed.item_authors" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pinax.apps.blog.feeds.BasePostFeed.item_content">
+<tt class="descname">item_content</tt><big>(</big><em>post</em><big>)</big><a class="headerlink" href="#pinax.apps.blog.feeds.BasePostFeed.item_content" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pinax.apps.blog.feeds.BasePostFeed.item_id">
+<tt class="descname">item_id</tt><big>(</big><em>post</em><big>)</big><a class="headerlink" href="#pinax.apps.blog.feeds.BasePostFeed.item_id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pinax.apps.blog.feeds.BasePostFeed.item_links">
+<tt class="descname">item_links</tt><big>(</big><em>post</em><big>)</big><a class="headerlink" href="#pinax.apps.blog.feeds.BasePostFeed.item_links" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pinax.apps.blog.feeds.BasePostFeed.item_published">
+<tt class="descname">item_published</tt><big>(</big><em>post</em><big>)</big><a class="headerlink" href="#pinax.apps.blog.feeds.BasePostFeed.item_published" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pinax.apps.blog.feeds.BasePostFeed.item_title">
+<tt class="descname">item_title</tt><big>(</big><em>post</em><big>)</big><a class="headerlink" href="#pinax.apps.blog.feeds.BasePostFeed.item_title" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pinax.apps.blog.feeds.BasePostFeed.item_updated">
+<tt class="descname">item_updated</tt><big>(</big><em>post</em><big>)</big><a class="headerlink" href="#pinax.apps.blog.feeds.BasePostFeed.item_updated" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pinax.apps.blog.feeds.BlogFeedAll">
+<em class="property">class </em><tt class="descclassname">pinax.apps.blog.feeds.</tt><tt class="descname">BlogFeedAll</tt><big>(</big><em>slug</em>, <em>feed_url</em><big>)</big><a class="headerlink" href="#pinax.apps.blog.feeds.BlogFeedAll" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="pinax.apps.blog.feeds.BlogFeedAll.feed_id">
+<tt class="descname">feed_id</tt><big>(</big><big>)</big><a class="headerlink" href="#pinax.apps.blog.feeds.BlogFeedAll.feed_id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pinax.apps.blog.feeds.BlogFeedAll.feed_links">
+<tt class="descname">feed_links</tt><big>(</big><big>)</big><a class="headerlink" href="#pinax.apps.blog.feeds.BlogFeedAll.feed_links" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pinax.apps.blog.feeds.BlogFeedAll.feed_title">
+<tt class="descname">feed_title</tt><big>(</big><big>)</big><a class="headerlink" href="#pinax.apps.blog.feeds.BlogFeedAll.feed_title" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pinax.apps.blog.feeds.BlogFeedAll.feed_updated">
+<tt class="descname">feed_updated</tt><big>(</big><big>)</big><a class="headerlink" href="#pinax.apps.blog.feeds.BlogFeedAll.feed_updated" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pinax.apps.blog.feeds.BlogFeedAll.items">
+<tt class="descname">items</tt><big>(</big><big>)</big><a class="headerlink" href="#pinax.apps.blog.feeds.BlogFeedAll.items" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pinax.apps.blog.feeds.BlogFeedUser">
+<em class="property">class </em><tt class="descclassname">pinax.apps.blog.feeds.</tt><tt class="descname">BlogFeedUser</tt><big>(</big><em>slug</em>, <em>feed_url</em><big>)</big><a class="headerlink" href="#pinax.apps.blog.feeds.BlogFeedUser" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="pinax.apps.blog.feeds.BlogFeedUser.feed_id">
+<tt class="descname">feed_id</tt><big>(</big><em>user</em><big>)</big><a class="headerlink" href="#pinax.apps.blog.feeds.BlogFeedUser.feed_id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pinax.apps.blog.feeds.BlogFeedUser.feed_links">
+<tt class="descname">feed_links</tt><big>(</big><em>user</em><big>)</big><a class="headerlink" href="#pinax.apps.blog.feeds.BlogFeedUser.feed_links" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pinax.apps.blog.feeds.BlogFeedUser.feed_title">
+<tt class="descname">feed_title</tt><big>(</big><em>user</em><big>)</big><a class="headerlink" href="#pinax.apps.blog.feeds.BlogFeedUser.feed_title" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pinax.apps.blog.feeds.BlogFeedUser.feed_updated">
+<tt class="descname">feed_updated</tt><big>(</big><em>user</em><big>)</big><a class="headerlink" href="#pinax.apps.blog.feeds.BlogFeedUser.feed_updated" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pinax.apps.blog.feeds.BlogFeedUser.get_object">
+<tt class="descname">get_object</tt><big>(</big><em>params</em><big>)</big><a class="headerlink" href="#pinax.apps.blog.feeds.BlogFeedUser.get_object" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pinax.apps.blog.feeds.BlogFeedUser.items">
+<tt class="descname">items</tt><big>(</big><em>user</em><big>)</big><a class="headerlink" href="#pinax.apps.blog.feeds.BlogFeedUser.items" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-pinax.apps.blog.forms">
+<h3><tt class="docutils literal"><span class="pre">pinax.apps.blog.forms</span></tt><a class="headerlink" href="#module-pinax.apps.blog.forms" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="pinax.apps.blog.forms.BlogForm">
+<em class="property">class </em><tt class="descclassname">pinax.apps.blog.forms.</tt><tt class="descname">BlogForm</tt><big>(</big><em>user=None</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#pinax.apps.blog.forms.BlogForm" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="class">
+<dt id="pinax.apps.blog.forms.BlogForm.Meta">
+<em class="property">class </em><tt class="descname">Meta</tt><a class="headerlink" href="#pinax.apps.blog.forms.BlogForm.Meta" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="pinax.apps.blog.forms.BlogForm.Meta.model">
+<tt class="descname">model</tt><a class="headerlink" href="#pinax.apps.blog.forms.BlogForm.Meta.model" title="Permalink to this definition">¶</a></dt>
+<dd>alias of <tt class="xref docutils literal"><span class="pre">Post</span></tt></dd></dl>
+
+</dd></dl>
+
+<dl class="method">
+<dt id="pinax.apps.blog.forms.BlogForm.clean_slug">
+<tt class="descclassname">BlogForm.</tt><tt class="descname">clean_slug</tt><big>(</big><big>)</big><a class="headerlink" href="#pinax.apps.blog.forms.BlogForm.clean_slug" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="pinax.apps.blog.forms.BlogForm.media">
+<tt class="descclassname">BlogForm.</tt><tt class="descname">media</tt><a class="headerlink" href="#pinax.apps.blog.forms.BlogForm.media" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-pinax.apps.blog.models">
+<h3><tt class="docutils literal"><span class="pre">pinax.apps.blog.models</span></tt><a class="headerlink" href="#module-pinax.apps.blog.models" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="pinax.apps.blog.models.Post">
+<em class="property">class </em><tt class="descclassname">pinax.apps.blog.models.</tt><tt class="descname">Post</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#pinax.apps.blog.models.Post" title="Permalink to this definition">¶</a></dt>
+<dd><p>A model which holds a single post.</p>
+<dl class="exception">
+<dt id="pinax.apps.blog.models.Post.DoesNotExist">
+<em class="property">exception </em><tt class="descname">DoesNotExist</tt><a class="headerlink" href="#pinax.apps.blog.models.Post.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="exception">
+<dt id="pinax.apps.blog.models.Post.MultipleObjectsReturned">
+<em class="property">exception </em><tt class="descclassname">Post.</tt><tt class="descname">MultipleObjectsReturned</tt><a class="headerlink" href="#pinax.apps.blog.models.Post.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="pinax.apps.blog.models.Post.author">
+<tt class="descclassname">Post.</tt><tt class="descname">author</tt><a class="headerlink" href="#pinax.apps.blog.models.Post.author" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pinax.apps.blog.models.Post.get_absolute_url">
+<tt class="descclassname">Post.</tt><tt class="descname">get_absolute_url</tt><big>(</big><em>*moreargs</em>, <em>**morekwargs</em><big>)</big><a class="headerlink" href="#pinax.apps.blog.models.Post.get_absolute_url" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pinax.apps.blog.models.Post.get_next_by_created_at">
+<tt class="descclassname">Post.</tt><tt class="descname">get_next_by_created_at</tt><big>(</big><em>*moreargs</em>, <em>**morekwargs</em><big>)</big><a class="headerlink" href="#pinax.apps.blog.models.Post.get_next_by_created_at" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pinax.apps.blog.models.Post.get_next_by_publish">
+<tt class="descclassname">Post.</tt><tt class="descname">get_next_by_publish</tt><big>(</big><em>*moreargs</em>, <em>**morekwargs</em><big>)</big><a class="headerlink" href="#pinax.apps.blog.models.Post.get_next_by_publish" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pinax.apps.blog.models.Post.get_next_by_updated_at">
+<tt class="descclassname">Post.</tt><tt class="descname">get_next_by_updated_at</tt><big>(</big><em>*moreargs</em>, <em>**morekwargs</em><big>)</big><a class="headerlink" href="#pinax.apps.blog.models.Post.get_next_by_updated_at" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pinax.apps.blog.models.Post.get_previous_by_created_at">
+<tt class="descclassname">Post.</tt><tt class="descname">get_previous_by_created_at</tt><big>(</big><em>*moreargs</em>, <em>**morekwargs</em><big>)</big><a class="headerlink" href="#pinax.apps.blog.models.Post.get_previous_by_created_at" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pinax.apps.blog.models.Post.get_previous_by_publish">
+<tt class="descclassname">Post.</tt><tt class="descname">get_previous_by_publish</tt><big>(</big><em>*moreargs</em>, <em>**morekwargs</em><big>)</big><a class="headerlink" href="#pinax.apps.blog.models.Post.get_previous_by_publish" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pinax.apps.blog.models.Post.get_previous_by_updated_at">
+<tt class="descclassname">Post.</tt><tt class="descname">get_previous_by_updated_at</tt><big>(</big><em>*moreargs</em>, <em>**morekwargs</em><big>)</big><a class="headerlink" href="#pinax.apps.blog.models.Post.get_previous_by_updated_at" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pinax.apps.blog.models.Post.get_status_display">
+<tt class="descclassname">Post.</tt><tt class="descname">get_status_display</tt><big>(</big><em>*moreargs</em>, <em>**morekwargs</em><big>)</big><a class="headerlink" href="#pinax.apps.blog.models.Post.get_status_display" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pinax.apps.blog.models.Post.save">
+<tt class="descclassname">Post.</tt><tt class="descname">save</tt><big>(</big><em>**kwargs</em><big>)</big><a class="headerlink" href="#pinax.apps.blog.models.Post.save" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="pinax.apps.blog.models.new_comment">
+<tt class="descclassname">pinax.apps.blog.models.</tt><tt class="descname">new_comment</tt><big>(</big><em>sender</em>, <em>instance</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#pinax.apps.blog.models.new_comment" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-pinax.apps.blog.templatetags.blog_tags">
+<h3><tt class="docutils literal"><span class="pre">pinax.apps.blog.templatetags.blog_tags</span></tt><a class="headerlink" href="#module-pinax.apps.blog.templatetags.blog_tags" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="pinax.apps.blog.templatetags.blog_tags.show_blog_post">
+<tt class="descclassname">pinax.apps.blog.templatetags.blog_tags.</tt><tt class="descname">show_blog_post</tt><big>(</big><em>blog_post</em><big>)</big><a class="headerlink" href="#pinax.apps.blog.templatetags.blog_tags.show_blog_post" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-pinax.apps.blog.templatetags.creole">
+<h3><tt class="docutils literal"><span class="pre">pinax.apps.blog.templatetags.creole</span></tt><a class="headerlink" href="#module-pinax.apps.blog.templatetags.creole" title="Permalink to this headline">¶</a></h3>
+<p>Provides the <cite>creole</cite> template filter, to render
+texts using the markup used by the MoinMoin wiki.</p>
+<dl class="class">
+<dt id="pinax.apps.blog.templatetags.creole.CreoleTextNode">
+<em class="property">class </em><tt class="descclassname">pinax.apps.blog.templatetags.creole.</tt><tt class="descname">CreoleTextNode</tt><big>(</big><em>nodelist</em><big>)</big><a class="headerlink" href="#pinax.apps.blog.templatetags.creole.CreoleTextNode" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="pinax.apps.blog.templatetags.creole.CreoleTextNode.render">
+<tt class="descname">render</tt><big>(</big><em>context</em><big>)</big><a class="headerlink" href="#pinax.apps.blog.templatetags.creole.CreoleTextNode.render" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="pinax.apps.blog.templatetags.creole.creole">
+<tt class="descclassname">pinax.apps.blog.templatetags.creole.</tt><tt class="descname">creole</tt><big>(</big><em>text</em>, <em>**kw</em><big>)</big><a class="headerlink" href="#pinax.apps.blog.templatetags.creole.creole" title="Permalink to this definition">¶</a></dt>
+<dd>Returns the text rendered by the Creole markup.</dd></dl>
+
+<dl class="function">
+<dt id="pinax.apps.blog.templatetags.creole.crl_tag">
+<tt class="descclassname">pinax.apps.blog.templatetags.creole.</tt><tt class="descname">crl_tag</tt><big>(</big><em>parser</em>, <em>token</em><big>)</big><a class="headerlink" href="#pinax.apps.blog.templatetags.creole.crl_tag" title="Permalink to this definition">¶</a></dt>
+<dd>Render the Creole into html. Will pre-render template code first.</dd></dl>
+
+</div>
+<div class="section" id="module-pinax.apps.blog.templatetags.restructuredtext">
+<h3><tt class="docutils literal"><span class="pre">pinax.apps.blog.templatetags.restructuredtext</span></tt><a class="headerlink" href="#module-pinax.apps.blog.templatetags.restructuredtext" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="pinax.apps.blog.templatetags.restructuredtext.ReStructuredTextNode">
+<em class="property">class </em><tt class="descclassname">pinax.apps.blog.templatetags.restructuredtext.</tt><tt class="descname">ReStructuredTextNode</tt><big>(</big><em>nodelist</em><big>)</big><a class="headerlink" href="#pinax.apps.blog.templatetags.restructuredtext.ReStructuredTextNode" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="pinax.apps.blog.templatetags.restructuredtext.ReStructuredTextNode.render">
+<tt class="descname">render</tt><big>(</big><em>context</em><big>)</big><a class="headerlink" href="#pinax.apps.blog.templatetags.restructuredtext.ReStructuredTextNode.render" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="pinax.apps.blog.templatetags.restructuredtext.flatpagehist_diff_previous">
+<tt class="descclassname">pinax.apps.blog.templatetags.restructuredtext.</tt><tt class="descname">flatpagehist_diff_previous</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#pinax.apps.blog.templatetags.restructuredtext.flatpagehist_diff_previous" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="pinax.apps.blog.templatetags.restructuredtext.rest_tag">
+<tt class="descclassname">pinax.apps.blog.templatetags.restructuredtext.</tt><tt class="descname">rest_tag</tt><big>(</big><em>parser</em>, <em>token</em><big>)</big><a class="headerlink" href="#pinax.apps.blog.templatetags.restructuredtext.rest_tag" title="Permalink to this definition">¶</a></dt>
+<dd><p>Render the ReStructuredText into html. Will pre-render template code first.</p>
+<p>Example:</p>
+<div class="highlight-python"><pre>{% restructuredtext %}
+    ===================================
+    To: {{ send_to }}
+    ===================================
+    {% include "email_form.rst" %}
+{% endrestructuredtext %}</pre>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="pinax.apps.blog.templatetags.restructuredtext.restructuredparts">
+<tt class="descclassname">pinax.apps.blog.templatetags.restructuredtext.</tt><tt class="descname">restructuredparts</tt><big>(</big><em>value</em>, <em>**overrides</em><big>)</big><a class="headerlink" href="#pinax.apps.blog.templatetags.restructuredtext.restructuredparts" title="Permalink to this definition">¶</a></dt>
+<dd>return the restructured text parts</dd></dl>
+
+<dl class="function">
+<dt id="pinax.apps.blog.templatetags.restructuredtext.restructuredtext">
+<tt class="descclassname">pinax.apps.blog.templatetags.restructuredtext.</tt><tt class="descname">restructuredtext</tt><big>(</big><em>value</em>, <em>**overrides</em><big>)</big><a class="headerlink" href="#pinax.apps.blog.templatetags.restructuredtext.restructuredtext" title="Permalink to this definition">¶</a></dt>
+<dd>The Django version of this markup filter has an issue when only one title
+or subtitle is supplied in that they are dropped from the markup. This is
+due to the use of &#8220;fragment&#8221; instead of something like &#8220;html_body&#8221;. We do
+not want to use &#8220;html_body&#8221; either due to some header/footer stuff we want
+to prevent, but we want to keep the title and subtitle. So we include them
+if present.</dd></dl>
+
+<dl class="function">
+<dt id="pinax.apps.blog.templatetags.restructuredtext.restructuredtext_has_errors">
+<tt class="descclassname">pinax.apps.blog.templatetags.restructuredtext.</tt><tt class="descname">restructuredtext_has_errors</tt><big>(</big><em>value</em>, <em>do_raise=False</em><big>)</big><a class="headerlink" href="#pinax.apps.blog.templatetags.restructuredtext.restructuredtext_has_errors" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="pinax.apps.blog.templatetags.restructuredtext.rstflatpage">
+<tt class="descclassname">pinax.apps.blog.templatetags.restructuredtext.</tt><tt class="descname">rstflatpage</tt><big>(</big><em>context</em><big>)</big><a class="headerlink" href="#pinax.apps.blog.templatetags.restructuredtext.rstflatpage" title="Permalink to this definition">¶</a></dt>
+<dd><p>The core content of the restructuredtext flatpage with history, editing,
+etc. for use in your &#8220;flatpages/default.html&#8221; or custom template.</p>
+<p>Example:</p>
+<div class="highlight-python"><pre>&lt;html&gt;&lt;head&gt;&lt;title&gt;{{ flatpage.title }}&lt;/title&gt;&lt;/head&gt;
+      &lt;body&gt;{% load restructuredtext %}{% rstflatpage %}&lt;/body&gt;
+&lt;/html&gt;</pre>
+</div>
+<p>This will inject one of 6 different page contents:</p>
+<ul class="simple">
+<li>Just the flatpage.content for normal flatpages (so templates can be
+used with normal flatpages).</li>
+<li>A custom 404 page (with optional create/restore form).</li>
+<li>View current (with optional edit/history/delete form).</li>
+<li>View version (with optional history/current/revert form).</li>
+<li>Edit form (with preview/save/cancel).</li>
+<li>History listing.</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="pinax.apps.blog.templatetags.restructuredtext.rstflatpage_feeds">
+<tt class="descclassname">pinax.apps.blog.templatetags.restructuredtext.</tt><tt class="descname">rstflatpage_feeds</tt><big>(</big><em>context</em><big>)</big><a class="headerlink" href="#pinax.apps.blog.templatetags.restructuredtext.rstflatpage_feeds" title="Permalink to this definition">¶</a></dt>
+<dd>Optionally inserts the history feeds</dd></dl>
+
+</div>
+<div class="section" id="module-pinax.apps.blog.templatetags.switchcase">
+<h3><tt class="docutils literal"><span class="pre">pinax.apps.blog.templatetags.switchcase</span></tt><a class="headerlink" href="#module-pinax.apps.blog.templatetags.switchcase" title="Permalink to this headline">¶</a></h3>
+<p>Simplistic switch/case tag for Django.</p>
+<p>Usage:</p>
+<div class="highlight-python"><pre>{% load switchcase %}
+{% switch meal %}
+    {% case "spam" %}...{% endcase %}
+    {% case "eggs" %}...{% endcase %}
+{% endswitch %}</pre>
+</div>
+<dl class="class">
+<dt id="pinax.apps.blog.templatetags.switchcase.CaseNode">
+<em class="property">class </em><tt class="descclassname">pinax.apps.blog.templatetags.switchcase.</tt><tt class="descname">CaseNode</tt><big>(</big><em>value</em>, <em>childnodes</em><big>)</big><a class="headerlink" href="#pinax.apps.blog.templatetags.switchcase.CaseNode" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="pinax.apps.blog.templatetags.switchcase.CaseNode.equals">
+<tt class="descname">equals</tt><big>(</big><em>otherval</em>, <em>context</em><big>)</big><a class="headerlink" href="#pinax.apps.blog.templatetags.switchcase.CaseNode.equals" title="Permalink to this definition">¶</a></dt>
+<dd>Check to see if this case&#8217;s value equals some other value. This is
+called from <tt class="docutils literal"><span class="pre">SwitchNode.render()</span></tt>, above.</dd></dl>
+
+<dl class="method">
+<dt id="pinax.apps.blog.templatetags.switchcase.CaseNode.render">
+<tt class="descname">render</tt><big>(</big><em>context</em><big>)</big><a class="headerlink" href="#pinax.apps.blog.templatetags.switchcase.CaseNode.render" title="Permalink to this definition">¶</a></dt>
+<dd>Render this particular case, which means rendering its child nodes.</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pinax.apps.blog.templatetags.switchcase.SwitchNode">
+<em class="property">class </em><tt class="descclassname">pinax.apps.blog.templatetags.switchcase.</tt><tt class="descname">SwitchNode</tt><big>(</big><em>value</em>, <em>cases</em><big>)</big><a class="headerlink" href="#pinax.apps.blog.templatetags.switchcase.SwitchNode" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="pinax.apps.blog.templatetags.switchcase.SwitchNode.render">
+<tt class="descname">render</tt><big>(</big><em>context</em><big>)</big><a class="headerlink" href="#pinax.apps.blog.templatetags.switchcase.SwitchNode.render" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="pinax.apps.blog.templatetags.switchcase.case">
+<tt class="descclassname">pinax.apps.blog.templatetags.switchcase.</tt><tt class="descname">case</tt><big>(</big><em>parser</em>, <em>token</em><big>)</big><a class="headerlink" href="#pinax.apps.blog.templatetags.switchcase.case" title="Permalink to this definition">¶</a></dt>
+<dd>Case tag. Used only inside <tt class="docutils literal"><span class="pre">{%</span> <span class="pre">switch</span> <span class="pre">%}</span></tt> tags, so see above for those docs.</dd></dl>
+
+<dl class="function">
+<dt id="pinax.apps.blog.templatetags.switchcase.switch">
+<tt class="descclassname">pinax.apps.blog.templatetags.switchcase.</tt><tt class="descname">switch</tt><big>(</big><em>parser</em>, <em>token</em><big>)</big><a class="headerlink" href="#pinax.apps.blog.templatetags.switchcase.switch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Switch tag.  Usage:</p>
+<div class="highlight-python"><pre>{% switch meal %}
+    {% case "spam" %}...{% endcase %}
+    {% case "eggs" %}...{% endcase %}
+{% endswitch %}</pre>
+</div>
+<p>Note that <tt class="docutils literal"><span class="pre">{%</span> <span class="pre">case</span> <span class="pre">%}</span></tt> arguments can be variables if you like (as can
+switch arguments, buts that&#8217;s a bit silly).</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-pinax.apps.blog.views">
+<h3><tt class="docutils literal"><span class="pre">pinax.apps.blog.views</span></tt><a class="headerlink" href="#module-pinax.apps.blog.views" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="pinax.apps.blog.views.blogs">
+<tt class="descclassname">pinax.apps.blog.views.</tt><tt class="descname">blogs</tt><big>(</big><em>request</em>, <em>username=None</em>, <em>template_name='blog/blogs.html'</em><big>)</big><a class="headerlink" href="#pinax.apps.blog.views.blogs" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="pinax.apps.blog.views.destroy">
+<tt class="descclassname">pinax.apps.blog.views.</tt><tt class="descname">destroy</tt><big>(</big><em>request</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#pinax.apps.blog.views.destroy" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="pinax.apps.blog.views.edit">
+<tt class="descclassname">pinax.apps.blog.views.</tt><tt class="descname">edit</tt><big>(</big><em>request</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#pinax.apps.blog.views.edit" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="pinax.apps.blog.views.new">
+<tt class="descclassname">pinax.apps.blog.views.</tt><tt class="descname">new</tt><big>(</big><em>request</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#pinax.apps.blog.views.new" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="pinax.apps.blog.views.post">
+<tt class="descclassname">pinax.apps.blog.views.</tt><tt class="descname">post</tt><big>(</big><em>request</em>, <em>username</em>, <em>year</em>, <em>month</em>, <em>slug</em>, <em>template_name='blog/post.html'</em><big>)</big><a class="headerlink" href="#pinax.apps.blog.views.post" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="pinax.apps.blog.views.your_posts">
+<tt class="descclassname">pinax.apps.blog.views.</tt><tt class="descname">your_posts</tt><big>(</big><em>request</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#pinax.apps.blog.views.your_posts" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="#">Reference</a><ul>
+<li><a class="reference external" href="#settings">Settings</a><ul>
+<li><a class="reference external" href="#pinax-items-per-feed"><tt class="docutils literal"><span class="pre">PINAX_ITEMS_PER_FEED</span></tt></a></li>
+<li><a class="reference external" href="#markup-choices"><tt class="docutils literal"><span class="pre">MARKUP_CHOICES</span></tt></a></li>
+<li><a class="reference external" href="#restructuredtext-filter-settings"><tt class="docutils literal"><span class="pre">RESTRUCTUREDTEXT_FILTER_SETTINGS</span></tt></a></li>
+<li><a class="reference external" href="#behind-proxy"><tt class="docutils literal"><span class="pre">BEHIND_PROXY</span></tt></a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#named-urls">Named Urls</a><ul>
+<li><a class="reference external" href="#blog-post">blog_post</a></li>
+<li><a class="reference external" href="#blog-list-all">blog_list_all</a></li>
+<li><a class="reference external" href="#blog-list-user">blog_list_user</a></li>
+<li><a class="reference external" href="#blog-list-yours">blog_list_yours</a></li>
+<li><a class="reference external" href="#blog-new">blog_new</a></li>
+<li><a class="reference external" href="#blog-edit">blog_edit</a></li>
+<li><a class="reference external" href="#blog-destroy">blog_destroy</a></li>
+<li><a class="reference external" href="#blog-form-validate">blog_form_validate</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#templates">Templates</a><ul>
+<li><a class="reference external" href="#blogs-html">blogs.html</a></li>
+<li><a class="reference external" href="#post-html">post.html</a></li>
+<li><a class="reference external" href="#your-posts-html">your_posts.html</a></li>
+<li><a class="reference external" href="#new-html">new.html</a></li>
+<li><a class="reference external" href="#edit-html">edit.html</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#modules">Modules</a><ul>
+<li><a class="reference external" href="#module-pinax.apps.blog.admin"><tt class="docutils literal"><span class="pre">pinax.apps.blog.admin</span></tt></a></li>
+<li><a class="reference external" href="#module-pinax.apps.blog.feeds"><tt class="docutils literal"><span class="pre">pinax.apps.blog.feeds</span></tt></a></li>
+<li><a class="reference external" href="#module-pinax.apps.blog.forms"><tt class="docutils literal"><span class="pre">pinax.apps.blog.forms</span></tt></a></li>
+<li><a class="reference external" href="#module-pinax.apps.blog.models"><tt class="docutils literal"><span class="pre">pinax.apps.blog.models</span></tt></a></li>
+<li><a class="reference external" href="#module-pinax.apps.blog.templatetags.blog_tags"><tt class="docutils literal"><span class="pre">pinax.apps.blog.templatetags.blog_tags</span></tt></a></li>
+<li><a class="reference external" href="#module-pinax.apps.blog.templatetags.creole"><tt class="docutils literal"><span class="pre">pinax.apps.blog.templatetags.creole</span></tt></a></li>
+<li><a class="reference external" href="#module-pinax.apps.blog.templatetags.restructuredtext"><tt class="docutils literal"><span class="pre">pinax.apps.blog.templatetags.restructuredtext</span></tt></a></li>
+<li><a class="reference external" href="#module-pinax.apps.blog.templatetags.switchcase"><tt class="docutils literal"><span class="pre">pinax.apps.blog.templatetags.switchcase</span></tt></a></li>
+<li><a class="reference external" href="#module-pinax.apps.blog.views"><tt class="docutils literal"><span class="pre">pinax.apps.blog.views</span></tt></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="gettingstarted.html"
+                                  title="previous chapter">Getting started</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/apps/blog/reference.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="../../search.html" method="get">
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="gettingstarted.html" title="Getting started"
+             >previous</a> |</li>
+        <li><a href="../../index.html">Pinax v0.9a1 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Pinax Apps</a> &raquo;</li>
+          <li><a href="index.html" >blog</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2010, James Tauber and Pinax Team.
+      Last updated on Jun 06, 2010.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.7.
+    </div>
+  </body>
+</html>

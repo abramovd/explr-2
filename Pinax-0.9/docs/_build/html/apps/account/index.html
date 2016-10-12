@@ -1,0 +1,190 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>pinax.apps.account &mdash; Pinax v0.9a1 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.9a1',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="Pinax v0.9a1 documentation" href="../../index.html" />
+    <link rel="up" title="Pinax Apps" href="../index.html" />
+    <link rel="next" title="Getting started" href="gettingstarted.html" />
+    <link rel="prev" title="Pinax Apps" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="gettingstarted.html" title="Getting started"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../index.html" title="Pinax Apps"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">Pinax v0.9a1 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">Pinax Apps</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="pinax-apps-account">
+<span id="ref-pinax-apps-account-index"></span><h1><tt class="docutils literal"><span class="pre">pinax.apps.account</span></tt><a class="headerlink" href="#pinax-apps-account" title="Permalink to this headline">¶</a></h1>
+<p>An app to handle account signup, login and management.</p>
+<p>The account app is already integrated with most projects. Our default project,
+zero, does not come with account integrated.</p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="gettingstarted.html">Getting started</a><ul>
+<li class="toctree-l2"><a class="reference external" href="gettingstarted.html#prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference external" href="gettingstarted.html#installation">Installation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference external" href="reference.html">Reference</a><ul>
+<li class="toctree-l2"><a class="reference external" href="reference.html#settings">Settings</a><ul>
+<li class="toctree-l3"><a class="reference external" href="reference.html#account-email-verification"><tt class="docutils literal"><span class="pre">ACCOUNT_EMAIL_VERIFICATION</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="reference.html#login-redirect-urlname"><tt class="docutils literal"><span class="pre">LOGIN_REDIRECT_URLNAME</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="reference.html#static-url"><tt class="docutils literal"><span class="pre">STATIC_URL</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="reference.html#account-open-signup"><tt class="docutils literal"><span class="pre">ACCOUNT_OPEN_SIGNUP</span></tt></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference external" href="reference.html#named-urls">Named URLs</a><ul>
+<li class="toctree-l3"><a class="reference external" href="reference.html#acct-email">acct_email</a></li>
+<li class="toctree-l3"><a class="reference external" href="reference.html#acct-signup">acct_signup</a></li>
+<li class="toctree-l3"><a class="reference external" href="reference.html#acct-login">acct_login</a></li>
+<li class="toctree-l3"><a class="reference external" href="reference.html#acct-login-openid">acct_login_openid</a></li>
+<li class="toctree-l3"><a class="reference external" href="reference.html#acct-passwd">acct_passwd</a></li>
+<li class="toctree-l3"><a class="reference external" href="reference.html#acct-passwd-set">acct_passwd_set</a></li>
+<li class="toctree-l3"><a class="reference external" href="reference.html#acct-passwd-delete">acct_passwd_delete</a></li>
+<li class="toctree-l3"><a class="reference external" href="reference.html#acct-passwd-delete-done">acct_passwd_delete_done</a></li>
+<li class="toctree-l3"><a class="reference external" href="reference.html#acct-timezone-change">acct_timezone_change</a></li>
+<li class="toctree-l3"><a class="reference external" href="reference.html#acct-other-services">acct_other_services</a></li>
+<li class="toctree-l3"><a class="reference external" href="reference.html#acct-other-services-remove">acct_other_services_remove</a></li>
+<li class="toctree-l3"><a class="reference external" href="reference.html#acct-language-change">acct_language_change</a></li>
+<li class="toctree-l3"><a class="reference external" href="reference.html#acct-logout">acct_logout</a></li>
+<li class="toctree-l3"><a class="reference external" href="reference.html#acct-confirm-email">acct_confirm_email</a></li>
+<li class="toctree-l3"><a class="reference external" href="reference.html#acct-passwd-reset">acct_passwd_reset</a></li>
+<li class="toctree-l3"><a class="reference external" href="reference.html#acct-passwd-reset-done">acct_passwd_reset_done</a></li>
+<li class="toctree-l3"><a class="reference external" href="reference.html#acct-passwd-reset-key">acct_passwd_reset_key</a></li>
+<li class="toctree-l3"><a class="reference external" href="reference.html#signup-form-validate">signup_form_validate</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference external" href="reference.html#templates">Templates</a><ul>
+<li class="toctree-l3"><a class="reference external" href="reference.html#login-html">login.html</a></li>
+<li class="toctree-l3"><a class="reference external" href="reference.html#signup-html">signup.html</a></li>
+<li class="toctree-l3"><a class="reference external" href="reference.html#verification-sent-html">verification_sent.html</a></li>
+<li class="toctree-l3"><a class="reference external" href="reference.html#email-html">email.html</a></li>
+<li class="toctree-l3"><a class="reference external" href="reference.html#password-change-html">password_change.html</a></li>
+<li class="toctree-l3"><a class="reference external" href="reference.html#password-set-html">password_set.html</a></li>
+<li class="toctree-l3"><a class="reference external" href="reference.html#password-delete-html">password_delete.html</a></li>
+<li class="toctree-l3"><a class="reference external" href="reference.html#password-delete-done-html">password_delete_done.html</a></li>
+<li class="toctree-l3"><a class="reference external" href="reference.html#password-reset-html">password_reset.html</a></li>
+<li class="toctree-l3"><a class="reference external" href="reference.html#password-reset-done-html">password_reset_done.html</a></li>
+<li class="toctree-l3"><a class="reference external" href="reference.html#password-reset-from-key-html">password_reset_from_key.html</a></li>
+<li class="toctree-l3"><a class="reference external" href="reference.html#timezone-change-html">timezone_change.html</a></li>
+<li class="toctree-l3"><a class="reference external" href="reference.html#language-change-html">language_change.html</a></li>
+<li class="toctree-l3"><a class="reference external" href="reference.html#other-services-html">other_services.html</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference external" href="reference.html#modules">Modules</a><ul>
+<li class="toctree-l3"><a class="reference external" href="reference.html#module-pinax.apps.account.admin"><tt class="docutils literal"><span class="pre">pinax.apps.account.admin</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="reference.html#module-pinax.apps.account.auth_backends"><tt class="docutils literal"><span class="pre">pinax.apps.account.auth_backends</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="reference.html#module-pinax.apps.account.context_processors"><tt class="docutils literal"><span class="pre">pinax.apps.account.context_processors</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="reference.html#module-pinax.apps.account.forms"><tt class="docutils literal"><span class="pre">pinax.apps.account.forms</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="reference.html#module-pinax.apps.account.middleware"><tt class="docutils literal"><span class="pre">pinax.apps.account.middleware</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="reference.html#module-pinax.apps.account.models"><tt class="docutils literal"><span class="pre">pinax.apps.account.models</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="reference.html#pinax-apps-account-openid-consumer"><tt class="docutils literal"><span class="pre">pinax.apps.account.openid_consumer</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="reference.html#module-pinax.apps.account.signals"><tt class="docutils literal"><span class="pre">pinax.apps.account.signals</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="reference.html#module-pinax.apps.account.templatetags.account_tags"><tt class="docutils literal"><span class="pre">pinax.apps.account.templatetags.account_tags</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="reference.html#module-pinax.apps.account.templatetags.openid_tags"><tt class="docutils literal"><span class="pre">pinax.apps.account.templatetags.openid_tags</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="reference.html#module-pinax.apps.account.templatetags.other_service_tags"><tt class="docutils literal"><span class="pre">pinax.apps.account.templatetags.other_service_tags</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="reference.html#module-pinax.apps.account.utils"><tt class="docutils literal"><span class="pre">pinax.apps.account.utils</span></tt></a></li>
+<li class="toctree-l3"><a class="reference external" href="reference.html#pinax-apps-account-views"><tt class="docutils literal"><span class="pre">pinax.apps.account.views</span></tt></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="../index.html"
+                                  title="previous chapter">Pinax Apps</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="gettingstarted.html"
+                                  title="next chapter">Getting started</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/apps/account/index.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="../../search.html" method="get">
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="gettingstarted.html" title="Getting started"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../index.html" title="Pinax Apps"
+             >previous</a> |</li>
+        <li><a href="../../index.html">Pinax v0.9a1 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Pinax Apps</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2010, James Tauber and Pinax Team.
+      Last updated on Jun 06, 2010.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.7.
+    </div>
+  </body>
+</html>

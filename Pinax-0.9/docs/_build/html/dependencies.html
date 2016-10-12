@@ -1,0 +1,289 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Dependencies &mdash; Pinax v0.9a1 documentation</title>
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.9a1',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Pinax v0.9a1 documentation" href="index.html" />
+    <link rel="next" title="Frequently asked questions" href="faq.html" />
+    <link rel="prev" title="Settings" href="settings.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="faq.html" title="Frequently asked questions"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="settings.html" title="Settings"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Pinax v0.9a1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="dependencies">
+<h1>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h1>
+<p>This documents what apps use what other apps and what external libs.
+It is divided into the Pinax core apps and dependent apps that are
+loaded as part of the install process.</p>
+<div class="section" id="pinax-apps">
+<h2>Pinax Apps<a class="headerlink" href="#pinax-apps" title="Permalink to this headline">¶</a></h2>
+<p>These are the apps you will find within the Pinax package.</p>
+<dl class="docutils">
+<dt>account</dt>
+<dd>uses apps emailconfirmation, friends, profiles, timezones, microblogging, openid</dd>
+<dt>analytics</dt>
+<dd>no dependencies outside Django</dd>
+<dt>authsub</dt>
+<dd>uses library gdata</dd>
+<dt>autocomplete_app</dt>
+<dd>uses avatar, basic_profiles, friends, notification, profiles</dd>
+<dt>basic_profiles</dt>
+<dd>uses app notification</dd>
+<dt>bbauth</dt>
+<dd>uses library ybrowserauth</dd>
+<dt>blog</dt>
+<dd>uses apps friends, notification, tagging, threadedcomments
+and libraries atomformat, creole, docutils</dd>
+<dt>groups</dt>
+<dd>no dependencies outside Django</dd>
+<dt>photos</dt>
+<dd>uses apps photologue, projects, tagging, tribes</dd>
+<dt>profiles</dt>
+<dd>uses apps account, friends, gravatar, notification, photos, timezones, microblogging</dd>
+<dt>projects</dt>
+<dd>uses apps friends, notification, photos, tagging, things, threadedcomments, wiki</dd>
+<dt>signup_codes</dt>
+<dd>uses account</dd>
+<dt>tagging_utils</dt>
+<dd>uses tagging</dd>
+<dt>tasks</dt>
+<dd>uses attachments, dpaste, notification, tagging, tagging_utils, threadedcomments,
+and library atomformat</dd>
+<dt>threadedcomments_extras</dt>
+<dd>no dependencies outside Django</dd>
+<dt>topics</dt>
+<dd>uses notification, tagging, threadedcomments</dd>
+<dt>tribes</dt>
+<dd>uses apps groups, notification</dd>
+<dt>voting_extras</dt>
+<dd>uses voting</dd>
+<dt>waitinglist</dt>
+<dd>no dependencies outside Django</dd>
+</dl>
+</div>
+<div class="section" id="external-apps">
+<h2>External Apps<a class="headerlink" href="#external-apps" title="Permalink to this headline">¶</a></h2>
+<p>These are the external apps that Pinax uses.</p>
+<p>biblion</p>
+<p>django_ajax_validation</p>
+<dl class="docutils">
+<dt>django_announcements</dt>
+<dd>uses app notification
+and library atomformat</dd>
+</dl>
+<p>django_atomformat</p>
+<p>django_attachments</p>
+<dl class="docutils">
+<dt>django_avatar</dt>
+<dd>uses library PIL</dd>
+<dt>django_bookmarks</dt>
+<dd>uses apps tagging, voting
+and library atomformat</dd>
+</dl>
+<p>django_db_log</p>
+<p>django_dbtemplates</p>
+<dl class="docutils">
+<dt>django_email_confirmation</dt>
+<dd>uses app mailer</dd>
+<dt>django_extensions</dt>
+<dd>uses a wide range of libraries depends on command</dd>
+</dl>
+<p>django_filters</p>
+<p>django_flag</p>
+<dl class="docutils">
+<dt>django_friends</dt>
+<dd>uses apps emailconfirmation, mailer, notification
+and libraries gdata, vobject, ybrowserauth</dd>
+</dl>
+<p>django_frontendadmin</p>
+<p>django_generic_flatblocks</p>
+<p>django_gravatar</p>
+<p>django_groups</p>
+<p>django_locations</p>
+<p>django_mailer</p>
+<p>django_markup</p>
+<dl class="docutils">
+<dt>django_messages</dt>
+<dd>uses app mailer, notification</dd>
+<dt>django_microblogging</dt>
+<dd>uses apps account, notification, tribes
+and libraries atomformat, twitter</dd>
+<dt>django_notification</dt>
+<dd>uses app mailer
+and library atomformat</dd>
+</dl>
+<p>django_oembed</p>
+<dl class="docutils">
+<dt>django_openid</dt>
+<dd>uses libraries openid, yadis</dd>
+</dl>
+<p>django_pagination</p>
+<dl class="docutils">
+<dt>django_photologue</dt>
+<dd>uses app tagging
+and library PIL, EXIF</dd>
+</dl>
+<p>django_robots</p>
+<p>django_sorting</p>
+<p>django_staticfiles</p>
+<dl class="docutils">
+<dt>django_swaps</dt>
+<dd>uses apps notification, tagging, threadedcomments</dd>
+</dl>
+<p>django_tagging</p>
+<p>django_tagging_ext</p>
+<p>django_threadedcomments</p>
+<dl class="docutils">
+<dt>django_timezones</dt>
+<dd>uses library pytz</dd>
+</dl>
+<p>django_uni_form</p>
+<dl class="docutils">
+<dt>django_voting</dt>
+<dd>uses library simplejson</dd>
+<dt>django_wikiapp</dt>
+<dd>uses apps notification, tagging
+and libraries atomformat, creoleparser, diff_match_patch, docutils</dd>
+</dl>
+<p>template_utils</p>
+</div>
+<div class="section" id="pinax-apps-within-projects">
+<h2>Pinax Apps Within Projects<a class="headerlink" href="#pinax-apps-within-projects" title="Permalink to this headline">¶</a></h2>
+<dl class="docutils">
+<dt>friends_app (social_project)</dt>
+<dd>uses apps account, friends, notification</dd>
+</dl>
+<p>about</p>
+</div>
+<div class="section" id="external-libraries">
+<h2>External Libraries<a class="headerlink" href="#external-libraries" title="Permalink to this headline">¶</a></h2>
+<p>atom</p>
+<p>creole</p>
+<p>diff_match_patch</p>
+<p>docutils</p>
+<p>elementtree</p>
+<p>gdata</p>
+<p>geopy</p>
+<p>markdown</p>
+<p>pip</p>
+<p>pygments</p>
+<p>python_openid</p>
+<p>python_twitter</p>
+<p>python_yadis</p>
+<p>pytz</p>
+<p>smartypants</p>
+<p>sorl</p>
+<p>textile</p>
+<p>vobject</p>
+<p>ybrowserauth</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="#">Dependencies</a><ul>
+<li><a class="reference external" href="#pinax-apps">Pinax Apps</a></li>
+<li><a class="reference external" href="#external-apps">External Apps</a></li>
+<li><a class="reference external" href="#pinax-apps-within-projects">Pinax Apps Within Projects</a></li>
+<li><a class="reference external" href="#external-libraries">External Libraries</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="settings.html"
+                                  title="previous chapter">Settings</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="faq.html"
+                                  title="next chapter">Frequently asked questions</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="_sources/dependencies.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="search.html" method="get">
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="modindex.html" title="Global Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="faq.html" title="Frequently asked questions"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="settings.html" title="Settings"
+             >previous</a> |</li>
+        <li><a href="index.html">Pinax v0.9a1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2010, James Tauber and Pinax Team.
+      Last updated on Jun 06, 2010.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.7.
+    </div>
+  </body>
+</html>

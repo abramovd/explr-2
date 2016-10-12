@@ -1,0 +1,199 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Getting started &mdash; Pinax v0.9a1 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.9a1',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="Pinax v0.9a1 documentation" href="../../index.html" />
+    <link rel="up" title="autocomplete_app" href="index.html" />
+    <link rel="next" title="Reference" href="reference.html" />
+    <link rel="prev" title="autocomplete_app" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="reference.html" title="Reference"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="autocomplete_app"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">Pinax v0.9a1 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Pinax Apps</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">autocomplete_app</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="getting-started">
+<span id="ref-autocomplete-app-gettingstarted"></span><h1>Getting started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h1>
+<p>This document is designed to get you up and running with the
+<tt class="docutils literal"><span class="pre">pinax.apps.autocomplete_app</span></tt>...</p>
+<div class="section" id="prerequisites">
+<h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this headline">¶</a></h2>
+<p>These are the requirements to run <tt class="docutils literal"><span class="pre">pinax.apps.autocomplete_app</span></tt>:</p>
+<blockquote>
+<ul class="simple">
+<li>Python <strong>2.4+</strong> (Python 3.x is <strong>not</strong> supported yet)</li>
+<li>Django <strong>1.2+</strong></li>
+<li><tt class="docutils literal"><span class="pre">pinax.apps.basic_profiles</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">pinax.apps.profiles</span></tt></li>
+<li>django-avatar (<a class="reference external" href="http://github.com/ericflo/django-avatar">http://github.com/ericflo/django-avatar</a>)</li>
+<li>django-friends (<a class="reference external" href="http://github.com/jtauber/django-friends/">http://github.com/jtauber/django-friends/</a>)</li>
+</ul>
+</blockquote>
+<p>These dependencies should be added to your <tt class="docutils literal"><span class="pre">requirements/project.txt</span></tt> file
+and installed using <a class="reference external" href="http://pip.openplans.org/">pip</a>. For example:</p>
+<div class="highlight-python"><pre>pip install -r requirements/project.txt</pre>
+</div>
+</div>
+<div class="section" id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<p>Add <tt class="docutils literal"><span class="pre">pinax.apps.autocomplete_app</span></tt> to your <tt class="docutils literal"><span class="pre">INSTALLED_APPS</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">INSTALLED_APPS</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="c"># ...</span>
+    <span class="s">&quot;pinax.apps.autocomplete_app&quot;</span><span class="p">,</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="usage">
+<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
+<p>After installing this app in your Django project, you now have access to easily
+provide autocomplete lookups via client side javascript.</p>
+<p>First, you&#8217;ll want to wire up the appropriate urls for you app:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">urlpatterns</span> <span class="o">=</span> <span class="n">patterns</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">,</span>
+    <span class="n">url</span><span class="p">(</span><span class="s">r&quot;^username_autocomplete_friends/$&quot;</span><span class="p">,</span> <span class="s">&quot;pinax.apps.autocomplete_app.views.username_autocomplete_friends&quot;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;profile_username_autocomplete_friends&quot;</span><span class="p">),</span>
+    <span class="n">url</span><span class="p">(</span><span class="s">r&quot;^username_autocomplete/$&quot;</span><span class="p">,</span> <span class="s">&quot;pinax.apps.autocomplete_app.views.username_autocomplete_all&quot;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;profile_username_autocomplete&quot;</span><span class="p">),</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>The above url mapping will give you two different lookups, one using the
+<tt class="docutils literal"><span class="pre">django-friends</span></tt> app to look through just the logged in user&#8217;s friends, and
+the other looking through all users in the system.</p>
+<div class="highlight-html"><div class="highlight"><pre>###
+<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">&quot;text/javascript&quot;</span> <span class="na">src=</span><span class="s">&quot;jquery.min.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">&quot;text/javascript&quot;</span> <span class="na">src=</span><span class="s">&quot;jquery.autocomplete.min.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">&quot;text/javascript&quot;</span><span class="nt">&gt;</span>
+    <span class="nx">$</span><span class="p">().</span><span class="nx">ready</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+        <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#id_recipient&quot;</span><span class="p">).</span><span class="nx">autocomplete</span><span class="p">(</span><span class="s2">&quot;{% url profile_username_autocomplete %}&quot;</span><span class="p">,</span> <span class="p">{</span>
+            <span class="nx">formatItem</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">,</span> <span class="nx">i</span><span class="p">,</span> <span class="nx">n</span><span class="p">,</span> <span class="nx">value</span><span class="p">)</span> <span class="p">{</span>
+                <span class="nx">values</span> <span class="o">=</span> <span class="nx">value</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="s2">&quot;,,&quot;</span><span class="p">);</span>
+                <span class="k">return</span> <span class="nx">values</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="nx">values</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;&lt;br /&gt;&quot;</span> <span class="o">+</span> <span class="nx">values</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+            <span class="p">},</span>
+            <span class="nx">formatResult</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">,</span> <span class="nx">value</span><span class="p">)</span> <span class="p">{</span>
+                <span class="k">return</span> <span class="nx">value</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="s2">&quot;,,&quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">];</span>
+            <span class="p">},</span>
+            <span class="c1">// TODO: improve highlighting to only affect username.</span>
+            <span class="nx">highlight</span><span class="o">:</span> <span class="kc">false</span>
+        <span class="p">});</span>
+        <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#id_recipient&quot;</span><span class="p">).</span><span class="nx">focus</span><span class="p">()</span>
+    <span class="p">});</span>
+<span class="nt">&lt;/script&gt;</span>
+###
+
+###
+<span class="nt">&lt;input</span> <span class="na">id=</span><span class="s">&quot;id_recipient&quot;</span> <span class="na">type=</span><span class="s">&quot;text&quot;</span><span class="nt">&gt;</span>
+###
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="#">Getting started</a><ul>
+<li><a class="reference external" href="#prerequisites">Prerequisites</a></li>
+<li><a class="reference external" href="#installation">Installation</a></li>
+<li><a class="reference external" href="#usage">Usage</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="index.html"
+                                  title="previous chapter">autocomplete_app</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="reference.html"
+                                  title="next chapter">Reference</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/apps/autocomplete_app/gettingstarted.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="../../search.html" method="get">
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="reference.html" title="Reference"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="autocomplete_app"
+             >previous</a> |</li>
+        <li><a href="../../index.html">Pinax v0.9a1 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Pinax Apps</a> &raquo;</li>
+          <li><a href="index.html" >autocomplete_app</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2010, James Tauber and Pinax Team.
+      Last updated on Jun 06, 2010.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.7.
+    </div>
+  </body>
+</html>
